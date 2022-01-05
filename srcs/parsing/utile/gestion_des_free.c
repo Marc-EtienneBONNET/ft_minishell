@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:59:34 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/05 10:00:16 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/05 15:35:17 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,13 @@ void	*my_free_liste_chene(t_cmd *cmd)
 
 	x = 0;
 	i = 1;
-	if (cmd == NULL)
+	if (!cmd)
 		return (NULL);
-	i = cmd->info_cmd->nb_maillons;
 	if (cmd->info_cmd)
+	{
+		i = cmd->info_cmd->nb_maillons;
 		free(cmd->info_cmd);
+	}
 	while (i > 0)
 	{
 		tmp = cmd->next;

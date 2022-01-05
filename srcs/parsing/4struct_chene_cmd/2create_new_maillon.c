@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_new_maillon.c                               :+:      :+:    :+:   */
+/*   2create_new_maillon.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/12/14 18:51:20 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/05 15:29:37 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ char	**init_cmd_arg(char **tab_cmd, int *x, int *y)
 	int		x_tmp;
 
 	x_tmp = *x;
-	conteur = 0;
+	conteur = 1;
 	while (tab_cmd[x_tmp] && my_check_redirection(tab_cmd[x_tmp++]) == -1)
 		conteur++;
-	if (conteur == 0)
-		return (NULL);
 	tabe = malloc(sizeof(char *) * (conteur + 1));
 	if (!tabe)
 		return (NULL);
+	(*y)++;
 	while (tab_cmd[(*x)] && my_check_redirection(tab_cmd[*x]) == -1)
 		tabe[(*y)++] = ft_strdup(tab_cmd[(*x)++]);
 	tabe[*y] = NULL;
@@ -56,13 +55,11 @@ t_cmd	*new_maillons(char **tab_cmd, int *x)
 	y = 0;
 	tmp = bzero_tmp();
 	if (my_check_redirection(tab_cmd[*x]) == -1)
-		tmp->cmd = ft_strdup(tab_cmd[(*x)++]);
-	if (tab_cmd[*x] && my_check_redirection(tab_cmd[*x]) < 0)
-	{
-		tmp->arg = init_cmd_arg(tab_cmd, x, &y);
-		if (!tmp->arg)
-			return (NULL);
-	}
+	tmp->cmd = ft_strdup(tab_cmd[(*x)++]);
+	tmp->arg = init_cmd_arg(tab_cmd, x, &y);
+	if (!tmp->arg)
+		return (NULL);
+	tmp->arg[0] = ft_strdup(tmp->cmd);
 	if (my_check_redirection(tab_cmd[*x]) > 0)
 		tmp->red = ft_strdup(tab_cmd[(*x)++]);
 	return (tmp);
