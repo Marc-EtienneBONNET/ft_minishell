@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 17:49:49 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 18:50:52 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	my_lancement_building(void)
 	else if (ft_strncmp(cpe, "unset", 10) == 0)
 		printf("commande unset\n");
 	else if (ft_strncmp(cpe, "env", 5) == 0)
-		printf("commande env\n");
+		my_env(term->envp);
 	else if (ft_strncmp(cpe, "exit", 5) == 0)
 		printf("commande exit\n");
 }

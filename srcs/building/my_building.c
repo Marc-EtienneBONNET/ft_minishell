@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:32:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 18:45:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 18:53:50 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,19 @@ int	my_pwd(void)
 	return (0);
 }
 
-void	env(char **envp)
+void	my_env(char **envp)
 {
-	int i;
+	int	i;
 
-	i = 0;:
-	while (envp[i])
+	i = 0;
+	if (!term->cmd->arg[1])
 	{
-		printf("%s\n", envp[i]);
-		i++;
+		while (envp[i])
+		{
+			printf("%s\n", envp[i]);
+			i++;
+		}
 	}
+	else
+		printf("pwd: -a : option non valable\n");
 }
