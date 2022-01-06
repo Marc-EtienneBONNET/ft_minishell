@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 16:44:08 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 17:44:35 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_info_cmd
 
 typedef struct s_cmd
 {
+	char			*path;
 	char			*cmd;
 	char			**arg;
 	char			*red;

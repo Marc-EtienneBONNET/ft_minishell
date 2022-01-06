@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:08:40 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/05 11:05:03 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 17:44:22 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	my_print_list_chene(t_cmd *cmd)
 	while (cmd->info_cmd->nb_maillons > i)
 	{
 		printf("\e[1;36m\n\n\tMaillon N %d\n\e[0m", i);
+		printf("\e[1;31mpath \t\t:\t(%s)\n\e[0m", cmd->path);
 		printf("\e[1;32mcmd \t\t:\t(%s)\n\e[0m", cmd->cmd);
 		printf("\e[1;33marg\t\t:\t\e\e[0m");
 		if (cmd->arg)

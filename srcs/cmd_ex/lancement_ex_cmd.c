@@ -6,13 +6,13 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 17:17:04 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 17:49:49 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_lancement_building()
+void	my_lancement_building(void)
 {
 	char	*cpe;
 
@@ -38,7 +38,7 @@ void	*my_exe_cmd(t_term *term)
 	char	*cpe;
 
 	cpe = term->cmd->cmd;
-	if ( ft_strncmp(cpe, "cd", 10) == 0
+	if (ft_strncmp(cpe, "cd", 10) == 0
 		|| ft_strncmp(cpe, "pwd", 10) == 0
 		|| ft_strncmp(cpe, "echo", 10) == 0
 		|| ft_strncmp(cpe, "export", 10) == 0
@@ -50,7 +50,7 @@ void	*my_exe_cmd(t_term *term)
 	}
 	else
 	{
-		if (execve(ft_strjoin("/bin/", term->cmd->cmd), term->cmd->arg, term->envp) == -1)
+		if (execve(ft_strjoin(term->cmd->path, term->cmd->cmd), term->cmd->arg, term->envp) == -1)
 			printf("%s : commande introuvable\n", term->cmd->cmd);
 	}
 	return (NULL);
