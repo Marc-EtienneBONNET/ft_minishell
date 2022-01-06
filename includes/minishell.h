@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/05 15:36:23 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 08:16:35 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ typedef struct s_term
 	t_cmd	*cmd;
 	pid_t	pid;
 }	t_term;
+
+typedef struct s_path
+{
+	char *cmd;
+	char *path;
+} t_path;
 
 t_term *term;
 
