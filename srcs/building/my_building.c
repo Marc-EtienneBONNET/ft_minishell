@@ -72,3 +72,14 @@ int	my_pwd(void)
 	return (0);
 }
 
+void	env(char **envp)
+{
+	int i;
+
+	i = 0;:
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+}
