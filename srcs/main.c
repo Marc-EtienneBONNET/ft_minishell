@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 12:13:12 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:19:34 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ int	main(int ac, char **av, char **envp)
 		{
 			term->cmd = my_parsing(term->str_cmd);
 			term->pid = fork();
+			signal(SIGINT, handler_ctr_c_2);
 			if (term->pid == 0 && term->cmd)
 				my_exe_cmd(term);
 			waitpid(term->pid, NULL, 0);
+			signal(SIGINT, handler_ctr_c);
 			my_free_liste_chene(term->cmd);
 		}
 		free(term->str_cmd);
