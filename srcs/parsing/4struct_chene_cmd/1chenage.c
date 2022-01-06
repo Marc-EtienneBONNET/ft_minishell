@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/05 15:41:30 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 18:19:08 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ t_cmd	*my_init_struct_cmd(char **tab_cmd)
 		}
 		cmd = my_ajoute_maillon(cmd, tmp);
 	}
-	
 	my_free_double_tab((void **)tab_cmd, -1);
 	return (cmd);
 }

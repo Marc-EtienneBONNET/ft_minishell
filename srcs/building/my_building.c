@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:32:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 16:42:19 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 18:45:27 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,13 @@ int	my_pwd(void)
 {
 	char	*pwd;
 
-	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
+	if (!term->cmd->arg[1])
+	{
+		pwd = getcwd(NULL, 0);
+		printf("%s\n", pwd);
+	}
+	else
+		printf("pwd: -a : option non valable\n");
 	return (0);
 }
+

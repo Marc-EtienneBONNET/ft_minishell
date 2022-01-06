@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 18:16:00 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 18:18:48 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,9 @@ int	my_gestion_path(t_cmd *tmp)
 		tmp->path = malloc(sizeof(char) * (x + 2));
 		if (!tmp->path)
 			return (-1);
-		tmp->path[x + 1] = '\0';
-		while (x >= 0)
-		{
+		tmp->path[x++] = '\0';
+		while (--x >= 0)
 			tmp->path[x] = tmp->cmd[x];
-			x--;
-		}
 		tmp->cmd = my_modifie_cmd(tmp);
 	}
 	return (1);
@@ -107,7 +104,7 @@ t_cmd	*new_maillons(char **tab_cmd, int *x)
 	y = 0;
 	tmp = bzero_tmp();
 	if (my_check_redirection(tab_cmd[*x]) == -1)
-	tmp->cmd = ft_strdup(tab_cmd[(*x)++]);
+		tmp->cmd = ft_strdup(tab_cmd[(*x)++]);
 	my_gestion_path(tmp);
 	tmp->arg = init_cmd_arg(tab_cmd, x, &y);
 	if (!tmp->arg)
