@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 09:39:56 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 09:49:57 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,6 @@ void	*my_exe_cmd(t_term *term)
 	cpe = term->cmd->cmd;
 	if (my_ajoue_pid() == NULL)
 		return (NULL);
-	while (1)
-	{
-		printf("enfant\n");
-		usleep(1000000);
-	}
-	printf("process enfant\n");
 	if (ft_strncmp(cpe, "ls", 10) == 0
 		|| ft_strncmp(cpe, "cd", 10) == 0
 		|| ft_strncmp(cpe, "pwd", 10) == 0
