@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 08:14:24 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 12:13:12 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,12 @@ int	main(int ac, char **av, char **envp)
 		if (term->str_cmd == 0)
 		{
 			free(term->str_cmd);
-			printf("\nil faux encore :\n\t-free les variable aloue\n\t-fermer l'ensemble des processes\n");
 			free(term);
 			exit(0);
 		}
 		if (term->str_cmd[0])
 		{
 			term->cmd = my_parsing(term->str_cmd);
-			my_print_list_chene(term->cmd);
 			term->pid = fork();
 			if (term->pid == 0 && term->cmd)
 				my_exe_cmd(term);

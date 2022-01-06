@@ -6,63 +6,33 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 09:49:57 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 12:18:29 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t	*my_cloture_pid()
+void	my_lancement_building()
 {
-	pid_t	*pid;
-	int		x;
-	int		y;
+	char	*cpe;
 
-	x = 0;
-	y = 0;
-	if (!term->pid_cmd)
-		return (NULL);
-	while (term->pid_cmd[x] != -1)
-		x++;
-	if (x == 1)
-	{
-		free(term->pid_cmd);
-		return (NULL);
-	}
-	x--;
-	pid = malloc(sizeof(pid_t) * (x + 1));
-	while (y < x)
-	{
-		pid[y] = term->pid_cmd[y];
-		y++;
-	}
-	pid[y] = -1;
-	free(term->pid_cmd);
-	term->pid_cmd = pid;
-	return (term->pid_cmd);
-}
-
-pid_t	*my_ajoue_pid()
-{
-	pid_t	*pid;
-	int		x;
-	int		y;
-
-	x = 0;
-	y = 0;
-	while (term->pid_cmd && term->pid_cmd[x] != -1)
-		x++;
-	pid = malloc(sizeof(pid_t) * (x + 2));
-	while (y < x)
-	{
-		pid[y] = term->pid_cmd[y];
-		y++;
-	}
-	pid[y++] = getpid();
-	pid[y] = -1;
-	free(term->pid_cmd);
-	term->pid_cmd = pid;
-	return (term->pid_cmd);
+	cpe = term->cmd->cmd;
+	if (ft_strncmp(cpe, "ls", 10) == 0)
+		printf("commande ls\n");
+	else if (ft_strncmp(cpe, "cd", 10) == 0)
+		printf("commande cd\n");
+	else if (ft_strncmp(cpe, "pwd", 10) == 0)
+		printf("commande pwd\n");
+	else if (ft_strncmp(cpe, "echo", 10) == 0)
+		printf("commande echo\n");
+	else if (ft_strncmp(cpe, "export", 10) == 0)
+		printf("commande export\n");
+	else if (ft_strncmp(cpe, "unset", 10) == 0)
+		printf("commande unset\n");
+	else if (ft_strncmp(cpe, "env", 5) == 0)
+		printf("commande env\n");
+	else if (ft_strncmp(cpe, "exit", 5) == 0)
+		printf("commande exit\n");
 }
 
 void	*my_exe_cmd(t_term *term)
@@ -70,8 +40,6 @@ void	*my_exe_cmd(t_term *term)
 	char	*cpe;
 
 	cpe = term->cmd->cmd;
-	if (my_ajoue_pid() == NULL)
-		return (NULL);
 	if (ft_strncmp(cpe, "ls", 10) == 0
 		|| ft_strncmp(cpe, "cd", 10) == 0
 		|| ft_strncmp(cpe, "pwd", 10) == 0
@@ -81,10 +49,9 @@ void	*my_exe_cmd(t_term *term)
 		|| ft_strncmp(cpe, "env", 5) == 0
 		|| ft_strncmp(cpe, "exit", 5) == 0)
 	{
-		printf("fonction en cours de codage\n");
+		my_lancement_building();
 	}
 	else
 		execve(ft_strjoin("/bin/", term->cmd->cmd), term->cmd->arg, term->envp);
-	my_cloture_pid();
 	return (NULL);
 }

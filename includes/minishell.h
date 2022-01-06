@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 09:40:18 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 12:13:19 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_term
 	char	*str_cmd;
 	t_cmd	*cmd;
 	pid_t	pid;
-	pid_t *pid_cmd;
 }	t_term;
 
 t_term *term;
@@ -104,7 +103,6 @@ int		my_print_list_chene(t_cmd *cmd);
 //cmd_ex
 	//lancement_ex_cmd.c
 void	*my_exe_cmd(t_term *term);
-pid_t	*my_cloture_pid();
 
 //building
 	//cd
