@@ -6,13 +6,13 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:32:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 16:32:57 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:42:19 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		option(char *str)
+int	option(char *str)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ int		option(char *str)
 	return (0);
 }
 
-int		ft_echo(char **argv)
+int	my_echo(char **argv)
 {
 	int	i;
 	int	flag;
@@ -58,9 +58,10 @@ int		ft_echo(char **argv)
 	return (0);
 }
 
-int		pwd(void)
+int	my_pwd(void)
 {
-	char *pwd;
+	char	*pwd;
+
 	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 16:31:53 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/06 17:17:04 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ void	my_lancement_building()
 	char	*cpe;
 
 	cpe = term->cmd->cmd;
-	if (ft_strncmp(cpe, "ls", 10) == 0)
-		printf("commande ls\n");
-	else if (ft_strncmp(cpe, "cd", 10) == 0)
+	if (ft_strncmp(cpe, "cd", 10) == 0)
 		printf("commande cd\n");
 	else if (ft_strncmp(cpe, "pwd", 10) == 0)
-		printf("commande pwd\n");
+		my_pwd();
 	else if (ft_strncmp(cpe, "echo", 10) == 0)
-		printf("commande echo\n");
+		my_echo(term->cmd->arg);
 	else if (ft_strncmp(cpe, "export", 10) == 0)
 		printf("commande export\n");
 	else if (ft_strncmp(cpe, "unset", 10) == 0)
@@ -40,8 +38,7 @@ void	*my_exe_cmd(t_term *term)
 	char	*cpe;
 
 	cpe = term->cmd->cmd;
-	if (ft_strncmp(cpe, "ls", 10) == 0
-		|| ft_strncmp(cpe, "cd", 10) == 0
+	if ( ft_strncmp(cpe, "cd", 10) == 0
 		|| ft_strncmp(cpe, "pwd", 10) == 0
 		|| ft_strncmp(cpe, "echo", 10) == 0
 		|| ft_strncmp(cpe, "export", 10) == 0
