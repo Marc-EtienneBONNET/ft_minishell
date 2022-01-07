@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 14:56:08 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:16:30 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int		my_exe_cmd(t_term *term, t_cmd *cmd);
 //building
 	//cd
 int		my_echo(char **argv);
-int		my_pwd(void);
-void	my_env(char **envp);
+int	my_pwd(t_cmd *cmd);
+void	my_env(t_cmd *cmd);
 
 #endif

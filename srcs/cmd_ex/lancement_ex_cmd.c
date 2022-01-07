@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 15:07:01 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:15:27 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	my_lancement_building(t_cmd *cmd)
 	if (ft_strncmp(cpe, "cd", 10) == 0)
 		printf("commande cd\n");
 	else if (ft_strncmp(cpe, "pwd", 10) == 0)
-		my_pwd();
+		my_pwd(cmd);
 	else if (ft_strncmp(cpe, "echo", 10) == 0)
 		my_echo(cmd->arg);
 	else if (ft_strncmp(cpe, "export", 10) == 0)
@@ -28,7 +28,7 @@ void	my_lancement_building(t_cmd *cmd)
 	else if (ft_strncmp(cpe, "unset", 10) == 0)
 		printf("commande unset\n");
 	else if (ft_strncmp(cpe, "env", 5) == 0)
-		my_env(term->envp);
+		my_env(cmd);
 	else if (ft_strncmp(cpe, "exit", 5) == 0)
 		printf("commande exit\n");
 }

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:32:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 14:03:57 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:17:02 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int	my_echo(char **argv)
 	return (0);
 }
 
-int	my_pwd(void)
+int	my_pwd(t_cmd *cmd)
 {
 	char	*pwd;
 
-	if (!term->cmd->arg[1])
+	if (!cmd->arg[1])
 	{
 		pwd = getcwd(NULL, 0);
 		printf("%s\n", pwd);
@@ -73,16 +73,16 @@ int	my_pwd(void)
 	return (0);
 }
 
-void	my_env(char **envp)
+void	my_env(t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
-	if (!term->cmd->arg[1])
+	if (!cmd->arg[1])
 	{
-		while (envp[i])
+		while (term->my_env[i].key)
 		{
-			printf("%s\n", envp[i]);
+			printf("%s=%s\n", term->my_env[i].key, term->my_env[i].var);
 			i++;
 		}
 	}
