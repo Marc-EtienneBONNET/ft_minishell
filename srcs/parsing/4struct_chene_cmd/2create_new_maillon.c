@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 16:21:51 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 16:54:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ char	**init_cmd_arg(char **tab_cmd, int *x, int *y)
 
 	x_tmp = *x;
 	conteur = 1;
-	while (tab_cmd[x_tmp] && tab_cmd[x_tmp][0]
-		&& my_check_redirection(tab_cmd[x_tmp++]) == -1)
+	while (tab_cmd[x_tmp] && tab_cmd[(*x)][0] && my_check_redirection(tab_cmd[x_tmp++]) == -1)
 		conteur++;
 	tabe = malloc(sizeof(char *) * (conteur + 1));
 	if (!tabe)
@@ -30,7 +29,7 @@ char	**init_cmd_arg(char **tab_cmd, int *x, int *y)
 	while (tab_cmd[(*x)] && my_check_redirection(tab_cmd[*x]) == -1)
 	{
 		if (!tab_cmd[(*x)][0])
-			(*x)++;
+			(*y)++;
 		else
 			tabe[(*y)++] = ft_strdup(tab_cmd[(*x)++]);
 	}
@@ -75,32 +74,22 @@ char	*my_modifie_cmd(t_cmd *tmp)
 	return (res);
 }
 
+
+
 char	*my_gestion_path(t_cmd *tmp)
 {
 	int		x;
-	int		y;
 	char	*res;
 
-	y = 0;
 	x = ft_strlen(tmp->cmd) - 1;
-	res = NULL;
 	while (x >= 0 && tmp->cmd[x] != '/')
 		x--;
+	printf("%d\n", x);
 	if (x == -1)
-	{
-		res = (char *)malloc(sizeof(char) * (6));
-		if (!res)
-			return (NULL);
-		res[0] = '/';
-		res[1] = 'b';
-		res[2] = 'i';
-		res[3] = 'n';
-		res[4] = '/';
-		res[5] = '\0';
-	}
+		res = ft_strdup("/bin/");
 	else
 	{
-		res = malloc(sizeof(char) * (x + 2));
+		res = (char *)malloc(sizeof(char) * (x + 2));
 		if (!res)
 			return (NULL);
 		res[++x] = '\0';

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 15:15:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:03:18 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,32 +45,46 @@ int	my_exe_cmd(t_term *term, t_cmd *cmd)
 		|| ft_strncmp(cpe, "unset", 10) == 0
 		|| ft_strncmp(cpe, "env", 5) == 0
 		|| ft_strncmp(cpe, "exit", 5) == 0)
-	{
 		my_lancement_building(cmd);
-	}
 	else
 	{
-		if (execve(ft_strjoin(cmd->path, cmd->cmd), cmd->arg, term->envp) == -1)
+		cpe = ft_strjoin(cmd->path, cmd->cmd);
+		if (execve(cpe, cmd->arg, term->envp) == -1)
 		{
+			free(cpe);
 			if (ft_strncmp(cmd->red, "||", 3) == 0)
 				return (-2);
 			printf("%s : commande introuvable\n", cmd->cmd);
 			return (-1);
 		}
+		free(cpe);
 	}
 	return (1);
+}
+
+void	my_lancement_ex2(t_cmd *tmp)
+{
+	int	res;
+
+	term->pid = fork();
+	if (term->pid == 0 && tmp)
+	{
+		res = my_exe_cmd(term, tmp);
+		if (tmp->red[0] != ';' || tmp->next == NULL || res < 0)
+			exit(res);
+	}
+	waitpid(term->pid, &res, 0);
+	if (WIFEXITED(res))
+		res = WEXITSTATUS(res);
+	term->dernier_ret = res;
 }
 
 int	my_lancement_ex(void)
 {
 	t_cmd	*tmp;
 	int		x;
-	int		res;
-	int		ret;
 
 	x = 0;
-	ret = 10;
-	res = 0;
 	term->cmd = my_parsing(term->str_cmd);
 	free(term->str_cmd);
 	my_print_list_chene(term->cmd);
@@ -79,23 +93,10 @@ int	my_lancement_ex(void)
 	signal(SIGINT, handler_ctr_c_2);
 	while (x < term->cmd->info_cmd->nb_maillons)
 	{
-		term->pid = fork();
-		if (term->pid == 0 && tmp)
-		{
-			res = my_exe_cmd(term, tmp);
-			if (tmp->red[0] != ';' || tmp->next == NULL || res < 0)
-			{
-				exit(ret);
-				break ;
-			}
-		}
-		waitpid(term->pid, &ret, 0);
-		if (WIFEXITED(ret))
-			ret = WEXITSTATUS(ret);
-		term->dernier_ret = ret;
-		if (ret != 0 && ft_strncmp(tmp->red, "&&", 3) == 0)
+		my_lancement_ex2(tmp);
+		if (term->dernier_ret != 0 && ft_strncmp(tmp->red, "&&", 3) == 0)
 			break ;
-		if (ret == 0 && ft_strncmp(tmp->red, "||", 3) == 0)
+		if (term->dernier_ret == 0 && ft_strncmp(tmp->red, "||", 3) == 0)
 			break ;
 		tmp = tmp->next;
 		x++;
