@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 13:00:26 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 14:25:51 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ int	my_lancement_ex(void)
 	t_cmd	*tmp;
 	int		x;
 	int		res;
-	int		test;
+	int		ret;
 
 	x = 0;
-	test = 10;
+	ret = 10;
 	res = 0;
 	term->cmd = my_parsing(term->str_cmd);
 	free(term->str_cmd);
-	my_print_list_chene(term->cmd);
+	//my_print_list_chene(term->cmd);
 	tmp = term->cmd;
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
@@ -36,14 +36,17 @@ int	my_lancement_ex(void)
 			res = my_exe_cmd(term, tmp);
 			if (tmp->red[0] != ';' || tmp->next == NULL || res < 0)
 			{
-				exit(EXIT_FAILURE);
+				exit(ret);
 				break ;
 			}
 		}
-		waitpid(term->pid, &test, 0);
-		if (test == 256 && ft_strncmp(tmp->red, "&&", 3) == 0)
+		waitpid(term->pid, &ret, 0);
+		if (WIFEXITED(ret))
+			ret = WEXITSTATUS(ret);
+		term->dernier_ret = ret;
+		if (ret != 0 && ft_strncmp(tmp->red, "&&", 3) == 0)
 			break ;
-		if (test != 256 && ft_strncmp(tmp->red, "||", 3) == 0)
+		if (ret == 0 && ft_strncmp(tmp->red, "||", 3) == 0)
 			break ;
 		tmp = tmp->next;
 		x++;
