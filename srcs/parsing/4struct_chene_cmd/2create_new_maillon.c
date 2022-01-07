@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 16:54:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 19:03:10 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**init_cmd_arg(char **tab_cmd, int *x, int *y)
 	while (tab_cmd[(*x)] && my_check_redirection(tab_cmd[*x]) == -1)
 	{
 		if (!tab_cmd[(*x)][0])
-			(*y)++;
+			(*x)++;
 		else
 			tabe[(*y)++] = ft_strdup(tab_cmd[(*x)++]);
 	}
@@ -73,8 +73,6 @@ char	*my_modifie_cmd(t_cmd *tmp)
 	free(tmp->cmd);
 	return (res);
 }
-
-
 
 char	*my_gestion_path(t_cmd *tmp)
 {

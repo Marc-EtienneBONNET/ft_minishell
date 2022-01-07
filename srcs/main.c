@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 16:17:17 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:08:41 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	my_free_all(int ret)
 		free(term->my_env[x].var);
 		x++;
 	}
-	//rl_clear_history();
+	rl_clear_history();
 	free(term->my_env);	
 	free(term);
 	return (ret);

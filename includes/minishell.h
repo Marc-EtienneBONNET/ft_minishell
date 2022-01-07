@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 15:16:30 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 18:53:56 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,13 @@ typedef struct s_term
 	t_cmd	*cmd;
 	pid_t	pid;
 	int		dernier_ret;
+	int		tub[2];
 }	t_term;
 
 t_term *term;
+
+#define ENTRE 1
+#define SORTI 0
 
 //hendler
 	//hendler.c
@@ -119,11 +123,13 @@ int		my_print_list_chene(t_cmd *cmd);
 	//lancement_ex_cmd.c
 int		my_lancement_ex(void);
 int		my_exe_cmd(t_term *term, t_cmd *cmd);
+void	my_creat_tub(void);
+void	my_liaison_tub(void);
 
 //building
 	//cd
 int		my_echo(char **argv);
-int	my_pwd(t_cmd *cmd);
+int		my_pwd(t_cmd *cmd);
 void	my_env(t_cmd *cmd);
 
 #endif
