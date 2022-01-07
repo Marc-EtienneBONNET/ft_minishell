@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 18:18:48 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 11:50:09 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,46 +54,55 @@ char	*my_modifie_cmd(t_cmd *tmp)
 	int		x;
 
 	x = 0;
-	len = ft_strlen(tmp->path);
-	res = malloc(sizeof(char) * (ft_strlen(tmp->cmd) - len) + 1);
+	len = 0;
+	if (ft_strncmp(tmp->path, "/bin/", 10) != 0)
+		len = ft_strlen(tmp->path);
+	res = (char *)malloc(sizeof(char) * ((ft_strlen(tmp->cmd) - len) + 1));
 	while (tmp->cmd[len])
 	{
 		res[x] = tmp->cmd[len];
 		x++;
 		len++;
 	}
-	res[x]= '\0';
+	res[x] = '\0';
 	free(tmp->cmd);
 	return (res);
 }
 
-int	my_gestion_path(t_cmd *tmp)
+char	*my_gestion_path(t_cmd *tmp)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	char	*res;
 
 	y = 0;
 	x = ft_strlen(tmp->cmd) - 1;
+	res = NULL;
 	while (x >= 0 && tmp->cmd[x] != '/')
 		x--;
 	if (x == -1)
 	{
-		tmp->path = (char *)malloc(sizeof(char) * (6));
-		if (!tmp->path)
-			return (-1);
-		tmp->path = "/bin/";
+		res = (char *)malloc(sizeof(char) * (6));
+		if (!res)
+			return (NULL);
+		res[0] = '/';
+		res[1] = 'b';
+		res[2] = 'i';
+		res[3] = 'n';
+		res[4] = '/';
+		res[5] = '\0';
+
 	}
-	else if (tmp->cmd[x] == '/')
+	else
 	{
-		tmp->path = malloc(sizeof(char) * (x + 2));
-		if (!tmp->path)
-			return (-1);
-		tmp->path[x++] = '\0';
+		res = malloc(sizeof(char) * (x + 2));
+		if (!res)
+			return (NULL);
+		res[++x] = '\0';
 		while (--x >= 0)
-			tmp->path[x] = tmp->cmd[x];
-		tmp->cmd = my_modifie_cmd(tmp);
+			res[x] = tmp->cmd[x];
 	}
-	return (1);
+	return (res);
 }
 
 t_cmd	*new_maillons(char **tab_cmd, int *x)
@@ -105,12 +114,19 @@ t_cmd	*new_maillons(char **tab_cmd, int *x)
 	tmp = bzero_tmp();
 	if (my_check_redirection(tab_cmd[*x]) == -1)
 		tmp->cmd = ft_strdup(tab_cmd[(*x)++]);
-	my_gestion_path(tmp);
+	tmp->path = my_gestion_path(tmp);
+	tmp->cmd = my_modifie_cmd(tmp);
 	tmp->arg = init_cmd_arg(tab_cmd, x, &y);
 	if (!tmp->arg)
 		return (NULL);
 	tmp->arg[0] = ft_strdup(tmp->cmd);
 	if (my_check_redirection(tab_cmd[*x]) > 0)
 		tmp->red = ft_strdup(tab_cmd[(*x)++]);
+	else
+	{
+		tmp->red = malloc(sizeof(char) * 2);
+		tmp->red[0] = ';';
+		tmp->red[1] = '\0';
+	}
 	return (tmp);
 }

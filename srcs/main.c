@@ -6,11 +6,53 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 08:53:25 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 13:00:26 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	my_lancement_ex(void)
+{
+	t_cmd	*tmp;
+	int		x;
+	int		res;
+	int		test;
+
+	x = 0;
+	test = 10;
+	res = 0;
+	term->cmd = my_parsing(term->str_cmd);
+	free(term->str_cmd);
+	my_print_list_chene(term->cmd);
+	tmp = term->cmd;
+	signal(SIGQUIT, handler_ctr_backslash);
+	signal(SIGINT, handler_ctr_c_2);
+	while (x < term->cmd->info_cmd->nb_maillons)
+	{
+		term->pid = fork();
+		if (term->pid == 0 && tmp)
+		{
+			res = my_exe_cmd(term, tmp);
+			if (tmp->red[0] != ';' || tmp->next == NULL || res < 0)
+			{
+				exit(EXIT_FAILURE);
+				break ;
+			}
+		}
+		waitpid(term->pid, &test, 0);
+		if (test == 256 && ft_strncmp(tmp->red, "&&", 3) == 0)
+			break ;
+		if (test != 256 && ft_strncmp(tmp->red, "||", 3) == 0)
+			break ;
+		tmp = tmp->next;
+		x++;
+	}
+	signal(SIGINT, handler_ctr_c);
+	signal(SIGQUIT, SIG_IGN);
+	my_free_liste_chene(term->cmd);
+	return (1);
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -36,20 +78,7 @@ int	main(int ac, char **av, char **envp)
 			exit(0);
 		}
 		if (term->str_cmd[0])
-		{
-			term->cmd = my_parsing(term->str_cmd);
-			my_print_list_chene(term->cmd);
-			term->pid = fork();
-			signal(SIGQUIT, handler_ctr_backslash);
-			signal(SIGINT, handler_ctr_c_2);
-			if (term->pid == 0 && term->cmd)
-				my_exe_cmd(term);
-			waitpid(term->pid, NULL, 0);
-			signal(SIGINT, handler_ctr_c);
-			signal(SIGQUIT, SIG_IGN);
-			my_free_liste_chene(term->cmd);
-		}
-		free(term->str_cmd);
+			my_lancement_ex();
 	}
 	free(term);
 	return (0);

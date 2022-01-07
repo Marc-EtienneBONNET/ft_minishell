@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:59:34 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 09:35:42 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 10:39:31 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	*my_free_maillon_2(t_cmd *tmp)
 		free(tmp->arg);
 	if (tmp->red)
 		free(tmp->red);
+	if (tmp->path)
+		free(tmp->path);
 	if (tmp)
 		free(tmp);
 	return (NULL);
