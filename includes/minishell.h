@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 14:25:12 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 14:56:08 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,16 @@ typedef struct s_cmd
 	struct s_cmd	*previous;
 }	t_cmd;
 
+typedef struct str_env
+{
+	char	*key;
+	char	*var;
+}	t_env;
+
 typedef struct s_term
 {
 	char	**envp;
+	t_env	*my_env;
 	char	*str_cmd;
 	t_cmd	*cmd;
 	pid_t	pid;
@@ -65,6 +72,7 @@ void	handler_ctr_backslash(int code);
 //parsing
 	//protocole parsing
 t_cmd	*my_parsing(char *cmd_tmp);
+
 	//gestion_var_env
 char	*my_take_key_env(char *cmd_tmp, int x);
 void	my_inclus_res_var_env_2(char **tmp, int x, char **res, char *str_env);
@@ -92,6 +100,9 @@ t_cmd	*new_maillons(char **tab_cmd, int *x);
 t_cmd	*bzero_tmp(void);
 char	**init_cmd_arg(char **tab_cmd, int *x, int *y);
 
+	//pars_env
+		//my_pars_env
+int		my_init_struct_env(void);
 	//utile
 		//gestion des free
 void	*my_free_tab(void *a_free);
@@ -106,6 +117,7 @@ int		my_print_list_chene(t_cmd *cmd);
 
 //cmd_ex
 	//lancement_ex_cmd.c
+int		my_lancement_ex(void);
 int		my_exe_cmd(t_term *term, t_cmd *cmd);
 
 //building

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 12:53:33 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:07:01 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,50 @@ int	my_exe_cmd(t_term *term, t_cmd *cmd)
 			return (-1);
 		}
 	}
+	return (1);
+}
+
+int	my_lancement_ex(void)
+{
+	t_cmd	*tmp;
+	int		x;
+	int		res;
+	int		ret;
+
+	x = 0;
+	ret = 10;
+	res = 0;
+	term->cmd = my_parsing(term->str_cmd);
+	free(term->str_cmd);
+	my_print_list_chene(term->cmd);
+	tmp = term->cmd;
+	signal(SIGQUIT, handler_ctr_backslash);
+	signal(SIGINT, handler_ctr_c_2);
+	while (x < term->cmd->info_cmd->nb_maillons)
+	{
+		term->pid = fork();
+		if (term->pid == 0 && tmp)
+		{
+			res = my_exe_cmd(term, tmp);
+			if (tmp->red[0] != ';' || tmp->next == NULL || res < 0)
+			{
+				exit(ret);
+				break ;
+			}
+		}
+		waitpid(term->pid, &ret, 0);
+		if (WIFEXITED(ret))
+			ret = WEXITSTATUS(ret);
+		term->dernier_ret = ret;
+		if (ret != 0 && ft_strncmp(tmp->red, "&&", 3) == 0)
+			break ;
+		if (ret == 0 && ft_strncmp(tmp->red, "||", 3) == 0)
+			break ;
+		tmp = tmp->next;
+		x++;
+	}
+	signal(SIGINT, handler_ctr_c);
+	signal(SIGQUIT, SIG_IGN);
+	my_free_liste_chene(term->cmd);
 	return (1);
 }
