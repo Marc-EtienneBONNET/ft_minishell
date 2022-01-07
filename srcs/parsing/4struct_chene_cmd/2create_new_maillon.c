@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 11:50:09 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 16:21:51 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,20 @@ char	**init_cmd_arg(char **tab_cmd, int *x, int *y)
 
 	x_tmp = *x;
 	conteur = 1;
-	while (tab_cmd[x_tmp] && my_check_redirection(tab_cmd[x_tmp++]) == -1)
+	while (tab_cmd[x_tmp] && tab_cmd[x_tmp][0]
+		&& my_check_redirection(tab_cmd[x_tmp++]) == -1)
 		conteur++;
 	tabe = malloc(sizeof(char *) * (conteur + 1));
 	if (!tabe)
 		return (NULL);
 	(*y)++;
 	while (tab_cmd[(*x)] && my_check_redirection(tab_cmd[*x]) == -1)
-		tabe[(*y)++] = ft_strdup(tab_cmd[(*x)++]);
+	{
+		if (!tab_cmd[(*x)][0])
+			(*x)++;
+		else
+			tabe[(*y)++] = ft_strdup(tab_cmd[(*x)++]);
+	}
 	tabe[*y] = NULL;
 	return (tabe);
 }
@@ -91,7 +97,6 @@ char	*my_gestion_path(t_cmd *tmp)
 		res[3] = 'n';
 		res[4] = '/';
 		res[5] = '\0';
-
 	}
 	else
 	{

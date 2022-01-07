@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 16:15:39 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 16:17:17 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int ac, char **av, char **envp)
 			add_history(term->str_cmd);
 			my_lancement_ex();
 		}
-		else 
+		else
 			free(term->str_cmd);
 	}
 	return (my_free_all(0));
