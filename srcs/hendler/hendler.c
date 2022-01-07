@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 16:28:37 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 08:53:58 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,10 @@ void	handler_ctr_c_2(int code)
 		free(term->str_cmd);
 		term->str_cmd = NULL;
 	}
+}
+
+void	handler_ctr_backslash(int code)
+{
+	(void)code;
+	printf("Quitter (core dumped)\n");
 }

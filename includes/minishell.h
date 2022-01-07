@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/06 18:50:16 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/07 08:40:23 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_term *term;
 	//hendler.c
 void	handler_ctr_c(int code);
 void	handler_ctr_c_2(int code);
+void	handler_ctr_backslash(int code);
 
 //parsing
 	//protocole parsing
