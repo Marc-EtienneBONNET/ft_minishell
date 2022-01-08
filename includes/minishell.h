@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/08 08:37:25 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/08 09:53:50 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int		my_print_list_chene(t_cmd *cmd);
 	//lancement_ex_cmd.c
 int		my_lancement_ex(void);
 int		my_exe_cmd(t_term *term, t_cmd *cmd);
-void	my_create_tub(t_cmd *cmd);
+int		my_create_tub(t_cmd *cmd);
 void	my_kill_tub(t_cmd *cmd);
 
 //building

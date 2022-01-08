@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/08 08:53:24 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/08 10:41:26 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,38 @@ int	my_exe_cmd(t_term *term, t_cmd *cmd)
 		}
 		free(cpe);
 	}
-	return (1);
+	return (0);
 }
 
-void	my_lancement_ex2(t_cmd *tmp)
+int	my_lancement_ex2(t_cmd *tmp)
 {
 	int	res;
+	int	route;
 
+	route = 0;
 	pipe(term->tub);
 	term->pid = fork();
-	my_create_tub(tmp);
+	route = my_create_tub(tmp);
+	if (route == -1)
+		printf("%s : fichier introuvable\n", tmp->cmd);
 	if (term->pid == 0 && tmp)
 	{
 		res = my_exe_cmd(term, tmp);
-		if (tmp->red[0] != ';' || tmp->next == NULL || res < 0)
-			exit(res);
+		exit(res);
 	}
 	waitpid(term->pid, &res, 0);
 	if (WIFEXITED(res))
 		res = WEXITSTATUS(res);
 	term->dernier_ret = res;
+	if (term->dernier_ret != 0)
+		if ((tmp->previous && ft_strncmp(tmp->previous->red, ">>", 3) != 0))
+			printf("%s : commande introuvable\n", tmp->cmd);
+	if (term->dernier_ret != 0 && (ft_strncmp(tmp->red, "&&", 3) == 0
+			|| ft_strncmp(tmp->red, "|", 3) == 0))
+		return (-1);
+	if (term->dernier_ret == 0 && ft_strncmp(tmp->red, "||", 3) == 0)
+		return (-1);
+	return (1);
 }
 
 int	my_lancement_ex(void)
@@ -93,13 +105,11 @@ int	my_lancement_ex(void)
 	signal(SIGINT, handler_ctr_c_2);
 	while (x < term->cmd->info_cmd->nb_maillons)
 	{
-		my_lancement_ex2(tmp);
-		if (term->dernier_ret != 0)
-			printf("%s : commande introuvable\n", tmp->cmd);
-		if (term->dernier_ret != 0 && (ft_strncmp(tmp->red, "&&", 3) == 0 || ft_strncmp(tmp->red, "|", 3) == 0))
-			break ;
-		if (term->dernier_ret == 0 && ft_strncmp(tmp->red, "||", 3) == 0)
-			break ;
+		if (my_lancement_ex2(tmp) == -1)
+		{
+			x++;
+			tmp = tmp->next;
+		}
 		tmp = tmp->next;
 		x++;
 	}
