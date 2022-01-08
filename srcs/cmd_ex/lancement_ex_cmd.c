@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/08 12:22:05 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/08 13:58:48 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,38 +33,6 @@ void	my_lancement_building(t_cmd *cmd)
 		printf("commande exit\n");
 }
 
-
-int	my_lancement_ex2_2(t_cmd *tmp)
-{
-	int	res;
-	int	route;
-
-	route = 0;
-	pipe(term->tub);
-	term->pid = fork();
-	route = my_create_tub(tmp);
-	if (route == -1)
-		printf("%s : fichier introuvable\n", tmp->cmd);
-	if (term->pid == 0 && tmp)
-	{
-		res = my_exe_cmd(term, tmp);
-		exit(res);
-	}
-	waitpid(term->pid, &res, 0);
-	if (WIFEXITED(res))
-		res = WEXITSTATUS(res);
-	term->dernier_ret = res;
-	if (term->dernier_ret != 0)
-		if ((tmp->previous && ft_strncmp(tmp->previous->red, ">>", 3) != 0))
-			printf("%s : commande introuvable\n", tmp->cmd);
-	if (term->dernier_ret != 0 && (ft_strncmp(tmp->red, "&&", 3) == 0
-			|| ft_strncmp(tmp->red, "|", 3) == 0))
-		return (-1);
-	if (term->dernier_ret == 0 && ft_strncmp(tmp->red, "||", 3) == 0)
-		return (-1);
-	return (1);
-}
-
 int	my_exe_cmd(t_term *term, t_cmd *cmd)
 {
 	char	*cpe;
@@ -80,6 +48,9 @@ int	my_exe_cmd(t_term *term, t_cmd *cmd)
 		my_lancement_building(cmd);
 	else
 	{
+		if (cmd->previous && (ft_strncmp(cmd->previous->red, ">", 3) == 0
+			|| ft_strncmp(cmd->previous->red, ">>", 3) == 0))
+			return (1);
 		cpe = ft_strjoin(cmd->path, cmd->cmd);
 		if (execve(cpe, cmd->arg, term->envp) == -1)
 		{
@@ -114,7 +85,6 @@ int	my_lancement_ex2(t_cmd *tmp, int *x)
 	my_gestion_pip(res, tmp);
 	my_gestion_double_red_droite(res, tmp, x);
 	my_gestion_virgule_point(res, tmp);
-	
 	return (1);
 }
 
@@ -135,9 +105,9 @@ int	my_lancement_ex(void)
 		term->cmd = term->cmd->next;
 		x++;
 	}
+	my_kill_tub(term->cmd);
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
 	my_free_liste_chene(term->cmd);
-	my_kill_tub(tmp);
 	return (1);
 }
