@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 19:03:10 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/08 08:14:51 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ char	*my_gestion_path(t_cmd *tmp)
 	x = ft_strlen(tmp->cmd) - 1;
 	while (x >= 0 && tmp->cmd[x] != '/')
 		x--;
-	printf("%d\n", x);
 	if (x == -1)
 		res = ft_strdup("/bin/");
 	else

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 17:08:41 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/08 08:36:31 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	my_free_all(int ret)
 		x++;
 	}
 	rl_clear_history();
-	free(term->my_env);	
+	free(term->my_env);
 	free(term);
 	return (ret);
 }
@@ -50,7 +50,6 @@ int	main(int ac, char **av, char **envp)
 		{
 			free(term->str_cmd);
 			rl_clear_history();
-			//my_free_liste_chene(term->cmd);
 			return (my_free_all(-1));
 		}
 		if (term->str_cmd[0])

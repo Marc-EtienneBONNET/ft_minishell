@@ -6,35 +6,44 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 18:18:33 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 18:56:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/08 08:46:01 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_creat_tub(void)
+void	my_create_tub(t_cmd *cmd)
 {
-	if (term->pid == 0)
+	if (ft_strncmp(cmd->red, ";", 3) != 0
+		&& ft_strncmp(cmd->red, "&&", 3) != 0
+		&& ft_strncmp(cmd->red, "||", 3) != 0)
 	{
-		printf("coucou 1\n");
-		pipe(term->tub);
-		dup2(term->tub[ENTRE], 1);
-		close(term->tub[ENTRE]);
+		if (term->pid == 0)
+		{
+			close(term->tub[SORTI]);
+			dup2(term->tub[ENTRE], 1);
+			close(term->tub[ENTRE]);
+		}
+		else
+		{
+			close(term->tub[ENTRE]);
+			dup2(term->tub[SORTI], 0);
+			close(term->tub[SORTI]);
+		}
 	}
 }
 
-void	my_liaison_tub(void)
-{
-	if (term->pid == 0)
-	{
-		printf("coucou 2\n");
-		dup2(term->tub[SORTI], 0);
-		close(term->tub[SORTI]);
-	}
-}
 
 void	my_kill_tub(t_cmd *cmd)
 {
-	(void)cmd;
-	
+	if (ft_strncmp(cmd->red, ";", 3) != 0
+		&& ft_strncmp(cmd->red, "&&", 3) != 0
+		&& ft_strncmp(cmd->red, "||", 3) != 0)
+	{
+		if (term->pid != 0)
+		{
+			dup2(ENTRE, SORTI);
+		}
+	}
 }
+

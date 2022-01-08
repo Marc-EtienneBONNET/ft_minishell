@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 18:58:42 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/08 08:46:25 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ void	my_lancement_ex2(t_cmd *tmp)
 {
 	int	res;
 
+	pipe(term->tub);
 	term->pid = fork();
+	my_create_tub(tmp);
 	if (term->pid == 0 && tmp)
 	{
 		res = my_exe_cmd(term, tmp);
@@ -87,13 +89,14 @@ int	my_lancement_ex(void)
 	x = 0;
 	term->cmd = my_parsing(term->str_cmd);
 	free(term->str_cmd);
-	my_print_list_chene(term->cmd);
+	//my_print_list_chene(term->cmd);
 	tmp = term->cmd;
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	while (x < term->cmd->info_cmd->nb_maillons)
 	{
 		my_lancement_ex2(tmp);
+		//printf("ici : %d\n", term->dernier_ret);
 		if (term->dernier_ret != 0 && ft_strncmp(tmp->red, "&&", 3) == 0)
 			break ;
 		if (term->dernier_ret == 0 && ft_strncmp(tmp->red, "||", 3) == 0)
@@ -104,5 +107,6 @@ int	my_lancement_ex(void)
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
 	my_free_liste_chene(term->cmd);
+		my_kill_tub(tmp);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 16:14:32 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/08 08:17:47 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ void	handler_ctr_c_2(int code)
 	(void)code;
 	x = 0;
 	printf("\n");
-	if (term->str_cmd)
-	{
-		free(term->str_cmd);
-		term->str_cmd = NULL;
-	}
 }
 
 void	handler_ctr_backslash(int code)
