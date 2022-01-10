@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 03:54:22 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/10/01 03:54:24 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/10 10:11:47 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void	ft_lst_prec_delone(t_prec **lst);
 int		ft_part_putstr(const char *s, size_t i);
 int		ft_print_char(char c, int nb);
 char	*ft_utoa(unsigned int nb);
+char	**ft_strdoublejoin(char **tab, char *str);
 
 #endif

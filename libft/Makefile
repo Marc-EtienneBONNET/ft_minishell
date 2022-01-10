@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/17 15:47:27 by mbonnet           #+#    #+#              #
-#    Updated: 2021/11/12 16:52:09 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/10 10:11:29 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS =  ft_convertisseur/ft_atoi.c\
 		ft_str/ft_substr.c\
 		ft_str/ft_tolower.c\
 		ft_str/ft_toupper.c\
+		ft_str/ft_strdoublejoin.c\
 		ft_whitespace/ft_strlen_moin_whitespace.c\
 		ft_whitespace/ft_whitespace.c\
 		ft_printf/ft_printf.c ft_printf/srcs/parse_args.c \

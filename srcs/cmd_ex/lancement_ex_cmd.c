@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/10 08:06:06 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/10 10:45:33 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,22 @@ int	my_lancement_ex2(t_cmd *tmp, int *x)
 	return (1);
 }
 
+void	my_gestion_red_gauche(void)
+{
+	char	**tmp;
+	int		len;
+
+	len = 0;
+	while (term->cmd->arg[len])
+		len++;
+	if (ft_strncmp(term->cmd->red, "<", 3) == 0)
+	{
+		tmp = ft_strdoublejoin(term->cmd->arg, term->cmd->next->cmd);
+		my_free_double_tab((void **)term->cmd->arg, -1);
+		term->cmd->arg = tmp;
+	}
+}
+
 int	my_lancement_ex(void)
 {
 	t_cmd	*tmp;
@@ -101,13 +117,17 @@ int	my_lancement_ex(void)
 	signal(SIGINT, handler_ctr_c_2);
 	while (x < term->cmd->info_cmd->nb_maillons)
 	{
-		term->cmd = my_init_simple_red_gauche(term->cmd);
-		my_print_list_chene(term->cmd);
-		//printf("term : %s, next term : %s\n", term->cmd->cmd, term->cmd->next->cmd);
-		//my_lancement_ex2(term->cmd, &x);
+		my_gestion_red_gauche();
+		my_lancement_ex2(term->cmd, &x);
+		if (ft_strncmp(term->cmd->red, "<", 3) == 0)
+		{
+			term->cmd = term->cmd->next;
+			x++;
+		}
 		term->cmd = term->cmd->next;
 		x++;
 	}
+	term->cmd = tmp;
 	my_kill_tub(term->cmd);
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
