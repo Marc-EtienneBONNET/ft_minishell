@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 11:17:49 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/08 13:24:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/10 07:12:39 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,3 +76,5 @@ void	my_gestion_virgule_point(int res, t_cmd *cmd)
 			&& ft_strncmp(cmd->previous->red, ">>", 3) != 0))
 		printf("%s : commande introuvable\n", cmd->cmd);
 }
+
+

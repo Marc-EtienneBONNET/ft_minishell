@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 18:18:33 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/08 13:57:59 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/10 08:08:14 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,35 @@ int	my_create_tub(t_cmd *cmd)
 	return (1);
 }
 
+t_cmd	*my_init_simple_red_gauche(t_cmd *tmp)
+{
+	t_cmd	*tmp_1;
+	t_cmd	*tmp_2;
+	t_cmd	*tmp_1_previous;
+	t_cmd	*tmp_2_next;
+
+	tmp_2 = NULL;
+	tmp_1 = NULL;
+	if (ft_strncmp(tmp->red, "<", 2) == 0)
+	{
+		tmp_1 = tmp;
+		tmp_1_previous = tmp_1->previous;
+		tmp_2 = tmp->next;
+		tmp_2_next = tmp_2->next;
+		tmp_1_previous->next = tmp_2;
+		tmp_2_next->previous = tmp_1;
+		tmp_2->next = tmp_1;
+		tmp_2->previous = tmp_1_previous;
+		tmp_1->next = tmp_2_next;
+		tmp_1->previous = tmp_2;
+		free(tmp_1->red);
+		tmp_1->red = ft_strdup(tmp_2->red);
+		free(tmp_2->red);
+		tmp_2->red = ft_strdup("++");
+		return (tmp_2);
+	}
+	return (tmp);
+}
 
 void	my_kill_tub(t_cmd *cmd)
 {

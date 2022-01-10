@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/08 13:58:48 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/10 08:06:06 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	my_exe_cmd(t_term *term, t_cmd *cmd)
 	else
 	{
 		if (cmd->previous && (ft_strncmp(cmd->previous->red, ">", 3) == 0
-			|| ft_strncmp(cmd->previous->red, ">>", 3) == 0))
+				|| ft_strncmp(cmd->previous->red, ">>", 3) == 0))
 			return (1);
 		cpe = ft_strjoin(cmd->path, cmd->cmd);
 		if (execve(cpe, cmd->arg, term->envp) == -1)
@@ -101,7 +101,10 @@ int	my_lancement_ex(void)
 	signal(SIGINT, handler_ctr_c_2);
 	while (x < term->cmd->info_cmd->nb_maillons)
 	{
-		my_lancement_ex2(term->cmd, &x);
+		term->cmd = my_init_simple_red_gauche(term->cmd);
+		my_print_list_chene(term->cmd);
+		//printf("term : %s, next term : %s\n", term->cmd->cmd, term->cmd->next->cmd);
+		//my_lancement_ex2(term->cmd, &x);
 		term->cmd = term->cmd->next;
 		x++;
 	}

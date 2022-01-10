@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/08 13:52:07 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/10 07:29:10 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	my_gestion_virgule_point(int res, t_cmd *cmd);
 int		my_create_tub(t_cmd *cmd);
 void	my_gestion_red_gauche(void);
 void	my_kill_tub(t_cmd *cmd);
+t_cmd	*my_init_simple_red_gauche(t_cmd *tmp);
 
 //building
 	//cd
