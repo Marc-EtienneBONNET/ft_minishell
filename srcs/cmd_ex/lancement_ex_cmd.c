@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/10 10:45:33 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/10 20:11:48 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,89 +48,79 @@ int	my_exe_cmd(t_term *term, t_cmd *cmd)
 		my_lancement_building(cmd);
 	else
 	{
-		if (cmd->previous && (ft_strncmp(cmd->previous->red, ">", 3) == 0
-				|| ft_strncmp(cmd->previous->red, ">>", 3) == 0))
-			return (1);
 		cpe = ft_strjoin(cmd->path, cmd->cmd);
 		if (execve(cpe, cmd->arg, term->envp) == -1)
 		{
 			free(cpe);
-			if (ft_strncmp(cmd->red, "||", 3) == 0)
-				return (-2);
-			return (-1);
+			exit (-1);
 		}
 		free(cpe);
 	}
-	return (0);
-}
-
-int	my_lancement_ex2(t_cmd *tmp, int *x)
-{
-	int	res;
-
-	pipe(term->tub);
-	term->pid = fork();
-	my_create_tub(tmp);
-	if (term->pid == 0 && tmp)
-	{
-		res = my_exe_cmd(term, tmp);
-		exit(res);
-	}
-	waitpid(term->pid, &res, 0);
-	if (WIFEXITED(res))
-		res = WEXITSTATUS(res);
-	term->dernier_ret = res;
-	my_gestion_ou(res, tmp, x);
-	my_gestion_et(res, tmp, x);
-	my_gestion_pip(res, tmp);
-	my_gestion_double_red_droite(res, tmp, x);
-	my_gestion_virgule_point(res, tmp);
 	return (1);
 }
 
-void	my_gestion_red_gauche(void)
+int	my_realloc_tab()
 {
-	char	**tmp;
 	int		len;
+	pid_t	*pid;
 
 	len = 0;
-	while (term->cmd->arg[len])
+	while (term->pid && term->pid[len] != -1)
 		len++;
-	if (ft_strncmp(term->cmd->red, "<", 3) == 0)
+	pid = malloc(sizeof(pid_t) * (len + 2));
+	if (!pid)
+		return (-1);
+	len = 0;
+	while (term->pid && term->pid[len] != -1)
 	{
-		tmp = ft_strdoublejoin(term->cmd->arg, term->cmd->next->cmd);
-		my_free_double_tab((void **)term->cmd->arg, -1);
-		term->cmd->arg = tmp;
+		pid[len] = term->pid[len];
+		len++;
 	}
+	free(term->pid);
+	len++;
+	pid[len] = -1;
+	term->pid = pid;
+	return (--len);
+}
+
+void	my_lancement_fork(void)
+{
+	int		index;
+
+	index = my_realloc_tab();
+	term->pid[index] = fork();
+	my_gestion_pip(term->cmd, index);
+	if (term->pid[index] == 0)
+		my_exe_cmd(term, term->cmd);
+	term->cmd = term->cmd->next;
 }
 
 int	my_lancement_ex(void)
 {
-	t_cmd	*tmp;
+	int		res;
 	int		x;
 
 	x = 0;
 	term->cmd = my_parsing(term->str_cmd);
 	free(term->str_cmd);
-	tmp = term->cmd;
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
-	while (x < term->cmd->info_cmd->nb_maillons)
+	pipe(term->tub);
+	while (x++ < term->cmd->info_cmd->nb_maillons)
+		my_lancement_fork();
+	x = 0;
+	while (term->pid[x] != -1)
 	{
-		my_gestion_red_gauche();
-		my_lancement_ex2(term->cmd, &x);
-		if (ft_strncmp(term->cmd->red, "<", 3) == 0)
-		{
-			term->cmd = term->cmd->next;
-			x++;
-		}
-		term->cmd = term->cmd->next;
-		x++;
+		waitpid(term->pid[x++], NULL, 0);
+		if (WIFEXITED(res))
+			res = WEXITSTATUS(res);
 	}
-	term->cmd = tmp;
-	my_kill_tub(term->cmd);
+	my_kill_tub();
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
 	my_free_liste_chene(term->cmd);
 	return (1);
 }
+
+/*waitpid(term->pid, &res, 0);
+	*/

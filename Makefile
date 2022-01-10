@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/08 11:18:22 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/10 19:36:21 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,7 @@ SRCS			=	main.c\
 					parsing/4struct_chene_cmd/2create_new_maillon.c\
 					parsing/pars_env/my_pars_env.c\
 					cmd_ex/lancement_ex_cmd.c\
-					cmd_ex/create_tube.c\
-					cmd_ex/my_gestion_red.c\
+					cmd_ex/gestion_red.c\
 					building/my_building.c\
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}

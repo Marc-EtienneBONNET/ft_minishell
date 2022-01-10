@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/10 07:29:10 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/10 20:09:21 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_term
 	t_env	*my_env;
 	char	*str_cmd;
 	t_cmd	*cmd;
-	pid_t	pid;
+	pid_t	*pid;
 	int		dernier_ret;
 	int		tub[2];
 }	t_term;
@@ -122,16 +122,9 @@ int		my_print_list_chene(t_cmd *cmd);
 //cmd_ex
 	//lancement_ex_cmd.c
 int		my_lancement_ex(void);
-int		my_exe_cmd(t_term *term, t_cmd *cmd);
-void	my_gestion_ou(int res, t_cmd *cmd, int *x);
-void	my_gestion_et(int res, t_cmd *cmd, int *x);
-void	my_gestion_pip(int res, t_cmd *cmd);
-void	my_gestion_double_red_droite(int res, t_cmd *cmd, int *x);
-void	my_gestion_virgule_point(int res, t_cmd *cmd);
-int		my_create_tub(t_cmd *cmd);
-void	my_gestion_red_gauche(void);
-void	my_kill_tub(t_cmd *cmd);
-t_cmd	*my_init_simple_red_gauche(t_cmd *tmp);
+	//gestion_red
+void	my_gestion_pip(t_cmd *cmd, int index);
+void	my_kill_tub();
 
 //building
 	//cd
