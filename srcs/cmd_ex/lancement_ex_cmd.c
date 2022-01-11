@@ -6,46 +6,19 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 12:00:40 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 12:49:54 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	my_realloc_tab()
-{
-	int		len;
-	pid_t	*pid;
-
-	len = 0;
-	while (term->pid && term->pid[len] != -1)
-		len++;
-	pid = malloc(sizeof(pid_t) * (len + 2));
-	if (!pid)
-		return (-1);
-	len = 0;
-	while (term->pid && term->pid[len] != -1)
-	{
-		pid[len] = term->pid[len];
-		len++;
-	}
-	if (term->pid)
-		free(term->pid);
-	len++;
-	pid[len] = -1;
-	term->pid = pid;
-	return (--len);
-}
-
 int	my_lancement_fork(void)
 {
-	int		index;
 	int		res;
 
 	res = 0;
-	index = my_realloc_tab();
-	term->pid[index] = fork();
-	my_gestion_pip(term->cmd, index);
+	term->cmd->pid = fork();
+	my_gestion_pip(term->cmd, 0);
 	if (ft_strncmp(term->cmd->cmd, "cd", 10) == 0
 		&& ft_strncmp(term->cmd->cmd, "pwd", 10) == 0
 		&& ft_strncmp(term->cmd->cmd, "echo", 10) == 0
@@ -54,54 +27,53 @@ int	my_lancement_fork(void)
 		&& ft_strncmp(term->cmd->cmd, "env", 10) == 0
 		&& ft_strncmp(term->cmd->cmd, "exit", 10) == 0)
 	{
-		if (term->pid[index] == 0)
+		if (term->cmd->pid == 0)
 			exit (0);
 		res = 1;
 		my_ex_building(term->cmd);
-		term->cmd = term->cmd->next;
-		return (1);
 	}
-	if (term->pid[index] == 0)
+	else if (term->cmd->pid == 0)
 		my_exe_cmd(term, term->cmd);
 	term->cmd = term->cmd->next;
 	return (1);
+}
+
+void	my_attente_waitpid(void)
+{
+	int	x;
+
+	x = 0;
+	while (x < term->cmd->info_cmd->nb_maillons)
+	{
+		waitpid(term->cmd->pid, &term->dernier_ret, 0);
+		if (WIFEXITED(term->dernier_ret))
+			term->dernier_ret = WEXITSTATUS(term->dernier_ret);
+		if (term->dernier_ret != 0)
+			printf("%s: commande introuvable\n", term->cmd->cmd);
+		term->cmd = term->cmd->next;
+		x++;
+	}
 }
 
 int	my_lancement_ex(void)
 {
 	int		x;
 	int		y;
+	t_cmd	*tmp;
 
 	y = 0;
 	x = 0;
 	term->cmd = my_parsing(term->str_cmd);
-	term->pid = NULL;
 	free(term->str_cmd);
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
+	tmp = term->cmd;
 	pipe(term->tub);
 	while (x++ < term->cmd->info_cmd->nb_maillons)
 		my_lancement_fork();
-	x = 0;
-	while (term->pid && term->pid[x] != 0)
-	{
-		term->dernier_ret = 0;
-		waitpid(term->pid[x++], &term->dernier_ret, 0);
-		if (WIFEXITED(term->dernier_ret))
-			term->dernier_ret = WEXITSTATUS(term->dernier_ret);
-		if (term->dernier_ret != 0)
-		{
-			while (y <= x)
-			{
-				y++;
-				term->cmd = term->cmd->next;
-			}
-			printf("%s: commande introuvable\n", term->cmd->cmd);
-		}
-	}
-	free(term->pid);
-	if (term->dernier_ret == 0)
-		my_kill_tub();
+	term->cmd = tmp;
+	my_attente_waitpid();
+	my_kill_tub();
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
 	my_free_liste_chene(term->cmd);

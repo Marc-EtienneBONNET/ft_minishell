@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:30:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 11:40:18 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 12:46:05 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	my_exe_cmd(t_term *term, t_cmd *cmd)
 	if (execve(cpe, cmd->arg, term->envp) == -1)
 	{
 		free(cpe);
-		close(term->tub[ENTRE]);
-		printf("%s: commande introuvable\n", cmd->cmd);
 		exit (-1);
 	}
 	free(cpe);

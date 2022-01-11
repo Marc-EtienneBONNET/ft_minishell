@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 10:31:26 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 12:27:54 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_cmd
 	t_info_cmd		*info_cmd;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
+	pid_t			pid;
 }	t_cmd;
 
 typedef struct str_env
@@ -57,7 +58,6 @@ typedef struct s_term
 	t_env	*my_env;
 	char	*str_cmd;
 	t_cmd	*cmd;
-	pid_t	*pid;
 	int		dernier_ret;
 	int		tub[2];
 }	t_term;
