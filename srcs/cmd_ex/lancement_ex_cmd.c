@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 18:08:47 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 19:05:31 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,12 @@ int	my_lancement_ex(void)
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	tmp = term->cmd;
-	pipe(term->tub);
 	while (x++ < term->cmd->info_cmd->nb_maillons)
+	{
+		pipe(term->cmd->tub);
 		if (my_lancement_building() == -1)
 			my_lancement_fork();
+	}
 	term->cmd = tmp;
 	my_attente_waitpid();
 	my_kill_tub();

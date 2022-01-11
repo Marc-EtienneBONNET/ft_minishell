@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 18:39:19 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 19:02:31 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 	pid_t			pid;
+	int				tub[2];
+
 }	t_cmd;
 
 typedef struct str_env

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:34:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 16:06:30 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 19:05:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,29 @@ void	my_gestion_pip(t_cmd *cmd, int index)
 	{
 		if (cmd->pid == 0)
 		{
-			close(term->tub[SORTI]);
-			dup2(term->tub[ENTRE], 1);
+			close(cmd->tub[SORTI]);
+			dup2(cmd->tub[ENTRE], 1);
 		}
 		else
 		{
-			close(term->tub[ENTRE]);
-			dup2(term->tub[SORTI], 0);
+			close(cmd->tub[ENTRE]);
+			dup2(cmd->tub[SORTI], 0);
 		}
 	}
 }
 
 void	my_kill_tub(void)
 {
-	close(term->tub[ENTRE]);
-	close(term->tub[SORTI]);
-	dup2(ENTRE, SORTI);
+	int	x;
+
+	x = 0;
+	while (x < term->cmd->info_cmd->nb_maillons)
+	{
+		close(term->tub[ENTRE]);
+		close(term->tub[SORTI]);
+		dup2(ENTRE, SORTI);
+		term->cmd = term->cmd->next;
+		x++;
+	}
 }
 
