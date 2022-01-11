@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 10:33:03 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 11:19:23 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,29 @@ int	my_realloc_tab()
 int	my_lancement_fork(void)
 {
 	int		index;
+	int		res;
 
-	if (my_ex_building(term->cmd) != 1)
+	res = 0;
+	index = my_realloc_tab();
+	term->pid[index] = fork();
+	my_gestion_pip(term->cmd, index);
+	if (ft_strncmp(term->cmd->cmd, "cd", 10) == 0
+		&& ft_strncmp(term->cmd->cmd, "pwd", 10) == 0
+		&& ft_strncmp(term->cmd->cmd, "echo", 10) == 0
+		&& ft_strncmp(term->cmd->cmd, "export", 10) == 0
+		&& ft_strncmp(term->cmd->cmd, "unset", 10) == 0
+		&& ft_strncmp(term->cmd->cmd, "env", 10) == 0
+		&& ft_strncmp(term->cmd->cmd, "exit", 10) == 0)
 	{
-		index = my_realloc_tab();
-		term->pid[index] = fork();
-		my_gestion_pip(term->cmd, index);
 		if (term->pid[index] == 0)
-			my_exe_cmd(term, term->cmd);
+			exit (0);
+		res = 1;
+		my_ex_building(term->cmd);
+		term->cmd = term->cmd->next;
+		return (1);
 	}
+	if (term->pid[index] == 0)
+		my_exe_cmd(term, term->cmd);
 	term->cmd = term->cmd->next;
 	return (1);
 }
