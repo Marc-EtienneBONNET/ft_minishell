@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 12:14:59 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 16:32:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_cmd	*bzero_tmp(void)
 	tmp->red = NULL;
 	tmp->next = NULL;
 	tmp->previous = NULL;
-	tmp->pid = 0;
+	tmp->pid = -1;
 	return (tmp);
 }
 

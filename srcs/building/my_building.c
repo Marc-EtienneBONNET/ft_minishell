@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:32:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 10:18:46 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 17:42:50 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	my_echo(char **argv)
 			printf("\n");
 		i++;
 	}
-	return (0);
+	exit (0);
 }
 
 int	my_pwd(t_cmd *cmd)
@@ -70,7 +70,7 @@ int	my_pwd(t_cmd *cmd)
 	}
 	else
 		printf("pwd: -a : option non valable\n");
-	return (0);
+	exit (0);
 }
 
 void	my_env(t_cmd *cmd)
@@ -88,4 +88,5 @@ void	my_env(t_cmd *cmd)
 	}
 	else
 		printf("env: option non valable\n");
+	exit (0);
 }
