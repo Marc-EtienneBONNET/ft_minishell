@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 15:12:48 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 18:39:19 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char	*my_take_key_env(char *cmd_tmp, int x);
 void	my_inclus_res_var_env_2(char **tmp, int x, char **res, char *str_env);
 char	*my_inclus_res_var_env(char **tmp, char *key_env, int x);
 char	*my_gestion_var_env(char *cmd_tmp);
+int		my_unset(char **argv);
 
 	//tab_cmd
 		//init_tab_cmd

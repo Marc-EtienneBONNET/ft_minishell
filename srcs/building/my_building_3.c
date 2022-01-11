@@ -1,9 +1,21 @@
-#include "../../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   my_building_3.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/11 18:37:39 by mbonnet           #+#    #+#             */
+/*   Updated: 2022/01/11 18:38:21 by mbonnet          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
 
 void	supp_var(char *argv)
 {
-	int 	i;
-	
+	int	i;
+
 	i = -1;
 	while (term->my_env[++i].key)
 	{
@@ -22,7 +34,7 @@ void	supp_var(char *argv)
 	}
 }
 
-int		mess_err(char *str)
+int	mess_err(char *str)
 {
 	write(2, "minishell: unset: '", 19);
 	write(2, str, ft_strlen(str));
@@ -30,11 +42,11 @@ int		mess_err(char *str)
 	return (1);
 }
 
-int		check(char *str)
+int	check(char *str)
 {
-	int i;
-	i = 0;
+	int	i;
 
+	i = 0;
 	if (!ft_isalpha(str[i]) && str[i] != '_')
 		mess_err(str);
 	i++;
@@ -47,14 +59,13 @@ int		check(char *str)
 	return (0);
 }
 
-int		my_unset(char **argv)
+int	my_unset(char **argv)
 {
 	int	i;
 
 	i = 0;
 	if (!argv[1])
 		return (0);
-
 	while (argv[i])
 	{
 		if (check(argv[i]) == -1)

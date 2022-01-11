@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/11 15:07:56 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/11 18:43:14 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS			=	main.c\
 					cmd_ex/my_gestion_red_droite.c\
 					building/my_building.c\
 					building/my_building_2.c\
+					building/my_building_3.c\
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}
 
