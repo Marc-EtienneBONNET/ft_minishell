@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 12:49:54 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 13:14:25 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	my_lancement_fork(void)
 	term->cmd->pid = fork();
 	my_gestion_pip(term->cmd, 0);
 	if (ft_strncmp(term->cmd->cmd, "cd", 10) == 0
-		&& ft_strncmp(term->cmd->cmd, "pwd", 10) == 0
-		&& ft_strncmp(term->cmd->cmd, "echo", 10) == 0
-		&& ft_strncmp(term->cmd->cmd, "export", 10) == 0
-		&& ft_strncmp(term->cmd->cmd, "unset", 10) == 0
-		&& ft_strncmp(term->cmd->cmd, "env", 10) == 0
-		&& ft_strncmp(term->cmd->cmd, "exit", 10) == 0)
+		|| ft_strncmp(term->cmd->cmd, "pwd", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "echo", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "export", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "unset", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "env", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "exit", 10) == 0)
 	{
 		if (term->cmd->pid == 0)
 			exit (0);
@@ -33,7 +33,9 @@ int	my_lancement_fork(void)
 		my_ex_building(term->cmd);
 	}
 	else if (term->cmd->pid == 0)
+	{
 		my_exe_cmd(term, term->cmd);
+	}
 	term->cmd = term->cmd->next;
 	return (1);
 }

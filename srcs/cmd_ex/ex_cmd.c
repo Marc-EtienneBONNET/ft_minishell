@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:30:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 12:46:05 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 13:05:42 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	my_ex_building(t_cmd *cmd)
 
 	cpe = cmd->cmd;
 	if (ft_strncmp(cpe, "cd", 10) == 0)
-		printf("commande cd\n");
+		my_cd(term->cmd->arg);
 	else if (ft_strncmp(cpe, "pwd", 10) == 0)
 		my_pwd(cmd);
 	else if (ft_strncmp(cpe, "echo", 10) == 0)
