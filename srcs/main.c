@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/10 18:33:30 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 18:07:49 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	main(int ac, char **av, char **envp)
 	bzero(term, sizeof(t_term));
 	term->envp = envp;
 	my_init_struct_env();
-	printf("\e[1;32mBien venu dans le terminal\e\n[0m");
+	printf(VERT"Bien venu dans le terminal\n"BLANC);
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		term->str_cmd = NULL;
-		term->str_cmd = readline("\e[1;34mMinishell> \e[0m");
+		term->str_cmd = readline(BLEU_2"Minishell> "BLANC);
 		if (term->str_cmd == 0)
 		{
 			free(term->str_cmd);

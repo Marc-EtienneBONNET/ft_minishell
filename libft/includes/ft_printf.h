@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 03:54:22 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/10 10:11:47 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 18:08:08 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 # define HEXA_LOWER "0123456789abcdef"
 # define HEXA_UPPER "0123456789ABCDEF"
 # define NOT_SET -1
+
+# define BLEU "\e[1;36m"
+# define BLEU_2 "\e[1;34m"
+# define ROUGE "\e[1;31m"
+# define VERT "\e[1;32m"
+# define JAUNE "\e[1;33m"
+# define VIOLET "\e[1;35m"
+# define BLANC "\e[0m"
 
 typedef struct s_precision	t_prec;
 struct	s_precision {
