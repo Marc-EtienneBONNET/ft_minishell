@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/10 20:11:48 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 09:03:43 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ int	my_realloc_tab()
 		pid[len] = term->pid[len];
 		len++;
 	}
-	free(term->pid);
+	if (term->pid)
+		free(term->pid);
 	len++;
 	pid[len] = -1;
 	term->pid = pid;
@@ -99,28 +100,33 @@ int	my_lancement_ex(void)
 {
 	int		res;
 	int		x;
+	t_cmd *tmp;
 
 	x = 0;
+	res = 10;
 	term->cmd = my_parsing(term->str_cmd);
+	term->pid = NULL;
 	free(term->str_cmd);
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	pipe(term->tub);
+	tmp = term->cmd;
 	while (x++ < term->cmd->info_cmd->nb_maillons)
 		my_lancement_fork();
+	term->cmd = tmp;
 	x = 0;
 	while (term->pid[x] != -1)
 	{
-		waitpid(term->pid[x++], NULL, 0);
+		waitpid(term->pid[x++], &res, 0);
 		if (WIFEXITED(res))
 			res = WEXITSTATUS(res);
+		my_gestion_red(res, x);
 	}
+	free(term->pid);
+	term->pid = NULL;
 	my_kill_tub();
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
 	my_free_liste_chene(term->cmd);
 	return (1);
 }
-
-/*waitpid(term->pid, &res, 0);
-	*/

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/10 20:09:21 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 08:57:11 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int		my_lancement_ex(void);
 	//gestion_red
 void	my_gestion_pip(t_cmd *cmd, int index);
 void	my_kill_tub();
+void	my_gestion_red(int res, int x);
 
 //building
 	//cd
