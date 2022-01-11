@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 11:19:23 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 12:00:40 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ int	my_lancement_fork(void)
 int	my_lancement_ex(void)
 {
 	int		x;
+	int		y;
 
+	y = 0;
 	x = 0;
 	term->cmd = my_parsing(term->str_cmd);
 	term->pid = NULL;
@@ -81,14 +83,25 @@ int	my_lancement_ex(void)
 	while (x++ < term->cmd->info_cmd->nb_maillons)
 		my_lancement_fork();
 	x = 0;
-	while (term->pid && term->pid[x] != -1)
+	while (term->pid && term->pid[x] != 0)
 	{
+		term->dernier_ret = 0;
 		waitpid(term->pid[x++], &term->dernier_ret, 0);
 		if (WIFEXITED(term->dernier_ret))
 			term->dernier_ret = WEXITSTATUS(term->dernier_ret);
+		if (term->dernier_ret != 0)
+		{
+			while (y <= x)
+			{
+				y++;
+				term->cmd = term->cmd->next;
+			}
+			printf("%s: commande introuvable\n", term->cmd->cmd);
+		}
 	}
 	free(term->pid);
-	my_kill_tub();
+	if (term->dernier_ret == 0)
+		my_kill_tub();
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
 	my_free_liste_chene(term->cmd);
