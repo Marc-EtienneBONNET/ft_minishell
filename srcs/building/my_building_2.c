@@ -46,7 +46,7 @@ int		op(char **argv)
 	}
 	if (chdir(argv[1]) == -1)
 	{
-		write(2, "bash: cd: ", 10);
+		write(2, "minishell: cd: ", ft_strlen("minishell: cd: "));
 		write(2, argv[1], ft_strlen(argv[1]));
 		write(2, ": ", 2);
 		perror("");

@@ -4,15 +4,3 @@ Makefile
 minishell
 srcs
 test
-includes
-libft
-Makefile
-minishell
-srcs
-test
-includes
-libft
-Makefile
-minishell
-srcs
-testq
