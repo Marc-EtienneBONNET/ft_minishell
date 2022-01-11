@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:34:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 09:06:59 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/11 10:28:01 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,10 @@ void	my_gestion_pip(t_cmd *cmd, int index)
 	}
 }
 
-void	my_kill_tub()
+void	my_kill_tub(void)
 {
 	close(term->tub[ENTRE]);
 	close(term->tub[SORTI]);
 	dup2(ENTRE, SORTI);
 }
 
-void	my_gestion_red(int res, int x)
-{
-	int		y;
-	t_cmd *cmd_tmp;
-
-	y = 0;
-	cmd_tmp = term->cmd;
-	if (res != 0)
-	{
-		while (y < x -1)
-		{
-			y++;
-			cmd_tmp = cmd_tmp->next;
-		}
-		printf("%s : commande introuvable\n", cmd_tmp->cmd);
-	}
-}
