@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:34:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 19:05:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/12 09:37:01 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	my_gestion_pip(t_cmd *cmd, int index)
 	(void)index;
 	if (ft_strncmp(cmd->red, "|", 3) == 0
 		|| ft_strncmp(cmd->red, ">", 3) == 0
-		|| ft_strncmp(cmd->red, ">>", 3) == 0)
+		|| ft_strncmp(cmd->red, ">>", 3) == 0
+		|| ft_strncmp(cmd->red, "<", 3) == 0)
 	{
 		if (cmd->pid == 0)
 		{

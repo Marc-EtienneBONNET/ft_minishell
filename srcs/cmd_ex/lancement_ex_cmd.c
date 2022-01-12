@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 19:05:31 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/12 09:34:48 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ int	my_lancement_building(void)
 
 int	my_lancement_fork(void)
 {
+	int		fd;
+	char	c;
+	char	*fichier;
+
 	term->cmd->pid = fork();
 	my_gestion_pip(term->cmd, 0);
 	if (ft_strncmp(term->cmd->cmd, "pwd", 10) == 0
@@ -41,6 +45,18 @@ int	my_lancement_fork(void)
 	{
 		if (term->cmd->pid == 0)
 			my_ex_building(term->cmd);
+	}
+	else if (ft_strncmp(term->cmd->previous->red, "<", 10) == 0)
+	{
+		if (term->cmd->pid == 0)
+		{
+			fichier = my_choose_fichier();
+			fd = open(fichier, O_RDONLY);
+			while (read(fd, &c, 1) > 0)
+				write(1, &c, 1);
+			close(fd);
+			exit (0);
+		}
 	}
 	else
 	{
@@ -85,7 +101,9 @@ int	my_lancement_ex(void)
 	{
 		pipe(term->cmd->tub);
 		if (my_lancement_building() == -1)
+		{
 			my_lancement_fork();
+		}
 	}
 	term->cmd = tmp;
 	my_attente_waitpid();
