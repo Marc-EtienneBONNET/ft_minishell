@@ -1,50 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gestion_red.c                                      :+:      :+:    :+:   */
+/*   my_gestion_red_droite.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/10 19:34:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/12 09:37:01 by mbonnet          ###   ########.fr       */
+/*   Created: 2022/01/11 15:07:30 by mbonnet           #+#    #+#             */
+/*   Updated: 2022/01/11 16:50:33 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_gestion_pip(t_cmd *cmd, int index)
+char	*my_choose_fichier(void)
 {
-	(void)index;
-	if (ft_strncmp(cmd->red, "|", 3) == 0
-		|| ft_strncmp(cmd->red, ">", 3) == 0
-		|| ft_strncmp(cmd->red, ">>", 3) == 0
-		|| ft_strncmp(cmd->red, "<", 3) == 0)
-	{
-		if (cmd->pid == 0)
-		{
-			close(cmd->tub[SORTI]);
-			dup2(cmd->tub[ENTRE], 1);
-		}
-		else
-		{
-			close(cmd->tub[ENTRE]);
-			dup2(cmd->tub[SORTI], 0);
-		}
-	}
+	char	*res;
+
+	if (ft_strncmp(term->cmd->path, "/bin/", 7) == 0)
+		res = ft_strjoin("./", term->cmd->cmd);
+	else
+		res = ft_strjoin(term->cmd->path, term->cmd->cmd);
+	return (res);
 }
 
-void	my_kill_tub(void)
+int	my_gestion_red_droite(char *choose)
 {
-	int	x;
-
-	x = 0;
-	while (x < term->cmd->info_cmd->nb_maillons)
+	int		fd;
+	char	*fichier;
+	char	c;
+	
+	fichier = my_choose_fichier();
+	if (ft_strncmp(term->cmd->previous->red, ">", 10) != 0
+		&& ft_strncmp(term->cmd->previous->red, ">>", 10) != 0)
+		return (1);
+	if (ft_strncmp(choose, ">", 3) == 0)
 	{
-		close(term->tub[ENTRE]);
-		close(term->tub[SORTI]);
-		dup2(ENTRE, SORTI);
-		term->cmd = term->cmd->next;
-		x++;
+		fd = open(fichier, O_RDONLY);
+		if (fd != -1)
+		{
+			close(fd);
+			remove(fichier);
+		}
 	}
+	fd = open(fichier, O_RDONLY);
+	if (fd == -1)
+	{
+		fd = open(fichier, O_CREAT);
+		close(fd);
+	}
+	else
+		close(fd);
+	fd = open(fichier, O_RDWR);
+	while (read(fd, &c, 1) > 0);
+	while (read(term->tub[SORTI], &c, 1) > 0)
+		write(fd, &c, 1);
+	close(fd);
+	free(fichier);
+	return (1);
 }
-
