@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/13 09:09:25 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/13 11:55:37 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 int	my_lancement_building(void)
 {
-	if (ft_strncmp(term->cmd->cmd, "cd", 10) == 0
+	if (ft_strncmp(term->cmd->red, "|", 3) == 0)
+		return (-1);
+	else if (ft_strncmp(term->cmd->cmd, "cd", 10) == 0
 		|| ft_strncmp(term->cmd->cmd, "unset", 10) == 0
 		|| ft_strncmp(term->cmd->cmd, "export", 10) == 0
 		|| ft_strncmp(term->cmd->cmd, "exit", 10) == 0
-		|| ft_strncmp(term->cmd->previous->red, ">", 10) == 0
-		|| ft_strncmp(term->cmd->previous->red, ">>", 10) == 0)
+		|| ft_strncmp(term->cmd->cmd, "pwd", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "echo", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "env", 10) == 0)
 	{
-		if (ft_strncmp(term->cmd->previous->red, ">", 10) == 0
-			|| ft_strncmp(term->cmd->previous->red, ">>", 10) == 0)
-			my_gestion_red_droite(term->cmd->previous->red);
 		my_ex_building(term->cmd);
+		term->cmd = term->cmd->next;
 		return (1);
 	}
 	else
@@ -42,22 +43,11 @@ int	my_lancement_fork(void)
 		if (term->cmd->pid == 0)
 			my_ex_building(term->cmd);
 	}
-	else if (ft_strncmp(term->cmd->previous->red, "<", 10) == 0)
-	{
-		if (term->cmd->pid == 0)
-			exit (0);
-		return (0);
-	}
 	else
 	{
-		//write(2, term->cmd->cmd, ft_strlen(term->cmd->cmd));
-		if (ft_strncmp(term->cmd->red, "<", 3) == 0 && term->cmd->pid != 0)
-		{
-			my_gestion_red_gauche();
-		}
 		if (term->cmd->pid == 0)
 		{
-			write(2, "salut\n", ft_strlen("salut\n"));
+			my_gestion_red();
 			my_exe_cmd(term, term->cmd);
 		}
 	}
@@ -101,6 +91,13 @@ int	my_lancement_ex(void)
 		if (my_lancement_building() == -1)
 		{
 			my_lancement_fork();
+		}
+		if (ft_strncmp(term->cmd->previous->red, "<", 3) == 0
+			|| ft_strncmp(term->cmd->previous->red, ">", 3) == 0
+			|| ft_strncmp(term->cmd->previous->red, ">>", 3) == 0)
+		{
+			term->cmd = term->cmd->next;
+			x++;
 		}
 	}
 	term->cmd = tmp;
