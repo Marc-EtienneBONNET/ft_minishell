@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:07:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/13 12:45:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/13 14:38:02 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,58 @@ int	my_gestion_fichier(t_cmd *cmd)
 	return (fd);
 }
 
-int	my_gestion_red(void)
+pid_t	my_heredoc()
+{
+	pid_t	pid;
+	char	*str;
+	char	*tmp;
+
+	str = NULL;
+	tmp = str;
+	pipe(term->cmd->tub);
+	pid = fork();
+	{
+		if (pid != 0)
+		{
+			close(term->cmd->tub[ENTRE]);
+			dup2(term->cmd->tub[SORTI], 0);
+			close(term->cmd->tub[SORTI]);
+		}
+		if (pid == 0)
+		{
+			while (1)
+			{
+				str = readline(">");
+				if (ft_strncmp(str, term->cmd->next->cmd, 1000) == 0)
+				{
+					close(term->cmd->tub[SORTI]);
+					dup2(term->cmd->tub[ENTRE], 1);
+					close(term->cmd->tub[ENTRE]);
+					write(1, tmp, ft_strlen(tmp));
+					if (tmp)
+						free(tmp);
+					exit (0);
+				}
+				tmp = ft_strjoin(tmp, str);
+				tmp = ft_strjoin(tmp, "\n");
+			}
+			exit (0);
+		}
+	}
+	return (pid);
+}
+
+pid_t	my_gestion_red(void)
 {
 	int		fd;
+	pid_t	pid;
 
-	if (ft_strncmp(term->cmd->red, "<", 3) == 0
+	pid = -1;
+	if (ft_strncmp(term->cmd->red, "<<", 3) == 0)
+	{
+		pid = my_heredoc();
+	}
+	else if (ft_strncmp(term->cmd->red, "<", 3) == 0
 		|| ft_strncmp(term->cmd->red, ">", 3) == 0
 		|| ft_strncmp(term->cmd->red, ">>", 3) == 0)
 	{
@@ -80,5 +127,5 @@ int	my_gestion_red(void)
 			dup2(fd, 1);
 		close(fd);
 	}
-	return (1);
+	return (pid);
 }

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/13 11:55:37 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/13 14:17:26 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	my_lancement_building(void)
 
 int	my_lancement_fork(void)
 {
+	pid_t pid;
+
 	term->cmd->pid = fork();
 	my_gestion_pip(term->cmd, 0);
 	if (ft_strncmp(term->cmd->cmd, "pwd", 10) == 0
@@ -47,8 +49,12 @@ int	my_lancement_fork(void)
 	{
 		if (term->cmd->pid == 0)
 		{
-			my_gestion_red();
+			pid = my_gestion_red();
 			my_exe_cmd(term, term->cmd);
+			if (ft_strncmp(term->cmd->red, "<<", 3) == 0)
+			{
+				waitpid(pid, NULL, 0);
+			}
 		}
 	}
 	term->cmd = term->cmd->next;
@@ -94,7 +100,8 @@ int	my_lancement_ex(void)
 		}
 		if (ft_strncmp(term->cmd->previous->red, "<", 3) == 0
 			|| ft_strncmp(term->cmd->previous->red, ">", 3) == 0
-			|| ft_strncmp(term->cmd->previous->red, ">>", 3) == 0)
+			|| ft_strncmp(term->cmd->previous->red, ">>", 3) == 0
+			|| ft_strncmp(term->cmd->previous->red, "<<", 3) == 0)
 		{
 			term->cmd = term->cmd->next;
 			x++;

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/13 10:41:16 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/13 14:06:49 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_term
 	char	*str_cmd;
 	t_cmd	*cmd;
 	int		dernier_ret;
-	int		tub[2];
 }	t_term;
 
 t_term *term;
@@ -135,7 +134,7 @@ void	my_kill_tub(void);
 
 	//gestion_red.c
 char	*my_choose_fichier(t_cmd *cmd);
-int	my_gestion_red(void);
+pid_t	my_gestion_red(void);
 
 //building
 	//my_building
