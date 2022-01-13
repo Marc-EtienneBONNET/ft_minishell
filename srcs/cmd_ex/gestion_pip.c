@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gestion_red.c                                      :+:      :+:    :+:   */
+/*   gestion_pip.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:34:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/12 09:37:01 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/13 09:00:48 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ void	my_gestion_pip(t_cmd *cmd, int index)
 	(void)index;
 	if (ft_strncmp(cmd->red, "|", 3) == 0
 		|| ft_strncmp(cmd->red, ">", 3) == 0
-		|| ft_strncmp(cmd->red, ">>", 3) == 0
-		|| ft_strncmp(cmd->red, "<", 3) == 0)
+		|| ft_strncmp(cmd->red, ">>", 3) == 0)
 	{
 		if (cmd->pid == 0)
 		{
@@ -29,6 +28,19 @@ void	my_gestion_pip(t_cmd *cmd, int index)
 		{
 			close(cmd->tub[ENTRE]);
 			dup2(cmd->tub[SORTI], 0);
+		}
+	}
+	if (ft_strncmp(cmd->red, "<", 3) == 0)
+	{
+		if (cmd->pid == 0)
+		{
+			close(cmd->tub[ENTRE]);
+			dup2(cmd->tub[SORTI], 0);
+		}
+		else
+		{
+			close(cmd->tub[SORTI]);
+			dup2(cmd->tub[ENTRE], 1);
 		}
 	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_gestion_red_droite.c                            :+:      :+:    :+:   */
+/*   gestion_red.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:07:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 16:50:33 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/13 09:09:27 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,22 @@ int	my_gestion_red_droite(char *choose)
 		write(fd, &c, 1);
 	close(fd);
 	free(fichier);
+	return (1);
+}
+
+int	my_gestion_red_gauche(void)
+{
+	int		fd;
+	char	*fichier;
+	char	c;
+
+	term->cmd = term->cmd->next;
+	fichier = my_choose_fichier();
+	term->cmd = term->cmd->previous;
+	fd = open(fichier, O_RDWR);
+	if (fd < 0)
+		return (-1);
+	while (read(fd, &c, 1) > 0)
+		write(1, &c, 1);
 	return (1);
 }
