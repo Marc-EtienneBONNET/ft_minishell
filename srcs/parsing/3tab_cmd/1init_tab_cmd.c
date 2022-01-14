@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_tab_cmd.c                                     :+:      :+:    :+:   */
+/*   1init_tab_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 15:30:29 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/05 09:06:23 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 14:23:02 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,16 @@ int	my_avance_chaine(char *cmd_tmp, int *i)
 		while (cmd_tmp[(*i)] != '\"' && cmd_tmp[(*i)] != '\''
 			&& ft_whitespace(cmd_tmp[*i]) == 0 && cmd_tmp[*i]
 			&& my_check_redirection(&(cmd_tmp[*i])) < 0)
-			(*i)++;
+		{
+			if (cmd_tmp[(*i)] == '=')
+			{
+				while(ft_whitespace(cmd_tmp[*i]) == 0 && cmd_tmp[*i]
+					&& my_check_redirection(&(cmd_tmp[*i])) < 0)
+					(*i)++;
+			}
+			else
+				(*i)++;
+		}
 	return (1);
 }
 
@@ -62,8 +71,20 @@ void	my_strlen_space_2(char *str, int *index, int *conteur)
 			&& str[*index] && str[*index] != '\"' && str[*index] != '\'')
 		&& my_check_redirection(&(str[(*index)])) == -1)
 	{
-		(*index)++;
-		(*conteur)++;
+		if (str[(*index)] == '=')
+		{
+			while(ft_whitespace(str[*index]) == 0 && str[*index]
+				&& my_check_redirection(&(str[*index])) < 0)
+				{
+					(*index)++;
+					(*conteur)++;
+				}
+		}
+		else
+		{
+			(*index)++;
+			(*conteur)++;
+		}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 11:24:32 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 14:24:08 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ t_cmd	*my_parsing(char *cmd_tmp)
 	if (!cmd)
 		return (NULL);
 	my_mouv_struct_for_red(&cmd);
+	my_print_list_chene(cmd);
 	return (cmd);
 }
