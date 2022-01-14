@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/13 14:06:49 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 08:35:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,10 @@ int		my_ex_building(t_cmd *cmd);
 int		my_exe_cmd(t_term *term, t_cmd *cmd);
 
 	//gestion_pip
-void	my_gestion_pip(t_cmd *cmd, int index);
+void	my_gestion_pip(t_cmd *cmd);
+void	my_tub_entre_sorti_enfant(t_cmd *cmd);
+void	my_tub_sorti_entre_parent(t_cmd *cmd);
+
 void	my_kill_tub(void);
 
 	//gestion_red.c

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:07:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/13 14:38:02 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 08:39:01 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,7 @@ pid_t	my_heredoc()
 	pid = fork();
 	{
 		if (pid != 0)
-		{
-			close(term->cmd->tub[ENTRE]);
-			dup2(term->cmd->tub[SORTI], 0);
-			close(term->cmd->tub[SORTI]);
-		}
+			my_tub_sorti_entre_parent(term->cmd);
 		if (pid == 0)
 		{
 			while (1)
@@ -88,9 +84,7 @@ pid_t	my_heredoc()
 				str = readline(">");
 				if (ft_strncmp(str, term->cmd->next->cmd, 1000) == 0)
 				{
-					close(term->cmd->tub[SORTI]);
-					dup2(term->cmd->tub[ENTRE], 1);
-					close(term->cmd->tub[ENTRE]);
+					my_tub_entre_sorti_enfant(term->cmd);
 					write(1, tmp, ft_strlen(tmp));
 					if (tmp)
 						free(tmp);

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/13 14:17:26 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 08:35:02 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	my_lancement_fork(void)
 	pid_t pid;
 
 	term->cmd->pid = fork();
-	my_gestion_pip(term->cmd, 0);
+	my_gestion_pip(term->cmd);
 	if (ft_strncmp(term->cmd->cmd, "pwd", 10) == 0
 		|| ft_strncmp(term->cmd->cmd, "echo", 10) == 0
 		|| ft_strncmp(term->cmd->cmd, "env", 10) == 0)
