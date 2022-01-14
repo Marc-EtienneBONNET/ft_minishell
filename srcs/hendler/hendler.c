@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/08 08:17:47 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:45:31 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ void	handler_ctr_c_2(int code)
 void	handler_ctr_backslash(int code)
 {
 	(void)code;
-	printf("Quitter (core dumped)\n");
+	printf(ROUGE"Quitter (core dumped)\n"BLANC);
 }

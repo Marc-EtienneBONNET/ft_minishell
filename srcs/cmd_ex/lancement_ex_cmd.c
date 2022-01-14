@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 08:47:33 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:45:43 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	my_lancement_building(void)
 
 int	my_lancement_fork(void)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	term->cmd->pid = fork();
 	my_gestion_pip(term->cmd);
@@ -51,7 +51,7 @@ int	my_lancement_fork(void)
 		{
 			pid = my_gestion_red();
 			my_exe_cmd(term, term->cmd);
-			if (ft_strncmp(term->cmd->red, "<<", 3) == 0)
+			if (ft_strncmp(term->cmd->intra_red, "<<", 3) == 0)
 			{
 				waitpid(pid, NULL, 0);
 			}
@@ -72,7 +72,7 @@ void	my_attente_waitpid(void)
 		if (WIFEXITED(term->dernier_ret))
 			term->dernier_ret = WEXITSTATUS(term->dernier_ret);
 		if (term->dernier_ret != 0)
-			printf("%s: commande introuvable\n", term->cmd->cmd);
+			printf(ROUGE"%s: commande introuvable\n"BLANC, term->cmd->cmd);
 		term->cmd = term->cmd->next;
 		x++;
 	}
@@ -82,16 +82,16 @@ int	my_lancement_ex(void)
 {
 	int		x;
 	int		y;
-	//t_cmd	*tmp;
+	t_cmd	*tmp;
 
 	y = 0;
 	x = 0;
 	term->cmd = my_parsing(term->str_cmd);
 	free(term->str_cmd);
-	/*
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	tmp = term->cmd;
+	//my_print_list_chene(term->cmd);
 	while (x++ < term->cmd->info_cmd->nb_maillons)
 	{
 		pipe(term->cmd->tub);
@@ -99,21 +99,12 @@ int	my_lancement_ex(void)
 		{
 			my_lancement_fork();
 		}
-		if (ft_strncmp(term->cmd->previous->red, "<", 3) == 0
-			|| ft_strncmp(term->cmd->previous->red, ">", 3) == 0
-			|| ft_strncmp(term->cmd->previous->red, ">>", 3) == 0
-			|| ft_strncmp(term->cmd->previous->red, "<<", 3) == 0)
-		{
-			term->cmd = term->cmd->next;
-			x++;
-		}
 	}
 	term->cmd = tmp;
 	my_attente_waitpid();
 	my_kill_tub();
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
-	*/
 	my_free_liste_chene(term->cmd);
 	return (1);
 }

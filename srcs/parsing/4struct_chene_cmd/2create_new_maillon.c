@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/11 19:09:09 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:36:44 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ t_cmd	*bzero_tmp(void)
 	if (tmp == NULL)
 		return (NULL);
 	tmp->cmd = NULL;
+	tmp->path = NULL;
+	tmp->fichier_1 = NULL;
+	tmp->fichier_2 = NULL;
+	tmp->intra_red = NULL;
 	tmp->arg = NULL;
 	tmp->red = NULL;
 	tmp->next = NULL;

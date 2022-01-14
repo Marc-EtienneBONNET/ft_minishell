@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 09:32:19 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 12:13:51 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,7 @@ t_cmd	*new_maillons(char **tab_cmd, int *x);
 t_cmd	*bzero_tmp(void);
 char	**init_cmd_arg(char **tab_cmd, int *x, int *y);
 		//#mouv_struct_for_red.c
-t_cmd	*my_mouv_struct_for_red(t_cmd *cmd);
-
-
-
-
-
-
+t_cmd	*my_mouv_struct_for_red(t_cmd **cmd);
 	//pars_env
 		//my_pars_env
 int		my_init_struct_env(void);
@@ -134,17 +128,16 @@ int		my_lancement_ex(void);
 	//ex_cmd.c
 int		my_ex_building(t_cmd *cmd);
 int		my_exe_cmd(t_term *term, t_cmd *cmd);
-
 	//gestion_pip
 void	my_gestion_pip(t_cmd *cmd);
 void	my_tub_entre_sorti_enfant(t_cmd *cmd);
 void	my_tub_sorti_entre_parent(t_cmd *cmd);
-
 void	my_kill_tub(void);
-
 	//gestion_red.c
 char	*my_choose_fichier(t_cmd *cmd);
 pid_t	my_gestion_red(void);
+	//heredoc.c
+void	my_heredoc(pid_t pid);
 
 //building
 	//my_building

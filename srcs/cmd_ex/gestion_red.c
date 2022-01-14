@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:07:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 08:39:01 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 12:12:44 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ char	*my_choose_fichier(t_cmd *cmd)
 {
 	char	*res;
 
+
 	if (ft_strncmp(cmd->path, "/bin/", 7) == 0)
+	{
 		res = ft_strjoin("./", cmd->cmd);
+	}
 	else
 		res = ft_strjoin(cmd->path, cmd->cmd);
 	return (res);
@@ -27,7 +30,7 @@ void	my_ecrase_fichier(t_cmd *cmd, char *fichier)
 {
 	int	fd;
 
-	if (ft_strncmp(cmd->previous->red, ">", 3) == 0)
+	if (ft_strncmp(cmd->intra_red, ">", 3) == 0)
 	{
 		fd = open(fichier, O_RDONLY);
 		if (fd != -1)
@@ -48,55 +51,17 @@ void	my_ecrase_fichier(t_cmd *cmd, char *fichier)
 int	my_gestion_fichier(t_cmd *cmd)
 {
 	int		fd;
-	char	*fichier;
 	char	c;
 
-	fichier = my_choose_fichier(cmd);
-	if (ft_strncmp(cmd->previous->red, "<", 3) == 0)
-		return (open(fichier, O_RDWR));
-	my_ecrase_fichier(cmd, fichier);
-	if (ft_strncmp(cmd->previous->red, ">", 3) == 0
-		|| ft_strncmp(cmd->previous->red, ">>", 3) == 0)
-		fd = open(fichier, O_RDWR);
-	if (ft_strncmp(cmd->previous->red, ">>", 3) == 0)
+	if (ft_strncmp(cmd->intra_red, "<", 3) == 0)
+		return (open(cmd->fichier_1, O_RDWR));
+	my_ecrase_fichier(cmd, cmd->fichier_1);
+	if (ft_strncmp(cmd->intra_red, ">", 3) == 0
+		|| ft_strncmp(cmd->intra_red, ">>", 3) == 0)
+		fd = open(cmd->fichier_1, O_RDWR);
+	if (ft_strncmp(cmd->intra_red, ">>", 3) == 0)
 		while (read(fd, &c, 1) > 0);
-	free(fichier);
 	return (fd);
-}
-
-pid_t	my_heredoc()
-{
-	pid_t	pid;
-	char	*str;
-	char	*tmp;
-
-	str = NULL;
-	tmp = str;
-	pipe(term->cmd->tub);
-	pid = fork();
-	{
-		if (pid != 0)
-			my_tub_sorti_entre_parent(term->cmd);
-		if (pid == 0)
-		{
-			while (1)
-			{
-				str = readline(">");
-				if (ft_strncmp(str, term->cmd->next->cmd, 1000) == 0)
-				{
-					my_tub_entre_sorti_enfant(term->cmd);
-					write(1, tmp, ft_strlen(tmp));
-					if (tmp)
-						free(tmp);
-					exit (0);
-				}
-				tmp = ft_strjoin(tmp, str);
-				tmp = ft_strjoin(tmp, "\n");
-			}
-			exit (0);
-		}
-	}
-	return (pid);
 }
 
 pid_t	my_gestion_red(void)
@@ -105,19 +70,23 @@ pid_t	my_gestion_red(void)
 	pid_t	pid;
 
 	pid = -1;
-	if (ft_strncmp(term->cmd->red, "<<", 3) == 0)
+	if (!term->cmd->intra_red)
+		return (pid);
+	if (ft_strncmp(term->cmd->intra_red, "<<", 3) == 0)
 	{
-		pid = my_heredoc();
+		pipe(term->cmd->tub);
+		pid = fork();
+		my_heredoc(pid);
 	}
-	else if (ft_strncmp(term->cmd->red, "<", 3) == 0
-		|| ft_strncmp(term->cmd->red, ">", 3) == 0
-		|| ft_strncmp(term->cmd->red, ">>", 3) == 0)
+	else if (ft_strncmp(term->cmd->intra_red, "<", 3) == 0
+		|| ft_strncmp(term->cmd->intra_red, ">", 3) == 0
+		|| ft_strncmp(term->cmd->intra_red, ">>", 3) == 0)
 	{
-		fd = my_gestion_fichier(term->cmd->next);
-		if (ft_strncmp(term->cmd->red, "<", 3) == 0)
+		fd = my_gestion_fichier(term->cmd);
+		if (ft_strncmp(term->cmd->intra_red, "<", 3) == 0)
 			dup2(fd, 0);
-		else if (ft_strncmp(term->cmd->red, ">", 3) == 0
-			|| ft_strncmp(term->cmd->red, ">>", 3) == 0)
+		else if (ft_strncmp(term->cmd->intra_red, ">", 3) == 0
+			|| ft_strncmp(term->cmd->intra_red, ">>", 3) == 0)
 			dup2(fd, 1);
 		close(fd);
 	}
