@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/14 12:14:08 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/14 17:37:22 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS			=	main.c\
 					hendler/hendler.c\
 					parsing/1protocole_de_parsing.c\
 					parsing/2gestion_var_env.c\
+					parsing/3tab_cmd/modifi_cmd_tmp_for_export.c\
 					parsing/3tab_cmd/1init_tab_cmd.c\
 					parsing/3tab_cmd/2rempli_tab_cmd.c\
 					parsing/utile/gestion_des_free.c\
@@ -33,6 +34,11 @@ SRCS			=	main.c\
 					building/my_building.c\
 					building/my_building_2.c\
 					building/my_building_3.c\
+					building/my_building_4.c\
+					building/my_building_5.c\
+					building/my_building_6.c\
+					building/my_building_7.c\
+
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}
 

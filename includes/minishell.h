@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 15:06:30 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 17:38:15 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int		my_check_redirection(char *str);
 char	*my_little_printf_char(char *str);
 		//fonction_tmp
 int		my_print_list_chene(t_cmd *cmd);
+char	*my_modifi_for_export(char *cmd_tmp);
 
 //cmd_ex
 	//lancement_ex_cmd.c
@@ -146,6 +147,26 @@ int		my_echo(char **argv);
 int		my_pwd(t_cmd *cmd);
 void	my_env(t_cmd *cmd);
 	//my_building_2
-int my_cd(char **argv);
+int		my_cd(char **argv);
+	//my_building_4
+int		sort_exp(void);
+int		aj_export(char *str);
+void	creat_export(void);
+int		ft_strcmp(char *str1, char *str2);
+int		verif(char *str);
+	//my_building_5
+int		check_arg(char *str);
+int		mess_err2(char *str);
+int		check2(char *argv);
+int		check_dbl(char *key);
+int		change_var(char *key, char *var);
+	//my_building_6
+int		aj_env_to_exp(char *key, char *var);
+	//my_building_7
+int		my_export(char **argv);
+char	*remp_key(char *dst, char *src);
+char	*remp_var(char *dst, char *src);
+int		add_elem(char *key, char *var);
+int		add_var(t_env *tmp);
 
 #endif

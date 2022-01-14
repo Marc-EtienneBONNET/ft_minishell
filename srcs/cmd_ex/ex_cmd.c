@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:30:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 11:13:32 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 15:52:25 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	my_ex_building(t_cmd *cmd)
 	else if (ft_strncmp(cpe, "echo", 10) == 0)
 		my_echo(cmd->arg);
 	else if (ft_strncmp(cpe, "export", 10) == 0)
-		printf("commande export\n");
+		my_export(cmd->arg);
 	else if (ft_strncmp(cpe, "unset", 10) == 0)
 		my_unset(cmd->arg);
 	else if (ft_strncmp(cpe, "env", 5) == 0)
