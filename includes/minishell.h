@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 12:13:51 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 15:06:30 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ typedef struct str_env
 
 typedef struct s_term
 {
+	char	**exp;
 	char	**envp;
-	t_env	*my_env;
 	char	*str_cmd;
 	t_cmd	*cmd;
+	t_env	*my_env;
 	int		dernier_ret;
 }	t_term;
 
