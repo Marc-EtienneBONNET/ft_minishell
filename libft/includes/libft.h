@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 15:47:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/12/13 15:55:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 09:26:22 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int				ft_convertisseur_binaire_en_decimale(char *binaire);
 int				ft_puissance(int nb, int puissance);
 char			*ft_relloc(char **str, int len_more);
 void			ft_affichage_binaire(char c);
+char			**ft_strdoubledup(char **tab);
 
 #endif

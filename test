@@ -5,3 +5,13 @@ minishell
 srcs
 test
 wc
+total 112
+drwxrwxr-x  6 parallels parallels  4096 janv. 14 09:37 .
+drwxr-xr-x  3 parallels parallels  4096 janv. 14 08:26 ..
+drwxrwxr-x  8 parallels parallels  4096 janv. 14 08:39 .git
+drwxrwxr-x  2 parallels parallels  4096 janv. 14 08:26 includes
+drwxrwxr-x 13 parallels parallels  4096 janv. 14 09:28 libft
+-rwxrwxr-x  1 parallels parallels  2185 janv. 14 08:48 Makefile
+-rwxrwxr-x  1 parallels parallels 78536 janv. 14 09:37 minishell
+drwxrwxr-x  6 parallels parallels  4096 janv. 14 09:11 srcs
+-rw---S--T  1 parallels parallels    47 janv. 14 08:36 test

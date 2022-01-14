@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 08:35:02 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 08:47:33 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,13 @@ int	my_lancement_ex(void)
 {
 	int		x;
 	int		y;
-	t_cmd	*tmp;
+	//t_cmd	*tmp;
 
 	y = 0;
 	x = 0;
 	term->cmd = my_parsing(term->str_cmd);
 	free(term->str_cmd);
+	/*
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	tmp = term->cmd;
@@ -112,6 +113,7 @@ int	my_lancement_ex(void)
 	my_kill_tub();
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
+	*/
 	my_free_liste_chene(term->cmd);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:59:34 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 10:39:31 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/14 09:33:24 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	*my_free_liste_chene(t_cmd *cmd)
 	while (i > 0)
 	{
 		tmp = cmd->next;
-		my_free_maillon_2(cmd);
+		my_free_maillon(cmd);
 		if (tmp == NULL)
 			break ;
 		i--;
@@ -73,7 +73,7 @@ void	*my_free_liste_chene(t_cmd *cmd)
 	return (NULL);
 }
 
-void	*my_free_maillon_2(t_cmd *tmp)
+void	*my_free_maillon(t_cmd *tmp)
 {
 	int	x;
 
@@ -82,14 +82,20 @@ void	*my_free_maillon_2(t_cmd *tmp)
 		return (NULL);
 	if (tmp->cmd)
 		free(tmp->cmd);
+	if (tmp->path)
+		free(tmp->path);
+	if (tmp->fichier_1)
+		free(tmp->fichier_1);
+	if (tmp->fichier_2)
+		free(tmp->fichier_2);
+	if (tmp->intra_red)
+		free(tmp->intra_red);
 	while (tmp->arg && tmp->arg[x])
 		free(tmp->arg[x++]);
 	if (tmp->arg)
 		free(tmp->arg);
 	if (tmp->red)
 		free(tmp->red);
-	if (tmp->path)
-		free(tmp->path);
 	if (tmp)
 		free(tmp);
 	return (NULL);
