@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:35:42 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/15 11:05:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/15 14:28:05 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ void	my_install_guillemet(char **new, char *cmd_tmp, int *i, int *x)
 	(*new)[*i] = '\"';
 	while (cmd_tmp[*i] && my_check_redirection(&(cmd_tmp[*i])) < 0)
 	{
-		(*new)[(*i) + 1] = cmd_tmp[*i];
+		if (cmd_tmp[*i] == '\"')
+			(*new)[(*i) + 1] = (char)134;
+		else
+			(*new)[(*i) + 1] = cmd_tmp[*i];
 		(*i)++;
 	}
 	(*new)[(*i) + 1] = '\"';

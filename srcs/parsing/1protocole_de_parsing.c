@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/15 11:02:47 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/15 15:54:16 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ t_cmd	*my_parsing(void)
 	char		*cmd_tmp_env;
 	t_cmd		*cmd;
 	int			i;
+	char		*tmp;
 
 	i = 0;
 	cmd = NULL;
-	term->str_cmd = my_modif_for_export(term->str_cmd);
+	tmp = ft_strdup(term->str_cmd);
+	free(term->str_cmd);
+	term->str_cmd = my_modif_for_export(tmp);
+	free(tmp);
 	cmd_tmp_env = my_gestion_var_env(term->str_cmd);
 	if (!cmd_tmp_env)
 		return (my_free_tab(cmd_tmp_env));
@@ -32,11 +36,12 @@ t_cmd	*my_parsing(void)
 		return (my_free_double_tab((void **)tab_cmd, -1));
 	}
 	my_rempli_tab_cmd(tab_cmd, cmd_tmp_env);
+	printf("ici : %s\n", tab_cmd[1]);
 	my_free_tab((void *)cmd_tmp_env);
 	cmd = my_init_struct_cmd(tab_cmd);
 	if (!cmd)
 		return (NULL);
 	my_mouv_struct_for_red(&cmd);
-	my_print_list_chene(cmd);
+	//my_print_list_chene(cmd);
 	return (cmd);
 }

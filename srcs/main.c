@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/15 11:00:22 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/15 14:46:48 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int ac, char **av, char **envp)
 	bzero(term, sizeof(t_term));
 	term->envp = envp;
 	my_init_struct_env();
-	creat_export();
+	//creat_export();
 	printf(VERT"Bien venu dans le terminal\n"BLANC);
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
