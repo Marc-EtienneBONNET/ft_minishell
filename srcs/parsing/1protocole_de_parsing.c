@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/15 15:54:16 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/15 17:52:21 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ t_cmd	*my_parsing(void)
 		return (my_free_double_tab((void **)tab_cmd, -1));
 	}
 	my_rempli_tab_cmd(tab_cmd, cmd_tmp_env);
-	printf("ici : %s\n", tab_cmd[1]);
 	my_free_tab((void *)cmd_tmp_env);
 	cmd = my_init_struct_cmd(tab_cmd);
 	if (!cmd)
 		return (NULL);
 	my_mouv_struct_for_red(&cmd);
-	//my_print_list_chene(cmd);
 	return (cmd);
 }

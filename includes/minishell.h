@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/15 14:44:58 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/15 17:50:06 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,6 @@ void	my_env(t_cmd *cmd);
 int		my_cd(char **argv);
 	//my_export
 int	my_export(char **argv);
+char	**my_recup_arg(char *str);
 
 #endif
