@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 17:38:15 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/15 11:02:18 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	handler_ctr_backslash(int code);
 
 //parsing
 	//protocole parsing
-t_cmd	*my_parsing(char *cmd_tmp);
+t_cmd	*my_parsing(void);
 	//gestion_var_env
 char	*my_take_key_env(char *cmd_tmp, int x);
 void	my_inclus_res_var_env_2(char **tmp, int x, char **res, char *str_env);
@@ -122,7 +122,7 @@ int		my_check_redirection(char *str);
 char	*my_little_printf_char(char *str);
 		//fonction_tmp
 int		my_print_list_chene(t_cmd *cmd);
-char	*my_modifi_for_export(char *cmd_tmp);
+char	*my_modif_for_export(char *cmd_tmp);
 
 //cmd_ex
 	//lancement_ex_cmd.c

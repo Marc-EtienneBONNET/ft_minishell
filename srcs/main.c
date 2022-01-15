@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 18:39:14 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/15 11:00:22 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	main(int ac, char **av, char **envp)
 	{
 		term->str_cmd = NULL;
 		term->str_cmd = readline(BLEU_2"Minishell> "BLANC);
-		//my_modifi_for_export(term->str_cmd);
 		if (term->str_cmd == 0)
 		{
 			free(term->str_cmd);

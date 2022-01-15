@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 15:30:29 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 17:35:16 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/15 11:00:34 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	**my_malloc_chaine(char *cmd_tmp)
 
 	y = 0;
 	i = 0;
-	cmd_tmp = my_modifi_for_export(cmd_tmp);
+	
 	len = my_compte_nb_chaine(cmd_tmp);
 	if (len == -1)
 		return (NULL);

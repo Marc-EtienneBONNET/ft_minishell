@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 11:45:43 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/15 11:02:02 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	my_lancement_ex(void)
 
 	y = 0;
 	x = 0;
-	term->cmd = my_parsing(term->str_cmd);
+	term->cmd = my_parsing();
 	free(term->str_cmd);
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
