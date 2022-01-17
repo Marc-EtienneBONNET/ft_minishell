@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 17:49:52 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/15 17:49:54 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 09:16:52 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ char	*ft_strmicrojoin(char **str, char c)
 	int		x;
 	int		len;
 
-	x = 0;
 	if ((*str))
 		len = ft_strlen((*str));
 	else
@@ -62,12 +61,14 @@ char	*ft_strmicrojoin(char **str, char c)
 	res = malloc(sizeof(char) * (len + 2));
 	if (!res)
 		return (NULL);
-	while ((*str) && (*str)[x])
+	x = 0;
+	while (len > x)
 	{
 		res[x] = (*str)[x];
 		x++;
 	}
-	res[x++] = c;
+	res[x] = c;
+	x += 1;
 	res[x] = '\0';
 	free((*str));
 	return (res);
@@ -84,6 +85,7 @@ char	**my_recup_arg(char *str)
 	res = malloc(sizeof(char *) * (ft_len(str) + 1));
 	if (!res)
 		return (NULL);
+	res[y] = NULL;
 	while ((*str))
 	{
 		if ((ft_whitespace(*str) == 1 && para == 0))
@@ -91,6 +93,7 @@ char	**my_recup_arg(char *str)
 			while (ft_whitespace(*str) == 1)
 				str++;
 			y++;
+			res[y] = NULL;
 			continue ;
 		}
 		my_para(&para, str);

@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/15 17:50:35 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/17 09:49:32 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS			=	main.c\
 					building/my_building_3.c\
 					building/export/my_export.c\
 					building/export/my_traitement_arg_export.c\
+					building/export/ajoue_env_export.c\
 
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}

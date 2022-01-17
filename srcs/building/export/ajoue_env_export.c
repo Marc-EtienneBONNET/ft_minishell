@@ -1,0 +1,126 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   my_ajoue_env_export.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
+/*   Updated: 2022/01/17 09:48:56 by mbonnet          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+char	*my_recup_str(char *arg, int tele)
+{
+	int		x;
+	char	*new;
+
+	x = 0;
+	if (tele == 0)
+	{
+		while (arg[x] && arg[x] != '=')
+			x++;
+		new = malloc(sizeof(char) * (x + 1));
+		if (!new)
+			return (NULL);
+		x = -1;
+		while (arg[++x] && arg[x] != '=')
+			new[x] = arg[x];
+		new[x] = '\0';
+		return (new);
+	}
+	while (*arg && *arg != '=')
+		arg++;
+	arg++;
+	if (!(*arg))
+		return (NULL);
+	new = ft_strdup(arg);
+	return (new);
+}
+
+int	ft_strcmp(char *str1, char *str2)
+{
+	unsigned int	x;
+
+	x = 0;
+	while ((str1[x]) || (str2[x]))
+	{
+		if ((unsigned char)str1[x] < (unsigned char)str2[x])
+			return (-1);
+		else if ((unsigned char)str1[x] > (unsigned char)str2[x])
+			return (1);
+		x++;
+	}
+	return (0);
+}
+
+int	my_check_presence(char *key)
+{
+	int	x;
+
+	x = 0;
+	while (term->my_env[x].key)
+	{
+		if (ft_strcmp(term->my_env[x].key, key) == 0)
+			return (x);
+		x++;
+	}
+	return (-1);
+}
+
+int	my_ajoue_new_env(char **key, char **var)
+{
+	int		len;
+	t_env	*new;
+
+	len = 0;
+	while (term->my_env[len].key)
+		len++;
+	new = malloc(sizeof(t_env) * (len + 2));
+	if (!new)
+		return (-1);
+	len = 0;
+	while (term->my_env[len].key)
+	{
+		new[len].key = term->my_env[len].key;
+		new[len].var = term->my_env[len].var;
+		len++;
+	}
+	new[len].key = *key;
+	new[len].var = *var;
+	len++;
+	new[len].key = NULL;
+	new[len].var = NULL;
+	free(term->my_env);
+	term->my_env = new;
+	return (1);
+}
+
+int	my_ajoue_arg(char **arg)
+{
+	int		y;
+	char	*key;
+	char	*var;
+	int		index;
+
+	y = 0;
+	while (arg[y])
+	{
+		key = my_recup_str(arg[y], 0);
+		var = my_recup_str(arg[y], 1);
+		index = my_check_presence(key);
+		if (index >= 0)
+		{
+			free(term->my_env[index].var);
+			term->my_env[index].var = var;
+		}
+		else
+			my_ajoue_new_env(&key, &var);
+		free(arg[y]);
+		y++;
+	}
+	free(arg);
+	return (1);
+}
