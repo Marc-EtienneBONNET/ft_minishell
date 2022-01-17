@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 08:41:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 16:18:24 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:52:00 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	my_mouv_struct_for_red_droite(t_cmd **cmd)
 
 	(*cmd)->fichier_1 = my_choose_fichier((*cmd)->next);
 	(*cmd)->intra_red = ft_strdup((*cmd)->red);
-	if (!(*cmd)->intra_red)
+	if (!(*cmd)->intra_red || !(*cmd)->fichier_1)
 		return (-1);
 	free((*cmd)->red);
 	(*cmd)->red = ft_strdup((*cmd)->next->red);

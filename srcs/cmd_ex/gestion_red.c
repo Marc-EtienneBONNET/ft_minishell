@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:07:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 13:08:24 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:52:29 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ char	*my_choose_fichier(t_cmd *cmd)
 	}
 	else
 		res = ft_strjoin(cmd->path, cmd->cmd);
+	if (!res)
+	{
+		free(res);
+		return (NULL);
+	}
 	return (res);
 }
 
