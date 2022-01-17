@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/17 09:49:32 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/17 11:01:02 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,12 +31,13 @@ SRCS			=	main.c\
 					cmd_ex/ex_cmd.c\
 					cmd_ex/heredoc.c\
 					cmd_ex/gestion_red.c\
-					building/my_building.c\
-					building/my_building_2.c\
-					building/my_building_3.c\
+					building/my_unset.c\
+					building/my_cd.c\
+					building/my_echo_pwd_env.c\
 					building/export/my_export.c\
 					building/export/my_traitement_arg_export.c\
 					building/export/ajoue_env_export.c\
+					building/export/my_print_export.c\
 
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}

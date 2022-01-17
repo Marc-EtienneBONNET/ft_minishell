@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 09:49:12 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 10:54:41 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,8 @@ int		my_cd(char **argv);
 int		my_export(char **argv);
 char	**my_recup_arg(char *str);
 int		my_ajoue_arg(char **arg);
+int		my_print_export(void);
+int		ft_strcmp(char *str1, char *str2);
+int		mess_err2(char *str);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_ajoue_env_export.c                              :+:      :+:    :+:   */
+/*   ajoue_env_export.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 09:48:56 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 10:56:35 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,32 @@ int	ft_strcmp(char *str1, char *str2)
 	return (0);
 }
 
-int	my_check_presence(char *key)
+int	my_check_doublon_and_cara_key(char *key,	int tele)
 {
 	int	x;
 
 	x = 0;
-	while (term->my_env[x].key)
+	if (tele == 1)
 	{
-		if (ft_strcmp(term->my_env[x].key, key) == 0)
-			return (x);
+		while (term->my_env[x].key)
+		{
+			if (ft_strcmp(term->my_env[x].key, key) == 0)
+				return (x);
+			x++;
+		}
+		return (-1);
+	}
+	if (!ft_isalpha(key[x]) && key[x] != '_')
+		return (mess_err2(key));
+	x++;
+	while (key[x])
+	{
+		if (!ft_isalpha(key[x]) && key[x] != '_'
+			&& !ft_isdigit(key[x]) && key[x] != '=')
+			return (mess_err2(key));
 		x++;
 	}
-	return (-1);
+	return (0);
 }
 
 int	my_ajoue_new_env(char **key, char **var)
@@ -109,8 +123,10 @@ int	my_ajoue_arg(char **arg)
 	while (arg[y])
 	{
 		key = my_recup_str(arg[y], 0);
+		if (my_check_doublon_and_cara_key(key, 0) == -1)
+			return (-1);
 		var = my_recup_str(arg[y], 1);
-		index = my_check_presence(key);
+		index = my_check_doublon_and_cara_key(key, 1);
 		if (index >= 0)
 		{
 			free(term->my_env[index].var);

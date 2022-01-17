@@ -6,13 +6,19 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:29:06 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 09:50:23 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 10:54:32 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+int	mess_err2(char *str)
+{
+	write(2, "minishell: export: '", 20);
+	write(2, str, ft_strlen(str));
+	write(2, "': not a valid identifier\n", 26);
+	return (1);
+}
 
 int	my_export(char **argv)
 {
@@ -20,7 +26,7 @@ int	my_export(char **argv)
 
 	arg = NULL;
 	if (!argv[1])
-		printf("impretion de export\n");
+		my_print_export();
 	else
 	{
 		arg = my_recup_arg(argv[1]);
