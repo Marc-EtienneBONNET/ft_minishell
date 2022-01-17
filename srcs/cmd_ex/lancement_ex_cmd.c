@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 13:17:10 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 17:44:26 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,11 @@ int	my_lancement_ex(void)
 
 	y = 0;
 	x = 0;
-	term->cmd = my_parsing();
+	if (my_parsing() == 2)
+	{
+		//my_free_liste_chene(term->cmd);
+		return (1);
+	}
 	free(term->str_cmd);
 	if (!term->cmd)
 		return (-1);

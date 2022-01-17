@@ -96,7 +96,9 @@ char	*my_inclus_res_var_env(char **tmp, char *key_env, int x)
 	my_inclus_res_var_env_2(tmp, x, &res, str_env);
 	free(*tmp);
 	if (ft_strncmp(key_env, "?", 3) == 0 && str_env)
+	{
 		free(str_env);
+	}
 	free(key_env);
 	return (res);
 }
