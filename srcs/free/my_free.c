@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 12:01:20 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 16:00:14 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:06:53 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,21 +104,21 @@ int	my_free_all(int ret)
 	int	x;
 
 	x = 0;
-	while (term->my_env && term->my_env[x].key != NULL)
+	while (g_term->my_env && g_term->my_env[x].key != NULL)
 	{
-		free(term->my_env[x].key);
-		free(term->my_env[x].var);
+		free(g_term->my_env[x].key);
+		free(g_term->my_env[x].var);
 		x++;
 	}
 	rl_clear_history();
-	if (term->my_env)
-		free(term->my_env);
-	//if (term->envp)
-	//	my_free_double_tab((void **)term->envp, -1);
-	//if (term->str_cmd)
-	//	free(term->str_cmd);
-	//if (term->cmd)
-	//	my_free_liste_chene(term->cmd);
-	free(term);
+	if (g_term->my_env)
+		free(g_term->my_env);
+	//if (g_term->envp)
+	//	my_free_double_tab((void **)g_term->envp, -1);
+	//if (g_term->str_cmd)
+	//	free(g_term->str_cmd);
+	//if (g_term->cmd)
+	//	my_free_liste_chene(g_term->cmd);
+	free(g_term);
 	return (ret);
 }

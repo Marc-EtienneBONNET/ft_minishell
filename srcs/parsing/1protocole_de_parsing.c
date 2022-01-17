@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 17:43:41 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:06:53 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ int	my_parsing(void)
 
 	i = 0;
 	cmd = NULL;
-	tmp = ft_strdup(term->str_cmd);
+	tmp = ft_strdup(g_term->str_cmd);
 	if (!tmp)
 		return (-1);
-	free(term->str_cmd);
-	term->str_cmd = my_modif_for_export(tmp);
+	free(g_term->str_cmd);
+	g_term->str_cmd = my_modif_for_export(tmp);
 	free(tmp);
-	if (term->str_cmd == NULL)
+	if (g_term->str_cmd == NULL)
 		return (-1);
-	cmd_tmp_env = my_gestion_var_env(term->str_cmd);
+	cmd_tmp_env = my_gestion_var_env(g_term->str_cmd);
 	if (!cmd_tmp_env)
 	{
-		free(term->str_cmd);
+		free(g_term->str_cmd);
 		my_free_tab(cmd_tmp_env);
 		return (2);
 	}
@@ -46,12 +46,12 @@ int	my_parsing(void)
 	}
 	my_rempli_tab_cmd(tab_cmd, cmd_tmp_env);
 	my_free_tab((void *)cmd_tmp_env);
-	term->cmd = my_init_struct_cmd(tab_cmd);
-	if (!term->cmd)
+	g_term->cmd = my_init_struct_cmd(tab_cmd);
+	if (!g_term->cmd)
 		return (-1);
-	if (!my_mouv_struct_for_red(&term->cmd))
+	if (!my_mouv_struct_for_red(&g_term->cmd))
 	{
-		my_free_liste_chene(term->cmd);
+		my_free_liste_chene(g_term->cmd);
 		return (-1);
 	}
 	return (1);

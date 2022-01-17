@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 10:16:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 14:45:38 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:06:53 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ t_env	*my_copy_t_env(void)
 	int		x;
 
 	x = 0;
-	while (term->my_env[x].key)
+	while (g_term->my_env[x].key)
 		x++;
 	env = malloc(sizeof(t_env) * (x + 1));
 	if (!env)
 		return (NULL);
 	x = 0;
-	while (term->my_env[x].key)
+	while (g_term->my_env[x].key)
 	{
-		env[x].key = term->my_env[x].key;
-		env[x].var = term->my_env[x].var;
+		env[x].key = g_term->my_env[x].key;
+		env[x].var = g_term->my_env[x].var;
 		x++;
 	}
 	env[x].key = NULL;

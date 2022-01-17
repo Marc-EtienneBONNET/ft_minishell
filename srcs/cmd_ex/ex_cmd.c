@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:30:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 17:27:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:08:22 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	my_ex_building(t_cmd *cmd)
 
 	cpe = cmd->cmd;
 	if (ft_strncmp(cpe, "cd", 10) == 0)
-		my_cd(term->cmd->arg);
+		my_cd(g_term->cmd->arg);
 	else if (ft_strncmp(cpe, "pwd", 10) == 0)
 		my_pwd(cmd);
 	else if (ft_strncmp(cpe, "echo", 10) == 0)
@@ -33,11 +33,11 @@ int	my_ex_building(t_cmd *cmd)
 		printf("commande exit\n");
 	else
 		return (-1);
-	term->dernier_ret = 0;
+	g_term->dernier_ret = 0;
 	return (0);
 }
 
-int	my_exe_cmd(t_term *term, t_cmd *cmd)
+int	my_exe_cmd(t_term *g_term, t_cmd *cmd)
 {
 	char	*cpe;
 
@@ -48,7 +48,7 @@ int	my_exe_cmd(t_term *term, t_cmd *cmd)
 		exit (-1);
 		return (-1);
 	}
-	if (execve(cpe, cmd->arg, term->envp) == -1)
+	if (execve(cpe, cmd->arg, g_term->envp) == -1)
 	{
 		free(cpe);
 		exit (-1);
