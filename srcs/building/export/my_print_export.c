@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 10:16:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:37:58 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,13 @@ int	my_print_export(void)
 	}
 	i = -1;
 	while (tmp[++i].key)
-		printf("declare -x %s=\"%s\"\n", tmp[i].key, tmp[i].var);
+	{
+		printf("declare -x %s", tmp[i].key);
+		if (tmp[i].var)
+			printf("=%s",tmp[i].var);
+		printf("\n");
+	}
+		
 	free(tmp);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:32:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:38:56 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	my_env(t_cmd *cmd)
 	{
 		while (g_term.my_env[i].key)
 		{
-			printf("%s=%s\n", g_term.my_env[i].key, g_term.my_env[i].var);
+			if (g_term.my_env[i].var)
+				printf("%s=%s\n", g_term.my_env[i].key, g_term.my_env[i].var);
 			i++;
 		}
 	}
