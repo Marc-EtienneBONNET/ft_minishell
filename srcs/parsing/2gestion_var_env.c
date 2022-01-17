@@ -89,7 +89,7 @@ char	*my_inclus_res_var_env(char **tmp, char *key_env, int x)
 	return (res);
 }
 
-char	*my_gestion_var_env(char *cmd_tmp)
+char	*my_gestion_var_env(char *cmd_tmp) 
 {
 	int		x;
 	char	*res;

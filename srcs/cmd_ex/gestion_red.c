@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:07:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 12:12:44 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 13:08:24 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*my_choose_fichier(t_cmd *cmd)
 {
 	char	*res;
-
 
 	if (ft_strncmp(cmd->path, "/bin/", 7) == 0)
 	{

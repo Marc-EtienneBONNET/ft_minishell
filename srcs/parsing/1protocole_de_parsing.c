@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/15 17:52:21 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 12:53:38 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_cmd	*my_parsing(void)
 	tmp = ft_strdup(term->str_cmd);
 	free(term->str_cmd);
 	term->str_cmd = my_modif_for_export(tmp);
+	if (term->str_cmd == NULL)
+		return (NULL);
 	free(tmp);
 	cmd_tmp_env = my_gestion_var_env(term->str_cmd);
 	if (!cmd_tmp_env)
@@ -39,7 +41,10 @@ t_cmd	*my_parsing(void)
 	my_free_tab((void *)cmd_tmp_env);
 	cmd = my_init_struct_cmd(tab_cmd);
 	if (!cmd)
+	{
+		my_free_double_tab((void **)tab_cmd, -1);
 		return (NULL);
+	}
 	my_mouv_struct_for_red(&cmd);
 	return (cmd);
 }

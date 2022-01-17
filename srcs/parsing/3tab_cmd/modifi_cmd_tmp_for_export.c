@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:35:42 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/15 14:28:05 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 11:50:58 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ char	*my_modif_for_export(char *cmd_tmp)
 	{
 		my_passe_guillemet(&x, res);
 		if (x == 0 || my_check_redirection(&(res[x])) > 0)
-			my_modif_for_export_2(&res, &x);
+			if (my_modif_for_export_2(&res, &x) == -1)
+				return (NULL);
 	}
 	return (res);
 }

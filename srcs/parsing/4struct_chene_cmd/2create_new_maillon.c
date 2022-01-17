@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 11:36:44 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 12:47:35 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ char	**init_cmd_arg(char **tab_cmd, int *x, int *y)
 		conteur++;
 	tabe = malloc(sizeof(char *) * (conteur + 1));
 	if (!tabe)
+	{
+		free(tabe);
 		return (NULL);
+	}
 	(*y)++;
 	while (tab_cmd[(*x)] && my_check_redirection(tab_cmd[*x]) == -1)
 	{
@@ -68,6 +71,8 @@ char	*my_modifie_cmd(t_cmd *tmp)
 	if (ft_strncmp(tmp->path, "/bin/", 10) != 0)
 		len = ft_strlen(tmp->path);
 	res = (char *)malloc(sizeof(char) * ((ft_strlen(tmp->cmd) - len) + 1));
+	if (!res)
+		return (NULL);
 	while (tmp->cmd[len])
 	{
 		res[x] = tmp->cmd[len];
@@ -108,19 +113,27 @@ t_cmd	*new_maillons(char **tab_cmd, int *x)
 
 	y = 0;
 	tmp = bzero_tmp();
+	if (tmp == NULL)
+		return (NULL);
 	if (my_check_redirection(tab_cmd[*x]) == -1)
 		tmp->cmd = ft_strdup(tab_cmd[(*x)++]);
 	tmp->path = my_gestion_path(tmp);
+	if (!tmp->path)
+		return (my_free_maillon(tmp));
 	tmp->cmd = my_modifie_cmd(tmp);
+	if (!tmp->cmd)
+		return (my_free_maillon(tmp));
 	tmp->arg = init_cmd_arg(tab_cmd, x, &y);
 	if (!tmp->arg)
-		return (NULL);
+		return (my_free_maillon(tmp));
 	tmp->arg[0] = ft_strdup(tmp->cmd);
 	if (my_check_redirection(tab_cmd[*x]) > 0)
 		tmp->red = ft_strdup(tab_cmd[(*x)++]);
 	else
 	{
 		tmp->red = malloc(sizeof(char) * 2);
+		if (!tmp->red)
+			return (my_free_maillon(tmp));
 		tmp->red[0] = ';';
 		tmp->red[1] = '\0';
 	}

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 11:41:50 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 12:50:43 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,13 @@ t_cmd	*my_init_struct_cmd(char **tab_cmd)
 	while (tab_cmd[x] != NULL)
 	{
 		tmp = new_maillons(tab_cmd, &x);
-		tmp->info_cmd = info_cmd;
 		if (tmp == NULL)
 		{
+			free(info_cmd);
 			my_free_liste_chene(cmd);
 			return (my_free_double_tab((void **)tab_cmd, -1));
 		}
+		tmp->info_cmd = info_cmd;
 		cmd = my_ajoute_maillon(cmd, tmp);
 	}
 	my_free_double_tab((void **)tab_cmd, -1);

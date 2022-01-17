@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gestion_des_free.c                                 :+:      :+:    :+:   */
+/*   my_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/05 08:59:34 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 09:33:24 by mbonnet          ###   ########.fr       */
+/*   Created: 2022/01/17 12:01:20 by mbonnet           #+#    #+#             */
+/*   Updated: 2022/01/17 12:41:05 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//cette fonction permet de free n importe quel tab
+
 void	*my_free_tab(void *a_free)
 {
 	if (a_free)
@@ -19,10 +19,6 @@ void	*my_free_tab(void *a_free)
 	return (NULL);
 }
 
-//cette fonction permet de free nimporte quel tableau et a tout momant : 
-//	-1) para = le tableau en question
-//	-2) para = le nombre de tableau present dans le double tableau
-//	dans le cas d un free classique se parametre doit etre init a 0;
 void	*my_free_double_tab(void **tab_str, int nb_str)
 {
 	int	op;
@@ -99,4 +95,28 @@ void	*my_free_maillon(t_cmd *tmp)
 	if (tmp)
 		free(tmp);
 	return (NULL);
+}
+
+int	my_free_all(int ret)
+{
+	int	x;
+
+	x = 0;
+	while (term->my_env && term->my_env[x].key != NULL)
+	{
+		free(term->my_env[x].key);
+		free(term->my_env[x].var);
+		x++;
+	}
+	rl_clear_history();
+	if (term->my_env)
+		free(term->my_env);
+	//if (term->envp)
+	//	my_free_double_tab((void **)term->envp, -1);
+	//if (term->str_cmd)
+	//	free(term->str_cmd);
+	//if (term->cmd)
+	//	my_free_liste_chene(term->cmd);
+	free(term);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:30:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/15 14:44:49 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 12:54:30 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	my_ex_building(t_cmd *cmd)
 		printf("commande exit\n");
 	else
 		return (-1);
-	return (1);
+	return (0);
 }
 
 int	my_exe_cmd(t_term *term, t_cmd *cmd)

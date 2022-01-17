@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_building.c                                      :+:      :+:    :+:   */
+/*   my_echo_pwd_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:32:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 11:46:20 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 12:55:59 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ int	my_echo(char **argv)
 			printf("\n");
 		i++;
 	}
-	exit (0);
+	if (term->cmd->pid == 0)
+		exit (0);
+	else
+		return (0);
 }
 
 int	my_pwd(t_cmd *cmd)
@@ -70,10 +73,13 @@ int	my_pwd(t_cmd *cmd)
 	}
 	else
 		printf(ROUGE"pwd: -a : option non valable\n"BLANC);
-	exit (0);
+	if (term->cmd->pid == 0)
+		exit (0);
+	else
+		return (0);
 }
 
-void	my_env(t_cmd *cmd)
+int	my_env(t_cmd *cmd)
 {
 	int	i;
 
@@ -88,5 +94,8 @@ void	my_env(t_cmd *cmd)
 	}
 	else
 		printf(ROUGE"env: option non valable\n"BLANC);
-	exit (0);
+	if (term->cmd->pid == 0)
+		exit (0);
+	else
+		return (0);
 }

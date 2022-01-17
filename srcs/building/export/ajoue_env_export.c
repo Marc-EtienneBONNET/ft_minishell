@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 10:56:35 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 11:37:06 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	my_ajoue_arg(char **arg)
 	while (arg[y])
 	{
 		key = my_recup_str(arg[y], 0);
-		if (my_check_doublon_and_cara_key(key, 0) == -1)
+		if (!key || my_check_doublon_and_cara_key(key, 0) == -1)
 			return (-1);
 		var = my_recup_str(arg[y], 1);
 		index = my_check_doublon_and_cara_key(key, 1);
@@ -133,7 +133,8 @@ int	my_ajoue_arg(char **arg)
 			term->my_env[index].var = var;
 		}
 		else
-			my_ajoue_new_env(&key, &var);
+			if (my_ajoue_new_env(&key, &var) == -1)
+				return (-1);
 		free(arg[y]);
 		y++;
 	}

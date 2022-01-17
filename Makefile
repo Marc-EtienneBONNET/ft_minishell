@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/17 11:01:02 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/17 12:17:36 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ SRCS			=	main.c\
 					parsing/3tab_cmd/modifi_cmd_tmp_for_export.c\
 					parsing/3tab_cmd/1init_tab_cmd.c\
 					parsing/3tab_cmd/2rempli_tab_cmd.c\
-					parsing/utile/gestion_des_free.c\
 					parsing/utile/checker_et_ft_utile.c\
 					parsing/utile/fonction_tmp.c\
 					parsing/4struct_chene_cmd/1chenage.c\
@@ -38,6 +37,7 @@ SRCS			=	main.c\
 					building/export/my_traitement_arg_export.c\
 					building/export/ajoue_env_export.c\
 					building/export/my_print_export.c\
+					free/my_free.c\
 
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}

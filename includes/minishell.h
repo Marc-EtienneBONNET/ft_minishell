@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 10:54:41 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 12:56:23 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ typedef struct s_cmd
 	char			*intra_red;
 	char			**arg;
 	char			*red;
-	t_info_cmd		*info_cmd;
 	pid_t			pid;
+	t_info_cmd		*info_cmd;
 	int				tub[2];
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
@@ -59,7 +59,6 @@ typedef struct str_env
 
 typedef struct s_term
 {
-	char	**exp;
 	char	**envp;
 	char	*str_cmd;
 	t_cmd	*cmd;
@@ -145,7 +144,7 @@ void	my_heredoc(pid_t pid);
 	//my_building
 int		my_echo(char **argv);
 int		my_pwd(t_cmd *cmd);
-void	my_env(t_cmd *cmd);
+int		my_env(t_cmd *cmd);
 	//my_building_2
 int		my_cd(char **argv);
 	//my_export
@@ -155,5 +154,7 @@ int		my_ajoue_arg(char **arg);
 int		my_print_export(void);
 int		ft_strcmp(char *str1, char *str2);
 int		mess_err2(char *str);
+
+int		my_free_all(int ret);
 
 #endif

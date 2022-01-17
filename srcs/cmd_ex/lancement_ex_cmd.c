@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/15 11:02:02 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 13:17:10 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	my_lancement_building(void)
 {
-	if (ft_strncmp(term->cmd->red, "|", 3) == 0)
+	if (ft_strncmp(term->cmd->red, "|", 3) == 0
+		|| term->cmd->intra_red )
 		return (-1);
 	else if (ft_strncmp(term->cmd->cmd, "cd", 10) == 0
 		|| ft_strncmp(term->cmd->cmd, "unset", 10) == 0
@@ -38,12 +39,23 @@ int	my_lancement_fork(void)
 
 	term->cmd->pid = fork();
 	my_gestion_pip(term->cmd);
-	if (ft_strncmp(term->cmd->cmd, "pwd", 10) == 0
+	if (ft_strncmp(term->cmd->cmd, "cd", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "unset", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "export", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "exit", 10) == 0
+		|| ft_strncmp(term->cmd->cmd, "pwd", 10) == 0
 		|| ft_strncmp(term->cmd->cmd, "echo", 10) == 0
 		|| ft_strncmp(term->cmd->cmd, "env", 10) == 0)
 	{
 		if (term->cmd->pid == 0)
+		{
+			pid = my_gestion_red();
 			my_ex_building(term->cmd);
+			if (ft_strncmp(term->cmd->intra_red, "<<", 3) == 0)
+			{
+				waitpid(pid, NULL, 0);
+			}
+		}
 	}
 	else
 	{
@@ -88,17 +100,16 @@ int	my_lancement_ex(void)
 	x = 0;
 	term->cmd = my_parsing();
 	free(term->str_cmd);
+	if (!term->cmd)
+		return (-1);
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	tmp = term->cmd;
-	//my_print_list_chene(term->cmd);
 	while (x++ < term->cmd->info_cmd->nb_maillons)
 	{
 		pipe(term->cmd->tub);
 		if (my_lancement_building() == -1)
-		{
 			my_lancement_fork();
-		}
 	}
 	term->cmd = tmp;
 	my_attente_waitpid();

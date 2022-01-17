@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:52:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/07 14:58:13 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 12:37:40 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*my_env_var(char *env)
 	return (res);
 }
 
-int	my_init_struct_env(void)
+int	my_init_struct_env()
 {
 	int	y;
 	int	x;
@@ -75,6 +75,8 @@ int	my_init_struct_env(void)
 	{
 		term->my_env[x].key = my_env_key(term->envp[x]);
 		term->my_env[x].var = my_env_var(term->envp[x]);
+		if (!term->my_env[x].var || !term->my_env[x].key)
+			return (-1);
 		x++;
 	}
 	term->my_env[x].key = NULL;

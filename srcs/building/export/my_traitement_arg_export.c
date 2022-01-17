@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 17:49:52 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 09:16:52 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 12:00:11 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,14 @@ char	**my_recup_arg(char *str)
 		}
 		my_para(&para, str);
 		if (*str != -122 && *str != '\'')
+		{
 			res[y] = ft_strmicrojoin(&(res[y]), *str);
+			if (res[y] == NULL)
+			{
+				my_free_double_tab((void **)res, y);
+				return (NULL);
+			}
+		}
 		str++;
 	}
 	res[++y] = NULL;

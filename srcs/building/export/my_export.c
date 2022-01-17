@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:29:06 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 10:54:32 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 11:41:30 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ int	my_export(char **argv)
 
 	arg = NULL;
 	if (!argv[1])
-		my_print_export();
+	{
+		if (my_print_export() == -1)
+			return (-1);
+	}
 	else
 	{
 		arg = my_recup_arg(argv[1]);
-		my_ajoue_arg(arg);
+		if (arg == NULL || my_ajoue_arg(arg) == -1)
+			return (-1);
 	}
 	return (1);
 }
