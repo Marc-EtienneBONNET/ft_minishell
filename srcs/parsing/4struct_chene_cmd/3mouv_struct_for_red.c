@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 08:41:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 11:32:30 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:18:24 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	my_ajuste_pointeur(t_cmd **cmd)
 	}
 }
 
-void	my_mouv_struct_for_red_droite(t_cmd **cmd)
+int	my_mouv_struct_for_red_droite(t_cmd **cmd)
 {
 	int		x;
 
@@ -61,13 +61,18 @@ void	my_mouv_struct_for_red_droite(t_cmd **cmd)
 
 	(*cmd)->fichier_1 = my_choose_fichier((*cmd)->next);
 	(*cmd)->intra_red = ft_strdup((*cmd)->red);
+	if (!(*cmd)->intra_red)
+		return (-1);
 	free((*cmd)->red);
 	(*cmd)->red = ft_strdup((*cmd)->next->red);
+	if (!(*cmd)->red)
+		return (-1);
 	my_ajoute_arg(cmd, &((*cmd)->next));
 	my_ajuste_pointeur(cmd);
+	return (1);
 }
 
-void	my_mouv_struct_for_red_gauche(t_cmd **cmd)
+int	my_mouv_struct_for_red_gauche(t_cmd **cmd)
 {
 	int		x;
 
@@ -76,6 +81,8 @@ void	my_mouv_struct_for_red_gauche(t_cmd **cmd)
 	{
 		(*cmd)->fichier_1 = ft_strdup((*cmd)->next->next->cmd);
 		(*cmd)->fichier_2 = ft_strdup((*cmd)->next->cmd);
+		if (!(*cmd)->fichier_2)
+			return (-1);
 	}
 	else
 		(*cmd)->fichier_1 = ft_strdup((*cmd)->next->cmd);
@@ -86,9 +93,13 @@ void	my_mouv_struct_for_red_gauche(t_cmd **cmd)
 	else
 		(*cmd)->red = ft_strdup((*cmd)->next->red);
 	my_ajoute_arg(cmd, &((*cmd)->next));
+	if (!(*cmd)->fichier_1
+		|| !(*cmd)->intra_red || !(*cmd)->red)
+		return (-1);
 	if (ft_strncmp((*cmd)->next->red, "<<", 3) == 0)
 		my_ajoute_arg(cmd, &((*cmd)->next->next));
 	my_ajuste_pointeur(cmd);
+	return (1);
 }
 
 t_cmd	*my_mouv_struct_for_red(t_cmd **cmd)
@@ -101,11 +112,15 @@ t_cmd	*my_mouv_struct_for_red(t_cmd **cmd)
 		if (ft_strncmp((*cmd)->red, ">", 3) == 0
 			|| ft_strncmp((*cmd)->red, ">>", 3) == 0
 			|| ft_strncmp((*cmd)->red, "<", 3) == 0)
-			my_mouv_struct_for_red_droite(cmd);
+		{
+			if (my_mouv_struct_for_red_droite(cmd) == -1)
+				return (NULL);
+		}
 		else if (ft_strncmp((*cmd)->red, "<<", 3) == 0)
-			my_mouv_struct_for_red_gauche(cmd);
+			if (my_mouv_struct_for_red_gauche(cmd) == -1)
+				return (NULL);
 		(*cmd) = (*cmd)->next;
 		x++;
 	}
-	return (NULL);
+	return (*cmd);
 }

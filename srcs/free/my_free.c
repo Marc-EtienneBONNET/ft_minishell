@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 12:01:20 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 12:41:05 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:00:14 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ void	*my_free_double_tab(void **tab_str, int nb_str)
 		nb_str = 0;
 		op = 1;
 	}
-	while (tab_str[nb_str] && nb_str >= 0)
+	while (nb_str >= 0 && tab_str[nb_str])
 	{
-		free(tab_str[nb_str]);
+		if (tab_str[nb_str])
+		{
+			free(tab_str[nb_str]);
+		}
 		nb_str += (1 * op);
 	}
-	free(tab_str[nb_str]);
 	free(tab_str);
 	return (NULL);
 }

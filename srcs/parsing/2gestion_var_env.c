@@ -96,6 +96,8 @@ char	*my_gestion_var_env(char *cmd_tmp)
 
 	x = -1;
 	res = ft_strdup(cmd_tmp);
+	if (!res)
+		return (NULL);
 	while (res[++x] != '\0')
 	{
 		if (res[x] == '\'')

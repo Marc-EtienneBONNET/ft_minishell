@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 15:30:29 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 12:29:10 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 14:37:13 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,9 @@ char	**my_malloc_chaine(char *cmd_tmp)
 	{
 		tab_cmd[i] = malloc(sizeof(char) * (my_strlen_space(cmd_tmp, &y) + 1));
 		if (tab_cmd[i] == NULL)
+		{
 			return (my_free_double_tab((void **)tab_cmd, i));
+		}
 		i++;
 	}
 	tab_cmd[i] = NULL;

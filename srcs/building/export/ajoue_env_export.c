@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 11:37:06 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 14:59:32 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*my_recup_str(char *arg, int tele)
 	if (!(*arg))
 		return (NULL);
 	new = ft_strdup(arg);
+	if (!new)
+		return (NULL);
 	return (new);
 }
 
@@ -134,7 +136,11 @@ int	my_ajoue_arg(char **arg)
 		}
 		else
 			if (my_ajoue_new_env(&key, &var) == -1)
+			{
+				free(var);
+				free(key);
 				return (-1);
+			}
 		free(arg[y]);
 		y++;
 	}

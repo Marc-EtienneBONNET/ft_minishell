@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:35:42 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 11:50:58 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 15:17:51 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ char	*my_transforme_new_cmd_tmp(char *cmd_tmp, int *x)
 	i = 0;
 	new = malloc(sizeof(char) * (ft_strlen(cmd_tmp) + 3));
 	if (!new)
+	{
+		free(new);
 		return (NULL);
+	}
 	my_install_guillemet(&new, cmd_tmp, &i, x);
 	while (cmd_tmp[i])
 	{
@@ -79,6 +82,8 @@ int	my_modif_for_export_2(char **res, int *x)
 		while ((*res)[(*x)] && ft_whitespace((*res)[(*x)]) != 1)
 			(*x)++;
 		tmp = ft_strdup((*res));
+		if (!tmp)
+			return (-1);
 		free(*res);
 		(*res) = my_transforme_new_cmd_tmp(tmp, x);
 		free(tmp);
@@ -95,12 +100,19 @@ char	*my_modif_for_export(char *cmd_tmp)
 
 	x = -1;
 	res = ft_strdup(cmd_tmp);
+	if (!res)
+		return (NULL);
 	while (res[++x])
 	{
 		my_passe_guillemet(&x, res);
 		if (x == 0 || my_check_redirection(&(res[x])) > 0)
+		{
 			if (my_modif_for_export_2(&res, &x) == -1)
+			{
+				free(res);
 				return (NULL);
+			}
+		}
 	}
 	return (res);
 }

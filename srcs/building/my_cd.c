@@ -2,7 +2,7 @@
 
 int		change_pwd(char *pwd, char *oldpwd)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (term->my_env[++i].key)
@@ -11,6 +11,8 @@ int		change_pwd(char *pwd, char *oldpwd)
 		{
 			free(term->my_env[i].var);
 			term->my_env[i].var = ft_strdup(pwd);
+			if (!term->my_env[i].var)
+				return (-1);
 			free(pwd);
 		}
 	}
@@ -21,6 +23,8 @@ int		change_pwd(char *pwd, char *oldpwd)
 		{
 			free(term->my_env[i].var);
 			term->my_env[i].var = ft_strdup(oldpwd);
+			if (!term->my_env[i].var)
+				return (-1);
 			free(oldpwd);
 		}
 	}
@@ -76,6 +80,7 @@ int my_cd(char **argv)
 	}
 	op(argv);
 	pwd = getcwd(NULL, 0);
-	change_pwd(pwd, oldpwd);
+	if (change_pwd(pwd, oldpwd) == -1)
+		return (-1);
 	return (0);
 }

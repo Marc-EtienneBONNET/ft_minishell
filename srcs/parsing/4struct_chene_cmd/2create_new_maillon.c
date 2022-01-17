@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 12:47:35 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:07:13 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,15 @@ char	**init_cmd_arg(char **tab_cmd, int *x, int *y)
 		if (!tab_cmd[(*x)][0])
 			(*x)++;
 		else
-			tabe[(*y)++] = ft_strdup(tab_cmd[(*x)++]);
+		{
+			tabe[(*y)] = ft_strdup(tab_cmd[(*x)++]);
+			if (!tabe[(*y)])
+			{
+				free(tabe);
+				return (NULL);
+			}
+			(*y)++;
+		}
 	}
 	tabe[*y] = NULL;
 	return (tabe);
@@ -93,7 +101,11 @@ char	*my_gestion_path(t_cmd *tmp)
 	while (x >= 0 && tmp->cmd[x] != '/')
 		x--;
 	if (x == -1)
+	{
 		res = ft_strdup("/bin/");
+		if (!res)
+			return (NULL);
+	}
 	else
 	{
 		res = (char *)malloc(sizeof(char) * (x + 2));
@@ -136,6 +148,11 @@ t_cmd	*new_maillons(char **tab_cmd, int *x)
 			return (my_free_maillon(tmp));
 		tmp->red[0] = ';';
 		tmp->red[1] = '\0';
+	}
+	if (!tmp->cmd || !tmp->arg[0] || !tmp->red)
+	{
+		my_free_maillon(tmp);
+		return (NULL);
 	}
 	return (tmp);
 }

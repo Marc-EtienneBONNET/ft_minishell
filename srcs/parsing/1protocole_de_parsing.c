@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 12:53:38 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:12:21 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ t_cmd	*my_parsing(void)
 	i = 0;
 	cmd = NULL;
 	tmp = ft_strdup(term->str_cmd);
+	if (!tmp)
+		return (NULL);
 	free(term->str_cmd);
 	term->str_cmd = my_modif_for_export(tmp);
+	free(tmp);
 	if (term->str_cmd == NULL)
 		return (NULL);
-	free(tmp);
 	cmd_tmp_env = my_gestion_var_env(term->str_cmd);
 	if (!cmd_tmp_env)
 		return (my_free_tab(cmd_tmp_env));
@@ -42,9 +44,10 @@ t_cmd	*my_parsing(void)
 	cmd = my_init_struct_cmd(tab_cmd);
 	if (!cmd)
 	{
-		my_free_double_tab((void **)tab_cmd, -1);
+		//my_free_double_tab((void **)tab_cmd, -1);
 		return (NULL);
 	}
-	my_mouv_struct_for_red(&cmd);
+	if (!my_mouv_struct_for_red(&cmd))
+		return (my_free_liste_chene(cmd));
 	return (cmd);
 }
