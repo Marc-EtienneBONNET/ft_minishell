@@ -6,13 +6,13 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 08:41:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 16:52:00 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:56:00 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_ajoute_arg(t_cmd **cmd, t_cmd **cmd_new_arg)
+int	my_ajoute_arg(t_cmd **cmd, t_cmd **cmd_new_arg)
 {
 	int		x;
 	char	**tmp;
@@ -24,8 +24,11 @@ void	my_ajoute_arg(t_cmd **cmd, t_cmd **cmd_new_arg)
 		my_free_double_tab((void **)(*cmd)->arg, -1);
 		(*cmd)->arg = ft_strdoublejoin(tmp, (*cmd_new_arg)->arg[x]);
 		my_free_double_tab((void **)tmp, -1);
+		if (!(*cmd)->arg)
+			return (-1);
 		x++;
 	}
+	return (1);
 }
 
 void	my_ajuste_pointeur(t_cmd **cmd)
@@ -67,7 +70,8 @@ int	my_mouv_struct_for_red_droite(t_cmd **cmd)
 	(*cmd)->red = ft_strdup((*cmd)->next->red);
 	if (!(*cmd)->red)
 		return (-1);
-	my_ajoute_arg(cmd, &((*cmd)->next));
+	if (my_ajoute_arg(cmd, &((*cmd)->next)) == -1)
+		return (-1);
 	my_ajuste_pointeur(cmd);
 	return (1);
 }
