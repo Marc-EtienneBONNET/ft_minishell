@@ -6,11 +6,13 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:08:06 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:11:06 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_term *g_term;
 
 int	main(int ac, char **av, char **envp)
 {
