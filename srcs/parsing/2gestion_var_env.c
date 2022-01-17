@@ -83,8 +83,8 @@ char	*my_inclus_res_var_env(char **tmp, char *key_env, int x)
 		}
 		else
 		{
-			if (g_term->dernier_ret)
-				str_env = ft_itoa(g_term->dernier_ret);
+			if (g_term.dernier_ret)
+				str_env = ft_itoa(g_term.dernier_ret);
 			else
 				str_env = ft_strdup("0");
 		}

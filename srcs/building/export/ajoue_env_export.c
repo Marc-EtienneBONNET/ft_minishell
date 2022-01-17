@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:06:53 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	my_check_doublon_and_cara_key(char *key,	int tele)
 	x = 0;
 	if (tele == 1)
 	{
-		while (g_term->my_env[x].key)
+		while (g_term.my_env[x].key)
 		{
-			if (ft_strcmp(g_term->my_env[x].key, key) == 0)
+			if (ft_strcmp(g_term.my_env[x].key, key) == 0)
 				return (x);
 			x++;
 		}
@@ -92,16 +92,16 @@ int	my_ajoue_new_env(char **key, char **var)
 	t_env	*new;
 
 	len = 0;
-	while (g_term->my_env[len].key)
+	while (g_term.my_env[len].key)
 		len++;
 	new = malloc(sizeof(t_env) * (len + 2));
 	if (!new)
 		return (-1);
 	len = 0;
-	while (g_term->my_env[len].key)
+	while (g_term.my_env[len].key)
 	{
-		new[len].key = g_term->my_env[len].key;
-		new[len].var = g_term->my_env[len].var;
+		new[len].key = g_term.my_env[len].key;
+		new[len].var = g_term.my_env[len].var;
 		len++;
 	}
 	new[len].key = *key;
@@ -109,8 +109,8 @@ int	my_ajoue_new_env(char **key, char **var)
 	len++;
 	new[len].key = NULL;
 	new[len].var = NULL;
-	free(g_term->my_env);
-	g_term->my_env = new;
+	free(g_term.my_env);
+	g_term.my_env = new;
 	return (1);
 }
 
@@ -131,8 +131,8 @@ int	my_ajoue_arg(char **arg)
 		index = my_check_doublon_and_cara_key(key, 1);
 		if (index >= 0)
 		{
-			free(g_term->my_env[index].var);
-			g_term->my_env[index].var = var;
+			free(g_term.my_env[index].var);
+			g_term.my_env[index].var = var;
 		}
 		else
 			if (my_ajoue_new_env(&key, &var) == -1)

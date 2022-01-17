@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:07:57 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:19:16 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_term
 	int		dernier_ret;
 }	t_term;
 
-extern t_term *g_term;
+extern t_term g_term;
 
 #define ENTRE 1
 #define SORTI 0
@@ -128,7 +128,7 @@ char	*my_modif_for_export(char *cmd_tmp);
 int		my_lancement_ex(void);
 	//ex_cmd.c
 int		my_ex_building(t_cmd *cmd);
-int		my_exe_cmd(t_term *g_term, t_cmd *cmd);
+int		my_exe_cmd(t_term g_term, t_cmd *cmd);
 	//gestion_pip
 void	my_gestion_pip(t_cmd *cmd);
 void	my_tub_entre_sorti_enfant(t_cmd *cmd);

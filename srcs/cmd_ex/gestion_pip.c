@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:34:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:06:53 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	my_kill_tub(void)
 	int	x;
 
 	x = 0;
-	while (x < g_term->cmd->info_cmd->nb_maillons)
+	while (x < g_term.cmd->info_cmd->nb_maillons)
 	{
-		close(g_term->cmd->tub[ENTRE]);
-		close(g_term->cmd->tub[SORTI]);
+		close(g_term.cmd->tub[ENTRE]);
+		close(g_term.cmd->tub[SORTI]);
 		dup2(ENTRE, SORTI);
-		g_term->cmd = g_term->cmd->next;
+		g_term.cmd = g_term.cmd->next;
 		x++;
 	}
 }

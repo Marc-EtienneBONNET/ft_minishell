@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:32:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:06:53 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	my_echo(char **argv)
 			printf("\n");
 		i++;
 	}
-	if (g_term->cmd->pid == 0)
+	if (g_term.cmd->pid == 0)
 		exit (0);
 	else
 		return (0);
@@ -73,7 +73,7 @@ int	my_pwd(t_cmd *cmd)
 	}
 	else
 		printf(ROUGE"pwd: -a : option non valable\n"BLANC);
-	if (g_term->cmd->pid == 0)
+	if (g_term.cmd->pid == 0)
 		exit (0);
 	else
 		return (0);
@@ -86,15 +86,15 @@ int	my_env(t_cmd *cmd)
 	i = 0;
 	if (!cmd->arg[1])
 	{
-		while (g_term->my_env[i].key)
+		while (g_term.my_env[i].key)
 		{
-			printf("%s=%s\n", g_term->my_env[i].key, g_term->my_env[i].var);
+			printf("%s=%s\n", g_term.my_env[i].key, g_term.my_env[i].var);
 			i++;
 		}
 	}
 	else
 		printf(ROUGE"env: option non valable\n"BLANC);
-	if (g_term->cmd->pid == 0)
+	if (g_term.cmd->pid == 0)
 		exit (0);
 	else
 		return (0);

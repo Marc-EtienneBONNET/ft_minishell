@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:52:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:06:53 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,20 @@ int	my_init_struct_env()
 
 	y = 0;
 	x = 0;
-	while (g_term->envp[y])
+	while (g_term.envp[y])
 		y++;
-	g_term->my_env = malloc(sizeof(t_env) * (y + 1));
-	if (!g_term->my_env)
+	g_term.my_env = malloc(sizeof(t_env) * (y + 1));
+	if (!g_term.my_env)
 		return (-1);
 	while (x < y)
 	{
-		g_term->my_env[x].key = my_env_key(g_term->envp[x]);
-		g_term->my_env[x].var = my_env_var(g_term->envp[x]);
-		if (!g_term->my_env[x].var || !g_term->my_env[x].key)
+		g_term.my_env[x].key = my_env_key(g_term.envp[x]);
+		g_term.my_env[x].var = my_env_var(g_term.envp[x]);
+		if (!g_term.my_env[x].var || !g_term.my_env[x].key)
 			return (-1);
 		x++;
 	}
-	g_term->my_env[x].key = NULL;
-	g_term->my_env[x].var = NULL;
+	g_term.my_env[x].key = NULL;
+	g_term.my_env[x].var = NULL;
 	return (1);
 }

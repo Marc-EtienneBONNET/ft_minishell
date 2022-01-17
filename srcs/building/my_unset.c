@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:37:39 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:06:53 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	supp_var(char *argv)
 	int	i;
 
 	i = -1;
-	while (g_term->my_env[++i].key)
+	while (g_term.my_env[++i].key)
 	{
-		if (ft_strncmp(g_term->my_env[i].key, argv, ft_strlen(argv)) == 0)
+		if (ft_strncmp(g_term.my_env[i].key, argv, ft_strlen(argv)) == 0)
 		{
-			free(g_term->my_env[i].var);
-			free(g_term->my_env[i].key);
-			while (g_term->my_env[i].var)
+			free(g_term.my_env[i].var);
+			free(g_term.my_env[i].key);
+			while (g_term.my_env[i].var)
 			{
-				g_term->my_env[i].var = g_term->my_env[i + 1].var;
-				g_term->my_env[i].key = g_term->my_env[i + 1].key;
+				g_term.my_env[i].var = g_term.my_env[i + 1].var;
+				g_term.my_env[i].key = g_term.my_env[i + 1].key;
 				i++;
 			}
 			break ;
