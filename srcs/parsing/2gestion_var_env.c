@@ -75,17 +75,29 @@ char	*my_inclus_res_var_env(char **tmp, char *key_env, int x)
 	str_env = getenv(key_env);
 	if (str_env == NULL)
 	{
-		free(key_env);
-		free(*tmp);
-		return (my_little_printf_char("ERROR: variable d env inconnue\n"));
+		if (ft_strncmp(key_env, "?", 3) != 0)
+		{
+			free(key_env);
+			free(*tmp);
+			return (my_little_printf_char("ERROR: variable d env inconnue\n"));
+		}
+		else
+		{
+			if (term->dernier_ret)
+				str_env = ft_itoa(term->dernier_ret);
+			else
+				str_env = ft_strdup("0");
+		}
 	}
 	res = malloc(sizeof(char) * ((ft_strlen(str_env) + 2)
 				+ (ft_strlen(*tmp) - (ft_strlen(key_env) + 1)) + 1));
-	free(key_env);
 	if (res == NULL)
 		return (my_free_tab(*tmp));
 	my_inclus_res_var_env_2(tmp, x, &res, str_env);
 	free(*tmp);
+	if (ft_strncmp(key_env, "?", 3) == 0 && str_env)
+		free(str_env);
+	free(key_env);
 	return (res);
 }
 

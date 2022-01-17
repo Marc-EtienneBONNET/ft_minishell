@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 17:49:52 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 14:44:22 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/17 17:18:22 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	my_para(int *para, char *str)
 		*para = 2;
 }
 
-int	ft_len(char *str)
+int	ft_len_2(char *str)
 {
 	int	para;
 	int	y;
@@ -82,7 +82,7 @@ char	**my_recup_arg(char *str)
 
 	para = 0;
 	y = 0;
-	res = malloc(sizeof(char *) * (ft_len(str) + 1));
+	res = malloc(sizeof(char *) * (ft_len_2(str) + 1));
 	if (!res)
 		return (NULL);
 	res[y] = NULL;
