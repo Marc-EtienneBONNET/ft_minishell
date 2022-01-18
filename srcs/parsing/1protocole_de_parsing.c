@@ -6,22 +6,16 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:15:50 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	my_parsing(void)
+int	my_gestion_for_export(void)
 {
-	char		**tab_cmd;
-	char		*cmd_tmp_env;
-	t_cmd		*cmd;
-	int			i;
 	char		*tmp;
 
-	i = 0;
-	cmd = NULL;
 	tmp = ft_strdup(g_term.str_cmd);
 	if (!tmp)
 		return (-1);
@@ -30,6 +24,34 @@ int	my_parsing(void)
 	free(tmp);
 	if (g_term.str_cmd == NULL)
 		return (-1);
+	return (1);
+}
+
+int	my_lancement_struct(char **cmd_tmp_env)
+{
+	char		**tab_cmd;
+
+	tab_cmd = my_malloc_chaine(*cmd_tmp_env);
+	if (tab_cmd == NULL)
+	{
+		my_free_tab(*cmd_tmp_env);
+		my_free_double_tab((void **)tab_cmd, -1);
+		return (-1);
+	}
+	my_rempli_tab_cmd(tab_cmd, *cmd_tmp_env);
+	my_free_tab((void *)*cmd_tmp_env);
+	g_term.cmd = my_init_struct_cmd(tab_cmd);
+	return (1);
+}
+
+int	my_parsing(void)
+{
+	char		*cmd_tmp_env;
+	t_cmd		*cmd;
+
+	cmd = NULL;
+	if (my_gestion_for_export() == -1)
+		return (-1);
 	cmd_tmp_env = my_gestion_var_env(g_term.str_cmd);
 	if (!cmd_tmp_env)
 	{
@@ -37,17 +59,7 @@ int	my_parsing(void)
 		my_free_tab(cmd_tmp_env);
 		return (2);
 	}
-	tab_cmd = my_malloc_chaine(cmd_tmp_env);
-	if (tab_cmd == NULL)
-	{
-		my_free_tab(cmd_tmp_env);
-		my_free_double_tab((void **)tab_cmd, -1);
-		return (-1);
-	}
-	my_rempli_tab_cmd(tab_cmd, cmd_tmp_env);
-	my_free_tab((void *)cmd_tmp_env);
-	g_term.cmd = my_init_struct_cmd(tab_cmd);
-	if (!g_term.cmd)
+	if (my_lancement_struct(&cmd_tmp_env) == -1 || !g_term.cmd)
 		return (-1);
 	if (!my_mouv_struct_for_red(&g_term.cmd))
 	{

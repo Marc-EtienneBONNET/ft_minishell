@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 11:53:35 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:02:29 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,5 +158,11 @@ int		mess_err2(char *str);
 
 int		my_free_all(int ret);
 void	my_exit(char **argv);
+int		my_check_building(t_cmd *cmd);
+t_cmd	*new_maillons_2(char **tab_cmd, int *x, t_cmd *tmp);
+char	*my_gestion_path(t_cmd *tmp);
+char	*my_modifie_cmd(t_cmd *tmp);
+t_cmd	*bzero_tmp(void);
+char	**init_cmd_arg(char **tab_cmd, int *x, int *y);
 
 #endif

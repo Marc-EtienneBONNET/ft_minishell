@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 11:03:35 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:01:36 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,14 @@ char	**init_cmd_arg(char **tab_cmd, int *x, int *y)
 {
 	int		conteur;
 	char	**tabe;
-	int		x_tmp;
 
-	x_tmp = *x;
-	conteur = 1;
-	while (tab_cmd[x_tmp] && tab_cmd[(*x)][0] && my_check_redirection(tab_cmd[x_tmp++]) == -1)
+	conteur = *x;
+	while (tab_cmd[conteur] && tab_cmd[*x][0]
+		&& my_check_redirection(tab_cmd[conteur]) == -1)
 		conteur++;
-	tabe = malloc(sizeof(char *) * (conteur + 1));
+	tabe = malloc(sizeof(char *) * ((conteur - (*x)) + 2));
 	if (!tabe)
-	{
-		free(tabe);
-		return (NULL);
-	}
+		return (my_free_tab((void *)tabe));
 	(*y)++;
 	while (tab_cmd[(*x)] && my_check_redirection(tab_cmd[*x]) == -1)
 	{
@@ -35,13 +31,9 @@ char	**init_cmd_arg(char **tab_cmd, int *x, int *y)
 			(*x)++;
 		else
 		{
-			tabe[(*y)] = ft_strdup(tab_cmd[(*x)++]);
-			if (!tabe[(*y)])
-			{
-				free(tabe);
-				return (NULL);
-			}
-			(*y)++;
+			tabe[(*y)++] = ft_strdup(tab_cmd[(*x)++]);
+			if (!tabe[(*y) - 1])
+				return (my_free_tab((void *)tabe));
 		}
 	}
 	tabe[*y] = NULL;
@@ -118,29 +110,8 @@ char	*my_gestion_path(t_cmd *tmp)
 	return (res);
 }
 
-t_cmd	*new_maillons(char **tab_cmd, int *x)
+t_cmd	*new_maillons_2(char **tab_cmd, int *x, t_cmd *tmp)
 {
-	t_cmd	*tmp;
-	int		y;
-
-	y = 0;
-	tmp = bzero_tmp();
-	if (tmp == NULL)
-		return (NULL);
-	if (my_check_redirection(tab_cmd[*x]) == -1)
-		tmp->cmd = ft_strdup(tab_cmd[(*x)++]);
-	if (tmp->cmd == NULL)
-		tmp->cmd = ft_strdup("cmd_vide");
-	tmp->path = my_gestion_path(tmp);
-	if (!tmp->path)
-		return (my_free_maillon(tmp));
-	tmp->cmd = my_modifie_cmd(tmp);
-	if (!tmp->cmd)
-		return (my_free_maillon(tmp));
-	tmp->arg = init_cmd_arg(tab_cmd, x, &y);
-	if (!tmp->arg)
-		return (my_free_maillon(tmp));
-	tmp->arg[0] = ft_strdup(tmp->cmd);
 	if (my_check_redirection(tab_cmd[*x]) > 0)
 		tmp->red = ft_strdup(tab_cmd[(*x)++]);
 	else

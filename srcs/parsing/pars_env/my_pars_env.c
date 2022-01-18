@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:52:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:07:17 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*my_env_var(char *env)
 	return (res);
 }
 
-int	my_init_struct_env()
+int	my_init_struct_env(void)
 {
 	int	y;
 	int	x;

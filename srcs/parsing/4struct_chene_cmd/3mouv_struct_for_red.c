@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 08:41:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 16:56:00 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:06:49 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	my_mouv_struct_for_red_droite(t_cmd **cmd)
 	int		x;
 
 	x = 1;
-
 	(*cmd)->fichier_1 = my_choose_fichier((*cmd)->next);
 	(*cmd)->intra_red = ft_strdup((*cmd)->red);
 	if (!(*cmd)->intra_red || !(*cmd)->fichier_1)
@@ -81,27 +80,26 @@ int	my_mouv_struct_for_red_gauche(t_cmd **cmd)
 	int		x;
 
 	x = 1;
+	(*cmd)->intra_red = ft_strdup((*cmd)->red);
+	free((*cmd)->red);
 	if (ft_strncmp((*cmd)->next->red, "<<", 3) == 0)
 	{
 		(*cmd)->fichier_1 = ft_strdup((*cmd)->next->next->cmd);
 		(*cmd)->fichier_2 = ft_strdup((*cmd)->next->cmd);
+		(*cmd)->red = ft_strdup((*cmd)->next->next->red);
 		if (!(*cmd)->fichier_2)
 			return (-1);
+		my_ajoute_arg(cmd, &((*cmd)->next->next));
 	}
 	else
+	{
 		(*cmd)->fichier_1 = ft_strdup((*cmd)->next->cmd);
-	(*cmd)->intra_red = ft_strdup((*cmd)->red);
-	free((*cmd)->red);
-	if (ft_strncmp((*cmd)->next->red, "<<", 3) == 0)
-		(*cmd)->red = ft_strdup((*cmd)->next->next->red);
-	else
 		(*cmd)->red = ft_strdup((*cmd)->next->red);
-	my_ajoute_arg(cmd, &((*cmd)->next));
+		my_ajoute_arg(cmd, &((*cmd)->next));
+	}
 	if (!(*cmd)->fichier_1
 		|| !(*cmd)->intra_red || !(*cmd)->red)
 		return (-1);
-	if (ft_strncmp((*cmd)->next->red, "<<", 3) == 0)
-		my_ajoute_arg(cmd, &((*cmd)->next->next));
 	my_ajuste_pointeur(cmd);
 	return (1);
 }

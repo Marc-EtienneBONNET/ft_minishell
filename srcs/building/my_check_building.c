@@ -1,40 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hendler.c                                          :+:      :+:    :+:   */
+/*   check_building.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 14:37:26 by mbonnet          ###   ########.fr       */
+/*   Created: 2022/01/18 14:33:31 by mbonnet           #+#    #+#             */
+/*   Updated: 2022/01/18 14:33:44 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handler_ctr_c(int code)
+int	my_check_building(t_cmd *cmd)
 {
-	int	x;
-
-	x = 0;
-	(void)code;
-	printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	handler_ctr_c_2(int code)
-{
-	int	x;
-
-	(void)code;
-	x = 0;
-	printf("\n");
-}
-
-void	handler_ctr_backslash(int code)
-{
-	(void)code;
-	printf(ROUGE"Quitter (core dumped)\n"BLANC);
+	if (ft_strncmp(cmd->cmd, "cd", 10) == 0
+		|| ft_strncmp(cmd->cmd, "unset", 10) == 0
+		|| ft_strncmp(cmd->cmd, "export", 10) == 0
+		|| ft_strncmp(cmd->cmd, "exit", 10) == 0
+		|| ft_strncmp(cmd->cmd, "pwd", 10) == 0
+		|| ft_strncmp(cmd->cmd, "echo", 10) == 0
+		|| ft_strncmp(cmd->cmd, "env", 10) == 0)
+		return (1);
+	return (0);
 }

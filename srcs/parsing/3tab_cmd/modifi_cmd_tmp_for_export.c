@@ -6,13 +6,11 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:35:42 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 15:17:51 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 14:37:48 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//export test=test test=test ; echo non=non ; export test=test
 
 void	my_install_guillemet(char **new, char *cmd_tmp, int *i, int *x)
 {

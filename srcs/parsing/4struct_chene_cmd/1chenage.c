@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 12:50:43 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:01:23 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,32 @@ t_cmd	*my_ajoute_maillon(t_cmd *cmd, t_cmd *tmp)
 		return (cmd);
 	}
 	return (my_ajoute_maillon_2(cmd, tmp));
+}
+
+t_cmd	*new_maillons(char **tab_cmd, int *x)
+{
+	t_cmd	*tmp;
+	int		y;
+
+	y = 0;
+	tmp = bzero_tmp();
+	if (tmp == NULL)
+		return (NULL);
+	if (my_check_redirection(tab_cmd[*x]) == -1)
+		tmp->cmd = ft_strdup(tab_cmd[(*x)++]);
+	if (tmp->cmd == NULL)
+		tmp->cmd = ft_strdup("cmd_vide");
+	tmp->path = my_gestion_path(tmp);
+	if (!tmp->path)
+		return (my_free_maillon(tmp));
+	tmp->cmd = my_modifie_cmd(tmp);
+	if (!tmp->cmd)
+		return (my_free_maillon(tmp));
+	tmp->arg = init_cmd_arg(tab_cmd, x, &y);
+	if (!tmp->arg)
+		return (my_free_maillon(tmp));
+	tmp->arg[0] = ft_strdup(tmp->cmd);
+	return (new_maillons_2(tab_cmd, x, tmp));
 }
 
 t_cmd	*my_init_struct_cmd(char **tab_cmd)
