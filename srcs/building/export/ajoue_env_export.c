@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:32:56 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ char	*my_recup_str(char *arg, int tele)
 	}
 	while (*arg && *arg != '=')
 		arg++;
-	arg++;
-	if (!(*arg))
+	if (!(*(++arg)))
 		return (NULL);
 	new = ft_strdup(arg);
 	if (!new)
@@ -119,31 +118,26 @@ int	my_ajoue_arg(char **arg)
 	int		y;
 	char	*key;
 	char	*var;
-	int		index;
 
-	y = 0;
-	while (arg[y])
+	y = -1;
+	while (arg[++y])
 	{
 		key = my_recup_str(arg[y], 0);
 		if (!key || my_check_doublon_and_cara_key(key, 0) == -1)
 			return (-1);
 		var = my_recup_str(arg[y], 1);
-		index = my_check_doublon_and_cara_key(key, 1);
-		if (index >= 0)
+		if (my_check_doublon_and_cara_key(key, 1) >= 0)
 		{
-			free(g_term.my_env[index].var);
-			g_term.my_env[index].var = var;
+			free(g_term.my_env[my_check_doublon_and_cara_key(key, 1)].var);
+			g_term.my_env[my_check_doublon_and_cara_key(key, 1)].var = var;
 		}
-		else
-			if (my_ajoue_new_env(&key, &var) == -1)
-			{
-				free(var);
-				free(key);
-				return (-1);
-			}
-		free(arg[y]);
-		y++;
+		else if (my_ajoue_new_env(&key, &var) == -1)
+		{
+			free(var);
+			free(key);
+			return (-1);
+		}
 	}
-	free(arg);
+	my_free_double_tab((void **)arg, -1);
 	return (1);
 }

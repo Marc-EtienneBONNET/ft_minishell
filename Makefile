@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/18 14:35:02 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/18 16:39:12 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ SRCS			=	main.c\
 					parsing/3tab_cmd/1init_tab_cmd.c\
 					parsing/3tab_cmd/2rempli_tab_cmd.c\
 					parsing/utile/checker_et_ft_utile.c\
-					parsing/utile/fonction_tmp.c\
 					parsing/4struct_chene_cmd/1chenage.c\
 					parsing/4struct_chene_cmd/2create_new_maillon.c\
 					parsing/4struct_chene_cmd/3mouv_struct_for_red.c\

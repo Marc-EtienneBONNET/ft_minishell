@@ -6,13 +6,11 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 17:49:52 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 17:18:22 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:14:22 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//export haha bonjour=salut bonjour= b="salut sa vas" "b=salut sa vas" b='salut sa vas' 'b=salut sa vas' salut="bonjour "to i
 
 void	my_para(int *para, char *str)
 {
@@ -74,6 +72,18 @@ char	*ft_strmicrojoin(char **str, char c)
 	return (res);
 }
 
+char	**my_recup_arg_2(char **str, int *y, char **res)
+{
+	if (**str != -122 && (**str) != '\'')
+	{
+		res[*y] = ft_strmicrojoin(&(res[*y]), (**str));
+		if (res[*y] == NULL)
+			return (my_free_double_tab((void **)res, *y));
+	}
+	(*str)++;
+	return (res);
+}
+
 char	**my_recup_arg(char *str)
 {
 	int		para;
@@ -92,21 +102,11 @@ char	**my_recup_arg(char *str)
 		{
 			while (ft_whitespace(*str) == 1)
 				str++;
-			y++;
-			res[y] = NULL;
+			res[++y] = NULL;
 			continue ;
 		}
 		my_para(&para, str);
-		if (*str != -122 && *str != '\'')
-		{
-			res[y] = ft_strmicrojoin(&(res[y]), *str);
-			if (res[y] == NULL)
-			{
-				my_free_double_tab((void **)res, y);
-				return (NULL);
-			}
-		}
-		str++;
+		my_recup_arg_2(&str, &y, res);
 	}
 	res[++y] = NULL;
 	return (res);

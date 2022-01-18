@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 15:30:29 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 14:37:13 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:40:02 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	**my_malloc_chaine(char *cmd_tmp)
 	y = 0;
 	i = 0;
 	len = my_compte_nb_chaine(cmd_tmp);
-	if (len == -1) 
+	if (len == -1)
 		return (NULL);
 	tab_cmd = malloc(sizeof(char *) * (len + 1));
 	if (tab_cmd == NULL)

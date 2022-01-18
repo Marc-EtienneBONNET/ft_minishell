@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 15:35:03 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:04:05 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ typedef struct s_term
 	int		dernier_ret;
 }	t_term;
 
-extern t_term g_term;
+extern t_term	g_term;
 
-#define ENTRE 1
-#define SORTI 0
+# define ENTRE 1
+# define SORTI 0
 
 //hendler
 	//hendler.c

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 10:16:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:37:58 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:37:27 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,39 +34,47 @@ t_env	*my_copy_t_env(void)
 	return (env);
 }
 
-int	my_print_export(void)
+int	my_sort(t_env **tmp)
 {
 	int		i;
 	int		j;
 	t_env	tmp_2;
+
+	i = -1;
+	while ((*tmp)[++i].key)
+	{
+		j = i;
+		while ((*tmp)[++j].key)
+		{
+			if (ft_strcmp((*tmp)[i].key, (*tmp)[j].key) > 0)
+			{
+				tmp_2 = (*tmp)[i];
+				(*tmp)[i] = (*tmp)[j];
+				(*tmp)[j] = tmp_2;
+			}
+		}
+	}
+	return (0);
+}
+
+int	my_print_export(void)
+{
+	int		i;
 	t_env	*tmp;
 
 	i = -1;
 	tmp = my_copy_t_env();
 	if (!tmp)
 		return (-1);
-	while (tmp[++i].key)
-	{
-		j = i;
-		while (tmp[++j].key)
-		{
-			if (ft_strcmp(tmp[i].key, tmp[j].key) > 0)
-			{
-				tmp_2 = tmp[i];
-				tmp[i] = tmp[j];
-				tmp[j] = tmp_2;
-			}
-		}
-	}
+	my_sort(&tmp);
 	i = -1;
 	while (tmp[++i].key)
 	{
 		printf("declare -x %s", tmp[i].key);
 		if (tmp[i].var)
-			printf("=%s",tmp[i].var);
+			printf("=%s", tmp[i].var);
 		printf("\n");
 	}
-		
 	free(tmp);
 	return (0);
 }
