@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/17 12:17:36 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/18 11:53:55 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS			=	main.c\
 					cmd_ex/gestion_red.c\
 					building/my_unset.c\
 					building/my_cd.c\
+					building/my_exit.c\
 					building/my_echo_pwd_env.c\
 					building/export/my_export.c\
 					building/export/my_traitement_arg_export.c\

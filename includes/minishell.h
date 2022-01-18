@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 11:16:18 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:53:35 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,6 @@ int		ft_strcmp(char *str1, char *str2);
 int		mess_err2(char *str);
 
 int		my_free_all(int ret);
+void	my_exit(char **argv);
 
 #endif

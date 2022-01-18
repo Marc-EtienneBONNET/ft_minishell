@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:30:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:19:26 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:53:10 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	my_ex_building(t_cmd *cmd)
 	else if (ft_strncmp(cpe, "env", 5) == 0)
 		my_env(cmd);
 	else if (ft_strncmp(cpe, "exit", 5) == 0)
-		printf("commande exit\n");
+		my_exit(cmd->arg);
 	else
 		return (-1);
 	g_term.dernier_ret = 0;
