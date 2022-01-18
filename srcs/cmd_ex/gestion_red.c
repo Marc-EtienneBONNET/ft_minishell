@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:07:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:08:04 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ void	my_ecrase_fichier(t_cmd *cmd, char *fichier)
 		}
 		else
 			close(fd);
+	}
+	if (ft_strncmp(cmd->intra_red, ">", 3) == 0
+		|| ft_strncmp(cmd->intra_red, ">>", 3) == 0)
+	{
 		fd = open(fichier, O_RDONLY);
 		if (fd == -1)
 			fd = open(fichier, O_CREAT);

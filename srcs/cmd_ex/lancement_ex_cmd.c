@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:34:16 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,49 @@ void	my_attente_waitpid(void)
 		if (WIFEXITED(g_term.dernier_ret))
 			g_term.dernier_ret = WEXITSTATUS(g_term.dernier_ret);
 		if (g_term.dernier_ret != 0)
-			printf(ROUGE"%s: commande introuvable\n"BLANC, g_term.cmd->cmd);
+		{
+			if (ft_strncmp(g_term.cmd->cmd, "cmd_vide", 9) == 0
+				&& ft_strncmp(g_term.cmd->red, "|", 9) == 0)
+			{
+				while (ft_strncmp(g_term.cmd->red, ";", 3) != 0)
+				{
+					g_term.cmd = g_term.cmd->next;
+					x++;
+				}
+				g_term.cmd = g_term.cmd->next;
+				x++;
+			}
+			else
+				printf(ROUGE"%s: commande introuvable\n"BLANC, g_term.cmd->cmd);
+		} 
 		g_term.cmd = g_term.cmd->next;
 		x++;
 	}
+}
+
+int	my_gestion_cmd_vide(int *x)
+{
+	pid_t	pid;
+
+	if (ft_strncmp(g_term.cmd->red, "|", 3) == 0)
+	{
+		printf("Minishell: erreur de syntaxe autoure du \"|\"\n");
+		g_term.dernier_ret = -1;
+		(*x) = g_term.cmd->info_cmd->nb_maillons;
+		return (-1);
+	}
+	else if (ft_strncmp(g_term.cmd->intra_red, ">", 3) == 0
+		|| ft_strncmp(g_term.cmd->intra_red, ">>", 3) == 0)
+		my_ecrase_fichier(g_term.cmd, g_term.cmd->fichier_1);
+	else if (ft_strncmp(g_term.cmd->intra_red, "<<", 3) == 0)
+	{
+		pipe(g_term.cmd->tub);
+		pid = fork();
+		my_heredoc(pid);
+		waitpid(pid, &g_term.dernier_ret, 0);
+	}
+	g_term.cmd = g_term.cmd->next;
+	return (1);
 }
 
 int	my_lancement_ex(void)
@@ -99,10 +138,7 @@ int	my_lancement_ex(void)
 	y = 0;
 	x = 0;
 	if (my_parsing() == 2)
-	{
-		//my_free_liste_chene(g_term.cmd);
 		return (1);
-	}
 	free(g_term.str_cmd);
 	if (!g_term.cmd)
 		return (-1);
@@ -112,8 +148,13 @@ int	my_lancement_ex(void)
 	while (x++ < g_term.cmd->info_cmd->nb_maillons)
 	{
 		pipe(g_term.cmd->tub);
-		if (my_lancement_building() == -1)
-			my_lancement_fork();
+		if (ft_strncmp(g_term.cmd->cmd, "cmd_vide", 10) == 0)
+			my_gestion_cmd_vide(&x);
+		else
+		{
+			if (my_lancement_building() == -1)
+				my_lancement_fork();
+		}
 	}
 	g_term.cmd = tmp;
 	my_attente_waitpid();

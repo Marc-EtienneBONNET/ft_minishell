@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 16:07:13 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:03:35 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ t_cmd	*new_maillons(char **tab_cmd, int *x)
 		return (NULL);
 	if (my_check_redirection(tab_cmd[*x]) == -1)
 		tmp->cmd = ft_strdup(tab_cmd[(*x)++]);
+	if (tmp->cmd == NULL)
+		tmp->cmd = ft_strdup("cmd_vide");
 	tmp->path = my_gestion_path(tmp);
 	if (!tmp->path)
 		return (my_free_maillon(tmp));

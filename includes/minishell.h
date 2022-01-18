@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:19:16 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:16:18 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ char	*my_choose_fichier(t_cmd *cmd);
 pid_t	my_gestion_red(void);
 	//heredoc.c
 void	my_heredoc(pid_t pid);
+void	my_ecrase_fichier(t_cmd *cmd, char *fichier);
 
 //building
 	//my_building
