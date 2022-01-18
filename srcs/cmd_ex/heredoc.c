@@ -6,11 +6,32 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 12:12:17 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:21:16 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	my_concatonne_2(char **tmp, char **str, char **tmp_2)
+{
+	*tmp_2 = ft_strdup((*tmp));
+	if (!(*tmp_2) && *tmp != NULL)
+		return (-1);
+	free((*tmp));
+	(*tmp) = ft_strjoin((*tmp_2), (*str));
+	if (!(*tmp))
+		return (-1);
+	free((*tmp_2));
+	(*tmp_2) = ft_strdup((*tmp));
+	if (!(*tmp_2))
+		return (-1);
+	free((*tmp));
+	(*tmp) = ft_strjoin((*tmp_2), "\n");
+	if (!(*tmp))
+		return (-1);
+	free((*tmp_2));
+	return (1);
+}
 
 int	my_concatonne(char **tmp, char **str)
 {
@@ -19,22 +40,8 @@ int	my_concatonne(char **tmp, char **str)
 	tmp_2 = NULL;
 	if (g_term.cmd->fichier_2 == NULL)
 	{
-		tmp_2 = ft_strdup((*tmp));
-		if (!tmp_2 && *tmp != NULL)
+		if (my_concatonne_2(tmp, str, &tmp_2) == -1)
 			return (-1);
-		free((*tmp));
-		(*tmp) = ft_strjoin(tmp_2, (*str));
-		if (!(*tmp))
-			return (-1);
-		free(tmp_2);
-		tmp_2 = ft_strdup((*tmp));
-		if (!tmp_2)
-			return (-1);
-		free((*tmp));
-		(*tmp) = ft_strjoin(tmp_2, "\n");
-		if (!(*tmp))
-			return (-1);
-		free(tmp_2);
 	}
 	else if (ft_strncmp((*str), g_term.cmd->fichier_2, 1000) == 0
 		&& g_term.cmd->fichier_2)
@@ -44,6 +51,16 @@ int	my_concatonne(char **tmp, char **str)
 	}
 	free((*str));
 	return (1);
+}
+
+void	my_sorti(char **str, char **tmp)
+{
+	my_tub_entre_sorti_enfant(g_term.cmd);
+	free(*str);
+	write(1, *tmp, ft_strlen(*tmp));
+	if (*tmp)
+		free(*tmp);
+	exit (0);
 }
 
 void	my_heredoc(pid_t pid)
@@ -62,14 +79,7 @@ void	my_heredoc(pid_t pid)
 	{
 		str = readline(">");
 		if (ft_strncmp(str, g_term.cmd->fichier_1, 1000) == 0)
-		{
-			my_tub_entre_sorti_enfant(g_term.cmd);
-			free(str);
-			write(1, tmp, ft_strlen(tmp));
-			if (tmp)
-				free(tmp);
-			exit (0);
-		}
+			my_sorti(&str, &tmp);
 		if (my_concatonne(&tmp, &str) == -1)
 			exit (-1);
 	}

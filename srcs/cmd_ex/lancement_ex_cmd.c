@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 11:34:16 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:22:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	my_lancement_building(void)
 {
 	if (ft_strncmp(g_term.cmd->red, "|", 3) == 0
-		|| g_term.cmd->intra_red )
+		|| g_term.cmd->intra_red)
 		return (-1);
 	else if (ft_strncmp(g_term.cmd->cmd, "cd", 10) == 0
 		|| ft_strncmp(g_term.cmd->cmd, "unset", 10) == 0
@@ -98,7 +98,7 @@ void	my_attente_waitpid(void)
 			}
 			else
 				printf(ROUGE"%s: commande introuvable\n"BLANC, g_term.cmd->cmd);
-		} 
+		}
 		g_term.cmd = g_term.cmd->next;
 		x++;
 	}

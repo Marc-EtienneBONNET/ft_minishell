@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:34:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 11:41:54 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:00:39 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	my_kill_tub(void)
 	x = 0;
 	while (x < g_term.cmd->info_cmd->nb_maillons)
 	{
-		if (ft_strncmp(g_term.cmd->cmd, "cmd_vide",9) == 0)
+		if (ft_strncmp(g_term.cmd->cmd, "cmd_vide", 9) == 0)
 			return ;
 		close(g_term.cmd->tub[ENTRE]);
 		close(g_term.cmd->tub[SORTI]);

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:07:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 11:08:04 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:01:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	my_gestion_fichier(t_cmd *cmd)
 		|| ft_strncmp(cmd->intra_red, ">>", 3) == 0)
 		fd = open(cmd->fichier_1, O_RDWR);
 	if (ft_strncmp(cmd->intra_red, ">>", 3) == 0)
-		while (read(fd, &c, 1) > 0);
+		while (read(fd, &c, 1) > 0)
+			c = 'a';
 	return (fd);
 }
 
