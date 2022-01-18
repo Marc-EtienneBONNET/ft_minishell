@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 15:02:29 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:35:03 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,5 +164,9 @@ char	*my_gestion_path(t_cmd *tmp);
 char	*my_modifie_cmd(t_cmd *tmp);
 t_cmd	*bzero_tmp(void);
 char	**init_cmd_arg(char **tab_cmd, int *x, int *y);
-
+char	*my_gestion_var_env_2(char **res, int *x);
+char	*my_inclus_res_var_env(char **tmp, char *key_env, int x);
+char	*my_recup_str_env(char **tmp, char *key_env);
+void	my_inclus_res_var_env_2(char **tmp, int x, char **res, char *str_env);
+char	*my_take_key_env(char *cmd_tmp, int x);
 #endif

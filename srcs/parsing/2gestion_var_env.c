@@ -65,30 +65,35 @@ void	my_inclus_res_var_env_2(char **tmp, int x, char **res, char *str_env)
 	(*res)[index_res] = '\0';
 }
 
+char	*my_recup_str_env(char **tmp, char *key_env)
+{
+	char	*str_env;
+
+	if (key_env == NULL)
+		return (my_free_tab(*tmp));
+	str_env = getenv(key_env);
+	if (str_env == NULL && ft_strncmp(key_env, "?", 3) != 0)
+	{
+		free(key_env);
+		free(*tmp);
+		return (my_little_printf_char("ERROR: variable d env inconnue\n"));
+	}
+	else if (str_env == NULL)
+	{
+		if (g_term.dernier_ret)
+			str_env = ft_itoa(g_term.dernier_ret);
+		else
+			str_env = ft_strdup("0");
+	}
+	return (str_env);
+}
+
 char	*my_inclus_res_var_env(char **tmp, char *key_env, int x)
 {
 	char	*str_env;
 	char	*res;
 
-	if (key_env == NULL)
-		return (my_free_tab(*tmp));
-	str_env = getenv(key_env);
-	if (str_env == NULL)
-	{
-		if (ft_strncmp(key_env, "?", 3) != 0)
-		{
-			free(key_env);
-			free(*tmp);
-			return (my_little_printf_char("ERROR: variable d env inconnue\n"));
-		}
-		else
-		{
-			if (g_term.dernier_ret)
-				str_env = ft_itoa(g_term.dernier_ret);
-			else
-				str_env = ft_strdup("0");
-		}
-	}
+	str_env = my_recup_str_env(tmp, key_env);
 	res = malloc(sizeof(char) * ((ft_strlen(str_env) + 2)
 				+ (ft_strlen(*tmp) - (ft_strlen(key_env) + 1)) + 1));
 	if (res == NULL)
@@ -96,40 +101,29 @@ char	*my_inclus_res_var_env(char **tmp, char *key_env, int x)
 	my_inclus_res_var_env_2(tmp, x, &res, str_env);
 	free(*tmp);
 	if (ft_strncmp(key_env, "?", 3) == 0 && str_env)
-	{
 		free(str_env);
-	}
 	free(key_env);
 	return (res);
 }
 
-char	*my_gestion_var_env(char *cmd_tmp) 
+char	*my_gestion_var_env_2(char **res, int *x)
 {
-	int		x;
-	char	*res;
-
-	x = -1;
-	res = ft_strdup(cmd_tmp);
-	if (!res)
-		return (NULL);
-	while (res[++x] != '\0')
+	if ((*res)[(*x)] == '\'')
 	{
-		if (res[x] == '\'')
-		{
-			x++;
-			while (res[x] != '\'')
-				if (!res[x++])
-					return (my_free_tab(res));
-		}
-		else if (res[x] && res[x] == '$')
-		{
-			res = my_inclus_res_var_env(&res, my_take_key_env(res, x), x);
-			if (res == NULL)
-				return (NULL);
-			while (res[x] && res[x] != '\'' && res[x] != '$')
-				x++;
-			x--;
-		}
+		(*x)++;
+		while ((*res)[(*x)] != '\'')
+			if (!(*res)[(*x)++])
+				return (my_free_tab(res));
 	}
-	return (res);
+	else if ((*res)[(*x)] && (*res)[(*x)] == '$')
+	{
+		(*res) = my_inclus_res_var_env(res, my_take_key_env((*res),
+					(*x)), (*x));
+		if ((*res) == NULL)
+			return (NULL);
+		while ((*res)[(*x)] && (*res)[(*x)] != '\'' && (*res)[(*x)] != '$')
+			(*x)++;
+		(*x)--;
+	}
+	return (*res);
 }

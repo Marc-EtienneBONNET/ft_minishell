@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 15:15:50 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:34:03 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,23 @@ int	my_lancement_struct(char **cmd_tmp_env)
 	my_free_tab((void *)*cmd_tmp_env);
 	g_term.cmd = my_init_struct_cmd(tab_cmd);
 	return (1);
+}
+
+char	*my_gestion_var_env(char *cmd_tmp)
+{
+	int		x;
+	char	*res;
+
+	x = -1;
+	res = ft_strdup(cmd_tmp);
+	if (!res)
+		return (NULL);
+	while (res[++x] != '\0')
+	{
+		if (my_gestion_var_env_2(&res, &x) == NULL)
+			return (NULL);
+	}
+	return (res);
 }
 
 int	my_parsing(void)
