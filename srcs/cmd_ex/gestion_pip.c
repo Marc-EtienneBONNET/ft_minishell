@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:34:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 12:00:39 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 12:47:09 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	my_tub_sorti_entre_parent(t_cmd *cmd)
 
 void	my_gestion_pip(t_cmd *cmd)
 {
-	if (ft_strncmp(cmd->red, "|", 3) == 0)
+	if (ft_strncmp(cmd->red, "|", 3) == 0 && ft_strncmp(cmd->cmd, "cat", 4) != 0)
 	{
 		if (cmd->pid == 0)
 			my_tub_entre_sorti_enfant(cmd);

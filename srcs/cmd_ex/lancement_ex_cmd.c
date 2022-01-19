@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 12:08:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 12:39:44 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	my_lancement_fork(void)
 			my_ex_building(g_term.cmd);
 		else
 			my_exe_cmd(g_term, g_term.cmd);
+		printf("coucou\n");
 		if (ft_strncmp(g_term.cmd->intra_red, "<<", 3) == 0)
 			waitpid(pid, NULL, 0);
 	}
