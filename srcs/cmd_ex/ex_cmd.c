@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:30:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 10:47:56 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 16:43:50 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,15 @@ int	my_exe_cmd(t_term g_term, t_cmd *cmd)
 	char	*cpe;
 
 	cpe = ft_strjoin(cmd->path, cmd->cmd);
+	dprintf(2, "execution de : %s\n", cmd->cmd);
 	if (!cpe)
 	{
 		free(cpe);
 		exit (-1);
 		return (-1);
 	}
-	if (execve(cpe, cmd->arg, g_term.envp) == -1)
+	int ret; 
+	if ((ret = execve(cpe, cmd->arg, g_term.envp)) == -1)
 	{
 		free(cpe);
 		exit (-1);

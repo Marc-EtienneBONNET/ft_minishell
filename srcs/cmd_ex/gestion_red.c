@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:07:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 11:37:41 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 17:31:21 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	my_gestion_fichier(t_cmd *cmd)
 			c = 'a';
 	return (fd);
 }
-
+/*
 pid_t	my_gestion_red(void)
 {
 	int		fd;
@@ -101,3 +101,4 @@ pid_t	my_gestion_red(void)
 	}
 	return (pid);
 }
+*/

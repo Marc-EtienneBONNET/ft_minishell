@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 12:39:44 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 17:33:24 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ int	my_lancement_building(void)
 	else
 		return (-1);
 }
-
+/*
 int	my_lancement_fork(void)
 {
 	pid_t	pid;
 
+	g_term.save_stdout = dup(1);
+	g_term.save_stdin = dup(0);
 	g_term.cmd->pid = fork();
 	my_gestion_pip(g_term.cmd);
 	if (g_term.cmd->pid == 0)
@@ -47,7 +49,7 @@ int	my_lancement_fork(void)
 	g_term.cmd = g_term.cmd->next;
 	return (1);
 }
-
+*/
 void	my_attente_waitpid(void)
 {
 	int	x;
@@ -76,7 +78,7 @@ void	my_attente_waitpid(void)
 		x++;
 	}
 }
-
+/*
 int	my_gestion_cmd_vide(int *x)
 {
 	pid_t	pid;
@@ -101,6 +103,85 @@ int	my_gestion_cmd_vide(int *x)
 	g_term.cmd = g_term.cmd->next;
 	return (1);
 }
+*/
+int	creat_pipe(void)
+{
+	int		x;
+	t_cmd	*tmp;
+
+	x = 0;
+	tmp = g_term.cmd;
+	while (x++ < g_term.cmd->info_cmd->nb_maillons)
+	{
+		pipe(g_term.cmd->tub);
+		g_term.cmd = g_term.cmd->next;
+	}
+	g_term.cmd = tmp;
+	return (1);
+}
+
+int	creat_fork(void)
+{
+	int		x;
+	t_cmd	*tmp;
+
+	x = 0;
+	tmp = g_term.cmd;
+	while (x < g_term.cmd->info_cmd->nb_maillons)
+	{
+		if ((my_check_building(g_term.cmd) != 1
+				|| ft_strncmp(g_term.cmd->red, "|", 3) == 0))
+		{
+			g_term.cmd->pid = fork();
+			if (g_term.cmd->pid == 0)
+			{
+				my_tub_entre_sorti_enfant(g_term.cmd);
+				break ;
+			}
+			else
+				my_close_pip(g_term.cmd);
+		}
+		g_term.cmd = g_term.cmd->next;
+		x++;
+	}
+	g_term.cmd = tmp;
+	return (1);
+}
+
+int	boucle_waitpid(void)
+{
+	int		x;
+	t_cmd	*tmp;
+
+	x = 0;
+	tmp = g_term.cmd;
+	while (x++ < g_term.cmd->info_cmd->nb_maillons)
+	{
+		waitpid(g_term.cmd->pid, &g_term.dernier_ret, 0);
+		g_term.cmd = g_term.cmd->next;
+	}
+	g_term.cmd = tmp;
+	return (1);
+}
+
+int	boucle_ex(void)
+{
+	int		x;
+	t_cmd	*tmp;
+
+	x = 0;
+	tmp = g_term.cmd;
+	while (x++ < g_term.cmd->info_cmd->nb_maillons)
+	{
+		if (g_term.cmd->pid == 0)
+		{
+			my_exe_cmd(g_term, g_term.cmd);
+		}
+		g_term.cmd = g_term.cmd->next;
+	}
+	g_term.cmd = tmp;
+	return (1);
+}
 
 int	my_lancement_ex(void)
 {
@@ -112,19 +193,16 @@ int	my_lancement_ex(void)
 	free(g_term.str_cmd);
 	if (!g_term.cmd)
 		return (-1);
+	g_term.save_stdin = dup(0);
+	g_term.save_stdout = dup(1);
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
-	while (x++ < g_term.cmd->info_cmd->nb_maillons)
-	{
-		pipe(g_term.cmd->tub);
-		if (ft_strncmp(g_term.cmd->cmd, "cmd_vide", 10) == 0)
-			my_gestion_cmd_vide(&x);
-		else
-			if (my_lancement_building() == -1)
-				my_lancement_fork();
-	}
-	my_attente_waitpid();
-	my_kill_tub();
+	creat_pipe();
+	creat_fork();
+	boucle_ex();
+	if (g_term.cmd->pid)
+		boucle_waitpid();
+	//boucle tub;
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
 	my_free_liste_chene(g_term.cmd);

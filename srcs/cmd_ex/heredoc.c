@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 12:12:17 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 11:49:14 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 17:30:58 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	my_sorti(char **str, char **tmp)
 	exit (0);
 }
 
+/*
 void	my_heredoc(pid_t pid)
 {
 	char	*str;
@@ -94,3 +95,4 @@ void	my_heredoc(pid_t pid)
 	}
 	exit (0);
 }
+*/

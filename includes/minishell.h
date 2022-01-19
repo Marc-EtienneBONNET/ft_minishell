@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 11:08:52 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 17:30:24 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct str_env
 
 typedef struct s_term
 {
+	int		save_stdin;
+	int		save_stdout;
 	char	**envp;
 	char	*str_cmd;
 	t_cmd	*cmd;
@@ -169,6 +171,7 @@ char	*my_inclus_res_var_env(char **tmp, char *key_env, int x);
 char	*my_recup_str_env(char **tmp, char *key_env);
 void	my_inclus_res_var_env_2(char **tmp, int x, char **res, char *str_env);
 char	*my_take_key_env(char *cmd_tmp, int x);
+void	my_close_pip(t_cmd *cmd);
 
 void my_print_struct(t_cmd *cmd);
 #endif
