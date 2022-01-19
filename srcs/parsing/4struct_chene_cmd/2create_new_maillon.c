@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 11:58:07 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 12:22:12 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*my_modifie_cmd(t_cmd *tmp)
 
 	x = 0;
 	len = 0;
-		len = ft_strlen(tmp->path);
+	len = ft_strlen(tmp->path);
 	res = (char *)malloc(sizeof(char) * ((ft_strlen(tmp->cmd) - len) + 1)); 
 	if (!res)
 		return (NULL);

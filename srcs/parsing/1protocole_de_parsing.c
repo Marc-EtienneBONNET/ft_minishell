@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 11:16:38 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 12:11:20 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	my_lancement_struct(char **cmd_tmp_env)
 	my_rempli_tab_cmd(tab_cmd, *cmd_tmp_env);
 	my_free_tab((void *)*cmd_tmp_env);
 	g_term.cmd = my_init_struct_cmd(tab_cmd);
-	//printf("salut\n");
 	return (1);
 }
 
