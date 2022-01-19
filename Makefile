@@ -6,13 +6,14 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/18 16:39:12 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/19 10:46:42 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell 
 
 SRCS			=	main.c\
+					tmp.c\
 					hendler/hendler.c\
 					parsing/1protocole_de_parsing.c\
 					parsing/2gestion_var_env.c\

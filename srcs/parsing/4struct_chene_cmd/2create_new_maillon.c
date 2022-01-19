@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 15:01:36 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 11:58:07 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_cmd	*bzero_tmp(void)
 	return (tmp);
 }
 
-char	*my_modifie_cmd(t_cmd *tmp)
+char	*my_modifie_cmd(t_cmd *tmp) 
 {
 	int		len;
 	char	*res;
@@ -68,9 +68,8 @@ char	*my_modifie_cmd(t_cmd *tmp)
 
 	x = 0;
 	len = 0;
-	if (ft_strncmp(tmp->path, "/bin/", 10) != 0)
 		len = ft_strlen(tmp->path);
-	res = (char *)malloc(sizeof(char) * ((ft_strlen(tmp->cmd) - len) + 1));
+	res = (char *)malloc(sizeof(char) * ((ft_strlen(tmp->cmd) - len) + 1)); 
 	if (!res)
 		return (NULL);
 	while (tmp->cmd[len])
@@ -84,6 +83,41 @@ char	*my_modifie_cmd(t_cmd *tmp)
 	return (res);
 }
 
+char	*my_recup_path(t_cmd *cmd)
+{
+	char	**path;
+	int		y;
+	char	*tmp;
+	char	*tmp_2;
+
+	y = 0;
+	while (ft_strncmp(g_term.my_env[y].key, "PATH", 5) != 0)
+	{
+		y++;
+	}
+	path = ft_split(g_term.my_env[y].var, ':');
+	y = 0;
+	while (path[y])
+	{
+		tmp = ft_strjoin(path[y], "/");
+		tmp_2 = ft_strdup(tmp);
+		free(tmp);
+		tmp = ft_strjoin(tmp_2, cmd->cmd);
+		if (access(tmp, F_OK) == 0)
+		{
+			free(tmp);
+			my_free_double_tab((void *)path, -1);
+			return (tmp_2);
+		}
+		else
+			free(tmp_2);
+		free(tmp);
+		y++;
+	}
+	my_free_double_tab((void *)path, -1);
+	return (ft_strdup("sans_fichier"));
+}
+
 char	*my_gestion_path(t_cmd *tmp)
 {
 	int		x;
@@ -94,7 +128,7 @@ char	*my_gestion_path(t_cmd *tmp)
 		x--;
 	if (x == -1)
 	{
-		res = ft_strdup("/bin/");
+		res = my_recup_path(tmp);
 		if (!res)
 			return (NULL);
 	}

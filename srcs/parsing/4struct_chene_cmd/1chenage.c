@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 15:01:23 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 11:16:03 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,12 @@ t_cmd	*my_ajoute_maillon(t_cmd *cmd, t_cmd *tmp)
 t_cmd	*new_maillons(char **tab_cmd, int *x)
 {
 	t_cmd	*tmp;
+	char	*tmp_2;
 	int		y;
+	int		w;
 
 	y = 0;
+	w = 0;
 	tmp = bzero_tmp();
 	if (tmp == NULL)
 		return (NULL);
@@ -70,6 +73,15 @@ t_cmd	*new_maillons(char **tab_cmd, int *x)
 	tmp->path = my_gestion_path(tmp);
 	if (!tmp->path)
 		return (my_free_maillon(tmp));
+	w = ft_strlen(tmp->cmd);
+	while (tmp->cmd[w] != '/' && tmp->cmd[w])
+		w--;
+	if (tmp->cmd[w] != '/')
+	{
+		tmp_2 = ft_strjoin(tmp->path, tmp->cmd);
+		free(tmp->cmd);
+		tmp->cmd = tmp_2;
+	}
 	tmp->cmd = my_modifie_cmd(tmp);
 	if (!tmp->cmd)
 		return (my_free_maillon(tmp));

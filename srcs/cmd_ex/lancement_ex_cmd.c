@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 14:37:05 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 12:08:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	my_attente_waitpid(void)
 					x++;
 				}
 			}
-			else
-				printf(ROUGE"%s: commande introuvable\n"BLANC, g_term.cmd->cmd);
+			else if (g_term.dernier_ret == 255)
+				printf(ROUGE"%s: command not found\n"BLANC, g_term.cmd->cmd);
 		}
 		g_term.cmd = g_term.cmd->next;
 		x++;

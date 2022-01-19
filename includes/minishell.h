@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 16:04:05 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/19 11:08:52 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,4 +169,6 @@ char	*my_inclus_res_var_env(char **tmp, char *key_env, int x);
 char	*my_recup_str_env(char **tmp, char *key_env);
 void	my_inclus_res_var_env_2(char **tmp, int x, char **res, char *str_env);
 char	*my_take_key_env(char *cmd_tmp, int x);
+
+void my_print_struct(t_cmd *cmd);
 #endif
