@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:12:05 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 16:17:42 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 17:18:27 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	creat_fork(void)
 	while (x < g_term.cmd->info_cmd->nb_maillons)
 	{
 		if ((my_check_building(g_term.cmd) != 1
-				|| ft_strncmp(g_term.cmd->red, "|", 3) == 0)
+				|| ft_strncmp(g_term.cmd->red, "|", 3) == 0
+				|| g_term.cmd->intra_red)
 			&& ft_strncmp(g_term.cmd->cmd, "cmd_vide", 9) != 0)
 		{
 			g_term.cmd->pid = fork();
@@ -90,12 +91,14 @@ int	boucle_ex(void)
 	{
 		pid = my_gestion_red(g_term.cmd);
 		if ((my_check_building(g_term.cmd) == 1
-				&& ft_strncmp(g_term.cmd->red, "|", 3) != 0))
+				&& ft_strncmp(g_term.cmd->red, "|", 3) != 0
+				&& !g_term.cmd->intra_red))
 			g_term.dernier_ret = my_ex_building(g_term.cmd);
 		else if (g_term.cmd->pid == 0)
 		{
 			if ((my_check_building(g_term.cmd) == 1
-					&& ft_strncmp(g_term.cmd->red, "|", 3) == 0))
+					&& (ft_strncmp(g_term.cmd->red, "|", 3) == 0
+						|| g_term.cmd->intra_red)))
 				my_ex_building(g_term.cmd);
 			else
 			{
@@ -120,7 +123,8 @@ int	boucle_waitpid(void)
 	while (x++ < g_term.cmd->info_cmd->nb_maillons)
 	{
 		if ((my_check_building(g_term.cmd) != 1
-				|| ft_strncmp(g_term.cmd->red, "|", 3) == 0)
+				|| ft_strncmp(g_term.cmd->red, "|", 3) == 0
+				|| g_term.cmd->intra_red)
 			&& ft_strncmp(g_term.cmd->cmd, "cmd_vide", 9) != 0)
 		{
 			waitpid(g_term.cmd->pid, &g_term.dernier_ret, 0);

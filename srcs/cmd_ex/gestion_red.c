@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 13:44:24 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 16:21:53 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 17:04:43 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,12 @@ pid_t	my_gestion_red(t_cmd *cmd)
 	int		fd;
 	int		tub[2];
 	pid_t	pid;
-	int		save_int;
-	int		save_out;
+
 
 	fd = 0;
 	pid = -1;
-	if ((cmd->pid == 0 && cmd->intra_red) || (my_check_building(g_term.cmd) == 1
-			&& ft_strncmp(g_term.cmd->red, "|", 3) != 0))
+	if (cmd->pid == 0 && cmd->intra_red)
 	{
-		save_int = dup(0);
-		save_out = dup(1);
 		if (ft_strncmp(g_term.cmd->intra_red, ">", 3) == 0
 			|| ft_strncmp(g_term.cmd->intra_red, ">>", 3) == 0
 			|| ft_strncmp(g_term.cmd->intra_red, "<", 3) == 0)
