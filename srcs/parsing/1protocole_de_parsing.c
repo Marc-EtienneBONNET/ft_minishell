@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 12:11:20 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 11:17:38 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,7 @@ int	my_parsing(void)
 		return (2);
 	}
 	if (my_lancement_struct(&cmd_tmp_env) == -1 || !g_term.cmd)
-	{
-		//printf("coucou\n");
 		return (-1);
-		
-	}
-	//my_print_struct(g_term.cmd);
 	if (!my_mouv_struct_for_red(&g_term.cmd))
 	{
 		my_free_liste_chene(g_term.cmd);

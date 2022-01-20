@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/19 10:46:42 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/20 12:12:59 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,10 @@ SRCS			=	main.c\
 					parsing/4struct_chene_cmd/2create_new_maillon.c\
 					parsing/4struct_chene_cmd/3mouv_struct_for_red.c\
 					parsing/pars_env/my_pars_env.c\
-					cmd_ex/lancement_ex_cmd.c\
+					cmd_ex/protocole_ex.c\
+					cmd_ex/element_d_ex.c\
 					cmd_ex/gestion_pip.c\
 					cmd_ex/ex_cmd.c\
-					cmd_ex/heredoc.c\
-					cmd_ex/gestion_red.c\
 					building/my_unset.c\
 					building/my_cd.c\
 					building/my_exit.c\

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 17:30:24 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 12:13:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	my_kill_tub(void);
 char	*my_choose_fichier(t_cmd *cmd);
 pid_t	my_gestion_red(void);
 	//heredoc.c
-void	my_heredoc(pid_t pid);
+void	my_heredoc(pid_t pid, int *tub);
 void	my_ecrase_fichier(t_cmd *cmd, char *fichier);
 
 //building
@@ -174,4 +174,13 @@ char	*my_take_key_env(char *cmd_tmp, int x);
 void	my_close_pip(t_cmd *cmd);
 
 void my_print_struct(t_cmd *cmd);
+char	*my_recup_path(t_cmd *cmd);
+void	my_sorti(char **str, char **tmp);
+
+int	creat_pipe(void);
+int	creat_fork(void);
+int	boucle_close_tub(void);
+int	boucle_waitpid(void);
+int	boucle_ex(void);
+
 #endif

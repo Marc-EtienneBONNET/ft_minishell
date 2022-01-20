@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:30:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 09:40:31 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 12:09:22 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	my_ex_building(t_cmd *cmd)
 int	my_exe_cmd(t_term g_term, t_cmd *cmd)
 {
 	char	*cpe;
+	int		ret;
 
 	cpe = ft_strjoin(cmd->path, cmd->cmd);
 	if (!cpe)
@@ -48,11 +49,11 @@ int	my_exe_cmd(t_term g_term, t_cmd *cmd)
 		exit (-1);
 		return (-1);
 	}
-	int ret; 
-	if ((ret = execve(cpe, cmd->arg, g_term.envp)) == -1)
+	ret = execve(cpe, cmd->arg, g_term.envp);
+	if (ret == -1)
 	{
 		free(cpe);
-		exit (-1);
+		exit (ret);
 	}
 	free(cpe);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 08:41:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 15:06:49 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 12:10:01 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,27 @@ void	my_ajuste_pointeur(t_cmd **cmd)
 		(*cmd)->next->previous = (*cmd);
 		my_free_maillon(cmd_tmp);
 	}
+}
+
+char	*my_choose_fichier(t_cmd *cmd)
+{
+	char	*res;
+	char	*path;
+
+	path = my_recup_path(cmd);
+	if (ft_strncmp(cmd->path, path, 7) == 0)
+	{
+		res = ft_strjoin("./", cmd->cmd);
+	}
+	else
+		res = ft_strjoin(cmd->path, cmd->cmd);
+	free(path);
+	if (!res)
+	{
+		free(res);
+		return (NULL);
+	}
+	return (res);
 }
 
 int	my_mouv_struct_for_red_droite(t_cmd **cmd)
