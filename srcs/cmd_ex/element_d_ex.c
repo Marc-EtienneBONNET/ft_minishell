@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ellement_d_ex.c                                    :+:      :+:    :+:   */
+/*   element_d_ex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:12:05 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 12:12:38 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 15:02:50 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,40 @@ int	boucle_close_tub(void)
 	return (1);
 }
 
+int	boucle_ex(void)
+{
+	int		x;
+	t_cmd	*tmp;
+	int		pid;
+
+	x = 0;
+	tmp = g_term.cmd;
+	while (x++ < g_term.cmd->info_cmd->nb_maillons)
+	{
+		if (g_term.cmd->intra_red && (ft_strncmp(g_term.cmd->intra_red, ">", 3) == 0
+			|| ft_strncmp(g_term.cmd->intra_red, ">>", 3) == 0
+			|| ft_strncmp(g_term.cmd->intra_red, "<", 3) == 0
+			|| ft_strncmp(g_term.cmd->intra_red, "<<", 3) == 0))
+			pid = my_gestion_red(g_term.cmd);
+		if ((my_check_building(g_term.cmd) == 1
+				&& ft_strncmp(g_term.cmd->red, "|", 3) != 0))
+			g_term.dernier_ret = my_ex_building(g_term.cmd);
+		else if (g_term.cmd->pid == 0)
+		{
+			if ((my_check_building(g_term.cmd) == 1
+					&& ft_strncmp(g_term.cmd->red, "|", 3) == 0))
+				my_ex_building(g_term.cmd);
+			else
+				my_exe_cmd(g_term, g_term.cmd);
+			if (ft_strncmp(g_term.cmd->intra_red, "<<", 3) == 0)
+				waitpid(pid, NULL, 0);
+		}
+		g_term.cmd = g_term.cmd->next;
+	}
+	g_term.cmd = tmp;
+	return (1);
+}
+
 int	boucle_waitpid(void)
 {
 	int		x;
@@ -96,32 +130,6 @@ int	boucle_waitpid(void)
 				g_term.dernier_ret = WEXITSTATUS(g_term.dernier_ret);
 			if (g_term.dernier_ret == 255)
 				printf(ROUGE"%s: command not found\n"BLANC, g_term.cmd->cmd);
-		}
-		g_term.cmd = g_term.cmd->next;
-	}
-	g_term.cmd = tmp;
-	return (1);
-}
-
-int	boucle_ex(void)
-{
-	int		x;
-	t_cmd	*tmp;
-
-	x = 0;
-	tmp = g_term.cmd;
-	while (x++ < g_term.cmd->info_cmd->nb_maillons)
-	{
-		if ((my_check_building(g_term.cmd) == 1
-				&& ft_strncmp(g_term.cmd->red, "|", 3) != 0))
-			g_term.dernier_ret = my_ex_building(g_term.cmd);
-		else if (g_term.cmd->pid == 0)
-		{
-			if ((my_check_building(g_term.cmd) == 1
-					&& ft_strncmp(g_term.cmd->red, "|", 3) == 0))
-				my_ex_building(g_term.cmd);
-			else
-				my_exe_cmd(g_term, g_term.cmd);
 		}
 		g_term.cmd = g_term.cmd->next;
 	}

@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/20 12:12:59 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/20 14:29:32 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,9 @@ SRCS			=	main.c\
 					cmd_ex/protocole_ex.c\
 					cmd_ex/element_d_ex.c\
 					cmd_ex/gestion_pip.c\
+					cmd_ex/gestion_red.c\
 					cmd_ex/ex_cmd.c\
+					cmd_ex/my_heredoc.c\
 					building/my_unset.c\
 					building/my_cd.c\
 					building/my_exit.c\
