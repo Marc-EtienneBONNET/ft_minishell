@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/19 17:33:24 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 09:39:48 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,8 @@ int	creat_pipe(void)
 int	creat_fork(void)
 {
 	int		x;
-	t_cmd	*tmp;
 
 	x = 0;
-	tmp = g_term.cmd;
 	while (x < g_term.cmd->info_cmd->nb_maillons)
 	{
 		if ((my_check_building(g_term.cmd) != 1
@@ -144,7 +142,6 @@ int	creat_fork(void)
 		g_term.cmd = g_term.cmd->next;
 		x++;
 	}
-	g_term.cmd = tmp;
 	return (1);
 }
 
@@ -173,8 +170,15 @@ int	boucle_ex(void)
 	tmp = g_term.cmd;
 	while (x++ < g_term.cmd->info_cmd->nb_maillons)
 	{
+		if ((my_check_building(g_term.cmd) == 1
+			&& ft_strncmp(g_term.cmd->red, "|", 3) != 0))
+			my_ex_building(g_term.cmd);
 		if (g_term.cmd->pid == 0)
 		{
+			if ((my_check_building(g_term.cmd) == 1
+			&& ft_strncmp(g_term.cmd->red, "|", 3) == 0))
+				my_ex_building(g_term.cmd);
+			else
 			my_exe_cmd(g_term, g_term.cmd);
 		}
 		g_term.cmd = g_term.cmd->next;
