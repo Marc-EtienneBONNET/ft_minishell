@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 11:29:44 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 17:58:59 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,11 @@ char	*my_recup_path(t_cmd *cmd)
 	char	*tmp_2;
 
 	y = 0;
-	while (ft_strncmp(g_term.my_env[y].key, "PATH", 5) != 0)
-	{
+	while (g_term.my_env[y].key
+		&& ft_strncmp(g_term.my_env[y].key, "PATH", 5) != 0)
 		y++;
-	}
+	if (g_term.my_env[y].key == NULL)
+		return (NULL);
 	path = ft_split(g_term.my_env[y].var, ':');
 	y = 0;
 	while (path[y])

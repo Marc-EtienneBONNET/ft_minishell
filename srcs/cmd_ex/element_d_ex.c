@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:12:05 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 17:18:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 18:04:07 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,8 @@ int	boucle_waitpid(void)
 			waitpid(g_term.cmd->pid, &g_term.dernier_ret, 0);
 			if (WIFEXITED(g_term.dernier_ret))
 				g_term.dernier_ret = WEXITSTATUS(g_term.dernier_ret);
-			if (g_term.dernier_ret == 255)
-				printf(ROUGE"%s: command not found\n"BLANC, g_term.cmd->cmd);
+			if (g_term.dernier_ret == 255 || g_term.dernier_ret == 139)
+				printf(ROUGE"Minishell: %s : command not found\n"BLANC, g_term.cmd->cmd);
 		}
 		g_term.cmd = g_term.cmd->next;
 	}
