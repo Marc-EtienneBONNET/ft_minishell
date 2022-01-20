@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 13:44:24 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 15:03:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 16:21:53 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,38 @@ int	my_recup_fd_fichier(t_cmd *cmd)
 
 pid_t	my_gestion_red(t_cmd *cmd)
 {
-	int	fd;
-	int	*tub;
+	int		fd;
+	int		tub[2];
 	pid_t	pid;
+	int		save_int;
+	int		save_out;
 
 	fd = 0;
-	tub = NULL;
-	pid = 0;
-	if (cmd->pid == 0)
+	pid = -1;
+	if ((cmd->pid == 0 && cmd->intra_red) || (my_check_building(g_term.cmd) == 1
+			&& ft_strncmp(g_term.cmd->red, "|", 3) != 0))
 	{
+		save_int = dup(0);
+		save_out = dup(1);
 		if (ft_strncmp(g_term.cmd->intra_red, ">", 3) == 0
 			|| ft_strncmp(g_term.cmd->intra_red, ">>", 3) == 0
 			|| ft_strncmp(g_term.cmd->intra_red, "<", 3) == 0)
+		{
 			fd = my_recup_fd_fichier(cmd);
-		if (ft_strncmp(g_term.cmd->intra_red, ">", 3) == 0
-			|| ft_strncmp(g_term.cmd->intra_red, ">>", 3) == 0)
-			dup2(fd, 1);
-		else if (ft_strncmp(g_term.cmd->intra_red, "<", 3) == 0)
-			dup2(fd, 0);
-		close(fd);
-		if (g_term.cmd->pid == 0 && ft_strncmp(g_term.cmd->intra_red, "<<", 3) == 0)
+			if (ft_strncmp(g_term.cmd->intra_red, ">", 3) == 0
+				|| ft_strncmp(g_term.cmd->intra_red, ">>", 3) == 0)
+				dup2(fd, 1);
+			else if (ft_strncmp(g_term.cmd->intra_red, "<", 3) == 0)
+				dup2(fd, 0);
+			close(fd);
+		}
+		else if (ft_strncmp(g_term.cmd->intra_red, "<<", 3) == 0)
 		{
 			pipe(tub);
 			pid = fork();
 			my_heredoc(pid, tub);
+			return (pid);
 		}
-		return (pid);
 	}
 	return (-1);
 }

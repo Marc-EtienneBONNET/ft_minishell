@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:29:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 14:55:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 15:46:05 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ int	my_concatonne(char **tmp, char **str)
 
 void	my_sorti(char **str, char **tmp, int *tub)
 {
-	close(tub[SORTI]);
-	dup2(tub[ENTRE], 1);
-	close(tub[ENTRE]);
+	(void)tub;
 	free(*str);
 	write(1, *tmp, ft_strlen(*tmp));
 	if (*tmp)
@@ -89,7 +87,12 @@ void	my_heredoc(pid_t pid, int *tub)
 	{
 		str = readline(VERT"heredoc>"BLANC);
 		if (ft_strncmp(str, g_term.cmd->fichier_1, 1000) == 0)
+		{
+			close(tub[SORTI]);
+			dup2(tub[ENTRE], 1);
+			close(tub[ENTRE]);
 			my_sorti(&str, &tmp, tub);
+		}
 		if (my_concatonne(&tmp, &str) == -1)
 		{
 			exit (-1);
