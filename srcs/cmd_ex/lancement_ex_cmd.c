@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 09:39:48 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/20 10:13:56 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,26 @@ int	creat_fork(void)
 				my_tub_entre_sorti_enfant(g_term.cmd);
 				break ;
 			}
-			else
+		}
+		g_term.cmd = g_term.cmd->next;
+		x++;
+	}
+	return (1);
+}
+
+int	boucle_close_tub(void)
+{
+	int		x;
+
+	x = 0;
+	while (x < g_term.cmd->info_cmd->nb_maillons)
+	{
+		if (g_term.cmd->pid != 0)
+		{
+			if (x == 0)
 				my_close_pip(g_term.cmd);
+			if (ft_strncmp(g_term.cmd->red, "|", 3) == 0)
+				my_close_pip(g_term.cmd->next);
 		}
 		g_term.cmd = g_term.cmd->next;
 		x++;
@@ -154,7 +172,11 @@ int	boucle_waitpid(void)
 	tmp = g_term.cmd;
 	while (x++ < g_term.cmd->info_cmd->nb_maillons)
 	{
-		waitpid(g_term.cmd->pid, &g_term.dernier_ret, 0);
+		if ((my_check_building(g_term.cmd) != 1
+			|| ft_strncmp(g_term.cmd->red, "|", 3) == 0))
+		{
+			waitpid(g_term.cmd->pid, &g_term.dernier_ret, 0);
+		}
 		g_term.cmd = g_term.cmd->next;
 	}
 	g_term.cmd = tmp;
@@ -203,6 +225,7 @@ int	my_lancement_ex(void)
 	signal(SIGINT, handler_ctr_c_2);
 	creat_pipe();
 	creat_fork();
+	boucle_close_tub();
 	boucle_ex();
 	if (g_term.cmd->pid)
 		boucle_waitpid();
