@@ -6,11 +6,22 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 11:41:47 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 15:14:56 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	message_error(void)
+{
+	if (g_term.dernier_ret == 255 || g_term.dernier_ret == 139)
+		printf(ROUGE"Minishell: %s : command not found\n"BLANC,
+			g_term.cmd->cmd);
+	if (g_term.dernier_ret == -1)
+		printf(ROUGE"Minishell: %s : arg incorecte\n"BLANC,
+			g_term.cmd->cmd);
+	return (1);
+}
 
 int	boucle_waitpid(void)
 {
@@ -30,53 +41,10 @@ int	boucle_waitpid(void)
 			if (WIFEXITED(g_term.dernier_ret))
 				g_term.dernier_ret = WEXITSTATUS(g_term.dernier_ret);
 		}
-		if (g_term.dernier_ret == 255 || g_term.dernier_ret == 139)
-			printf(ROUGE"Minishell: %s : command not found\n"BLANC,
-				g_term.cmd->cmd);
-		if (g_term.dernier_ret == -1)
-			printf(ROUGE"Minishell: %s : arg incorecte\n"BLANC,
-				g_term.cmd->cmd);
+		message_error();
 		g_term.cmd = g_term.cmd->next;
 	}
 	g_term.cmd = tmp;
-	return (1);
-}
-
-int	my_print_list_chene(t_cmd *cmd)
-{
-	int	i;
-	int	x;
-
-	x = 0;
-	i = 0;
-	if (!cmd)
-		return (1);
-	printf(ROUGE"\tDEBUT structure cmd\n"BLANC);
-	while (cmd->info_cmd->nb_maillons > i)
-	{
-		printf(BLEU"\n\n\tMaillon N %d\n"BLANC, i);
-		printf(BLEU"\n\n\tNombre maillon : %d\n"BLANC, cmd->info_cmd->nb_maillons);
-		printf(VERT"cmd \t\t:\t(%s)\n"BLANC, cmd->cmd);
-		printf(VIOLET"fichier_1 \t:\t(%s)\n"BLANC, cmd->fichier_1);
-		printf(VIOLET"fichier_2 \t:\t(%s)\n"BLANC, cmd->fichier_2);
-		printf(VIOLET"intra_red \t:\t(%s)\n"BLANC, cmd->intra_red);
-		printf(VERT"path \t\t:\t(%s)\n"BLANC, cmd->path);
-		printf(VERT"arg\t\t:\t"BLANC);
-		if (cmd->arg)
-			while (cmd->arg[x] != NULL)
-				printf(VERT"(%s)\t"BLANC, cmd->arg[x++]);
-		else
-			printf(VERT"((null))"BLANC);
-		printf("\n");
-		if (cmd->red != NULL)
-			printf(VERT"redirection\t:\t%s\n"BLANC, cmd->red);
-		else
-			printf(VERT"redirection\t:\t((null))\n"BLANC);
-		i++;
-		x = 0;
-		cmd = cmd->next;
-	}
-	printf(ROUGE"\tFIN structure cmd\n\n"BLANC);
 	return (1);
 }
 
@@ -87,7 +55,6 @@ int	my_lancement_ex(void)
 	x = 0;
 	if (my_parsing() == 2)
 		return (1);
-	my_print_list_chene(g_term.cmd);
 	free(g_term.str_cmd);
 	if (!g_term.cmd)
 		return (-1);

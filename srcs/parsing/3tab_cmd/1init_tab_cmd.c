@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 15:30:29 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 08:47:00 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 15:19:20 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int	my_avance_chaine(char *cmd_tmp, int *i)
 	int	red;
 	int	c;
 
-	while (ft_whitespace(cmd_tmp[*i]) == 1 && cmd_tmp[*i])
-		(*i)++;
+	my_avance_whitespace(cmd_tmp, i);
 	red = my_check_redirection(&(cmd_tmp[*i]));
 	if (((cmd_tmp[*i] == '\"' || cmd_tmp[*i] == '\'')
 			&& cmd_tmp[*i] != 0) || red > 0)
@@ -37,6 +36,7 @@ int	my_avance_chaine(char *cmd_tmp, int *i)
 			&& ft_whitespace(cmd_tmp[*i]) == 0 && cmd_tmp[*i]
 			&& my_check_redirection(&(cmd_tmp[*i])) < 0)
 			(*i)++;
+	my_avance_whitespace(cmd_tmp, i);
 	return (1);
 }
 
@@ -115,9 +115,7 @@ char	**my_malloc_chaine(char *cmd_tmp)
 	{
 		tab_cmd[i] = malloc(sizeof(char) * (my_strlen_space(cmd_tmp, &y) + 1));
 		if (tab_cmd[i] == NULL)
-		{
 			return (my_free_double_tab((void **)tab_cmd, i));
-		}
 		i++;
 	}
 	tab_cmd[i] = NULL;

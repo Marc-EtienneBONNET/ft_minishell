@@ -6,11 +6,33 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 11:05:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 16:05:40 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*my_gestion_var_env_2(char **res, int *x)
+{
+	if ((*res)[(*x)] == '\'')
+	{
+		(*x)++;
+		while ((*res)[(*x)] != '\'')
+			if (!(*res)[(*x)++])
+				return (my_free_tab(res));
+	}
+	else if ((*res)[(*x)] && (*res)[(*x)] == '$')
+	{
+		(*res) = my_inclus_res_var_env(res, my_take_key_env((*res),
+					(*x)), (*x));
+		if ((*res) == NULL)
+			return (NULL);
+		while ((*res)[(*x)] && (*res)[(*x)] != '\'' && (*res)[(*x)] != '$')
+			(*x)++;
+		(*x)--;
+	}
+	return (*res);
+}
 
 int	my_gestion_for_export(void)
 {

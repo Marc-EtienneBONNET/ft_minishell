@@ -120,25 +120,3 @@ char	*my_inclus_res_var_env(char **tmp, char *key_env, int x)
 	free(key_env);
 	return (res);
 }
-
-char	*my_gestion_var_env_2(char **res, int *x)
-{
-	if ((*res)[(*x)] == '\'')
-	{
-		(*x)++;
-		while ((*res)[(*x)] != '\'')
-			if (!(*res)[(*x)++])
-				return (my_free_tab(res));
-	}
-	else if ((*res)[(*x)] && (*res)[(*x)] == '$')
-	{
-		(*res) = my_inclus_res_var_env(res, my_take_key_env((*res),
-					(*x)), (*x));
-		if ((*res) == NULL)
-			return (NULL);
-		while ((*res)[(*x)] && (*res)[(*x)] != '\'' && (*res)[(*x)] != '$')
-			(*x)++;
-		(*x)--;
-	}
-	return (*res);
-}

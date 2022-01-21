@@ -6,14 +6,13 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/21 09:00:22 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/21 16:06:35 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell 
 
 SRCS			=	main.c\
-					tmp.c\
 					hendler/hendler.c\
 					parsing/1protocole_de_parsing.c\
 					parsing/2gestion_var_env.c\
@@ -24,6 +23,8 @@ SRCS			=	main.c\
 					parsing/4struct_chene_cmd/1chenage.c\
 					parsing/4struct_chene_cmd/2create_new_maillon.c\
 					parsing/4struct_chene_cmd/3mouv_struct_for_red.c\
+					parsing/4struct_chene_cmd/3mouv_struct_for_red_2.c\
+					parsing/4struct_chene_cmd/my_gestion_path.c\
 					parsing/pars_env/my_pars_env.c\
 					cmd_ex/protocole_ex.c\
 					cmd_ex/element_d_ex.c\

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 17:35:44 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 16:10:59 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	my_check_space(char *str)
 	tem = 0;
 	while (str[x])
 	{
-		if (str[x]!= ' ')
+		if (str[x] != ' ')
 			tem = 1;
 		x++;
 	}
@@ -51,10 +51,10 @@ int	my_check_guillemet(char *str)
 	int		g_simple;
 	int		g_double;
 
-	x = 0;
+	x = -1;
 	g_simple = 0;
 	g_double = 0;
-	while (str[x])
+	while (str[++x])
 	{
 		if (str[x] == '\"' && g_double == 0 && g_simple == 0)
 			g_double = 1;
@@ -64,11 +64,13 @@ int	my_check_guillemet(char *str)
 			g_double = 0;
 		else if (str[x] == '\'' && g_simple == 1)
 			g_simple = 0;
-		x++;
 	}
-	if (g_simple != 0 || g_double != 0)
-		return (-1);
-	return (1);
+	if (g_simple == 0 && g_double == 0)
+		return (1);
+	printf(VIOLET"minishell: (%s) erreur de sintaxe\n"BLANC,
+		g_term.str_cmd);
+	free(g_term.str_cmd);
+	return (-1);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -87,11 +89,7 @@ int	main(int ac, char **av, char **envp)
 			return (my_free_all(-1));
 		}
 		if (my_check_guillemet(g_term.str_cmd) != 1)
-		{
-			printf(VIOLET"minishell: (%s) erreur de sintaxe\n"BLANC, g_term.str_cmd);
-			free(g_term.str_cmd);
 			continue ;
-		}
 		if (g_term.str_cmd[0] && my_check_space(g_term.str_cmd) == 1)
 		{
 			add_history(g_term.str_cmd);

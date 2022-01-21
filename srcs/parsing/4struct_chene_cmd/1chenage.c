@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 09:50:07 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 16:00:44 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,29 @@ t_cmd	*my_ajoute_maillon(t_cmd *cmd, t_cmd *tmp)
 	return (my_ajoute_maillon_2(cmd, tmp));
 }
 
-t_cmd	*new_maillons(char **tab_cmd, int *x)
+void	new_maillons_3(char **cmd, char *path)
 {
-	t_cmd	*tmp;
 	char	*tmp_2;
 	int		w;
 
-	w = 0;
+	w = ft_strlen(*cmd);
+	while ((*cmd)[w] != '/' && w > 0)
+		w--;
+	if ((*cmd)[w] != '/')
+	{
+		if (path)
+		{
+			tmp_2 = ft_strjoin(path, (*cmd));
+			free((*cmd));
+			(*cmd) = tmp_2;
+		}
+	}
+}
+
+t_cmd	*new_maillons(char **tab_cmd, int *x)
+{
+	t_cmd	*tmp;
+
 	tmp = bzero_tmp();
 	if (tmp == NULL)
 		return (NULL);
@@ -69,23 +85,10 @@ t_cmd	*new_maillons(char **tab_cmd, int *x)
 	if (tmp->cmd == NULL)
 		tmp->cmd = ft_strdup("cmd_vide");
 	tmp->path = my_gestion_path(tmp);
-	w = ft_strlen(tmp->cmd);
-	while (tmp->cmd[w] != '/' && w > 0)
-		w--;
-	if (tmp->cmd[w] != '/')
-	{
-		if (tmp->path)
-		{
-			tmp_2 = ft_strjoin(tmp->path, tmp->cmd);
-			free(tmp->cmd);
-			tmp->cmd = tmp_2;
-		}
-	}
+	new_maillons_3(&tmp->cmd, tmp->path);
 	tmp->cmd = my_modifie_cmd(tmp);
-	if (!tmp->cmd)
-		return (my_free_maillon(tmp));
 	tmp->arg = init_cmd_arg(tab_cmd, x);
-	if (!tmp->path)
+	if (!tmp->path || !tmp->cmd)
 		return (my_free_maillon(tmp));
 	tmp->arg[0] = ft_strdup(tmp->cmd);
 	return (new_maillons_2(tab_cmd, x, tmp));
