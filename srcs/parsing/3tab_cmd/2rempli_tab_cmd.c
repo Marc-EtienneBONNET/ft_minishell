@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 15:37:42 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/14 17:34:23 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 08:56:23 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ void	my_rempli_cmd(char **tab_cmd, char *cmd_tmp, int *i, int *y)
 		while (red-- > 0)
 			tab_cmd[*y][x++] = cmd_tmp[(*i)++];
 	else
+	{
 		while (ft_whitespace(cmd_tmp[(*i)]) == 0
 			&& my_check_redirection(&(cmd_tmp[(*i)])) == -1
 			&& cmd_tmp[(*i)] != '\"' && cmd_tmp[(*i)] != '\''
 			&& cmd_tmp[(*i)] != '\0')
 			tab_cmd[*y][x++] = cmd_tmp[(*i)++];
+	}
 	tab_cmd[(*y)][x] = '\0';
+	while (ft_whitespace(cmd_tmp[(*i)]) == 1)
+		(*i)++;
 }
 
 void	my_rempli_tab_cmd(char **tab_cmd, char *cmd_tmp)
