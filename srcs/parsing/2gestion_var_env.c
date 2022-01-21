@@ -65,13 +65,26 @@ void	my_inclus_res_var_env_2(char **tmp, int x, char **res, char *str_env)
 	(*res)[index_res] = '\0';
 }
 
+char	*my_give_str_env(char *key)
+{
+	int	x;
+
+	x = 0;
+	while (g_term.my_env[x].key != NULL
+		&& ft_strncmp(g_term.my_env[x].key, key, 1000) != 0)
+		x++;
+	if (g_term.my_env[x].key != NULL)
+		return (ft_strdup(g_term.my_env[x].var));
+	return (NULL);
+}
+
 char	*my_recup_str_env(char **tmp, char *key_env)
 {
 	char	*str_env;
 
 	if (key_env == NULL)
 		return (my_free_tab(*tmp));
-	str_env = getenv(key_env);
+	str_env = my_give_str_env(key_env);
 	if (str_env == NULL && ft_strncmp(key_env, "?", 3) != 0)
 	{
 		free(key_env);
@@ -94,6 +107,8 @@ char	*my_inclus_res_var_env(char **tmp, char *key_env, int x)
 	char	*res;
 
 	str_env = my_recup_str_env(tmp, key_env);
+	if (str_env == NULL)
+		return (NULL);
 	res = malloc(sizeof(char) * ((ft_strlen(str_env) + 2)
 				+ (ft_strlen(*tmp) - (ft_strlen(key_env) + 1)) + 1));
 	if (res == NULL)

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 08:56:50 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 09:50:52 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_cmd	*my_ajoute_maillon_2(t_cmd *cmd, t_cmd *tmp);
 		//2create_new_maillon.c
 t_cmd	*new_maillons(char **tab_cmd, int *x);
 t_cmd	*bzero_tmp(void);
-char	**init_cmd_arg(char **tab_cmd, int *x, int *y);
+char	**init_cmd_arg(char **tab_cmd, int *x);
 		//#mouv_struct_for_red.c
 t_cmd	*my_mouv_struct_for_red(t_cmd **cmd);
 	//pars_env
@@ -163,7 +163,6 @@ t_cmd	*new_maillons_2(char **tab_cmd, int *x, t_cmd *tmp);
 char	*my_gestion_path(t_cmd *tmp);
 char	*my_modifie_cmd(t_cmd *tmp);
 t_cmd	*bzero_tmp(void);
-char	**init_cmd_arg(char **tab_cmd, int *x, int *y);
 char	*my_gestion_var_env_2(char **res, int *x);
 char	*my_inclus_res_var_env(char **tmp, char *key_env, int x);
 char	*my_recup_str_env(char **tmp, char *key_env);

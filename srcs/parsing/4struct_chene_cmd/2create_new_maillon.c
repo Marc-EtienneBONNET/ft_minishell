@@ -6,32 +6,37 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 08:43:46 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 10:01:03 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**init_cmd_arg(char **tab_cmd, int *x, int *y)
+char	**init_cmd_arg(char **tab_cmd, int *x)
 {
 	int		conteur;
 	char	**tabe;
+	int		y;
 
-	conteur = *x;
-	while (tab_cmd[conteur] && tab_cmd[*x][0]
-		&& my_check_redirection(tab_cmd[conteur]) == -1)
+	y = 0;
+	conteur = 0;
+	while (tab_cmd[*x + conteur] && tab_cmd[*x + conteur][0]
+		&& my_check_redirection(tab_cmd[*x + conteur]) == -1)
 		conteur++;
-	tabe = malloc(sizeof(char *) * ((conteur - (*x)) + 2));
+	tabe = malloc(sizeof(char *) * (conteur + 2));
 	if (!tabe)
 		return (my_free_tab((void *)tabe));
-	(*y)++;
-	while (tab_cmd[(*x)] && my_check_redirection(tab_cmd[*x]) == -1)
+	y++;
+	while (tab_cmd[(*x)] && tab_cmd[*x][0]
+		&& my_check_redirection(tab_cmd[*x]) == -1)
 	{
-		tabe[(*y)++] = ft_strdup(tab_cmd[(*x)++]);
-		if (!tabe[(*y) - 1])
+		tabe[y++] = ft_strdup(tab_cmd[(*x)++]);
+		if (!tabe[y - 1])
 			return (my_free_tab((void *)tabe));
 	}
-	tabe[*y] = NULL;
+	if (tab_cmd[(*x)] && !tab_cmd[*x][0])
+		(*x)++;
+	tabe[y] = NULL;
 	return (tabe);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 16:32:56 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 09:29:33 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int	my_ajoue_arg(char **arg)
 		{
 			free(g_term.my_env[my_check_doublon_and_cara_key(key, 1)].var);
 			g_term.my_env[my_check_doublon_and_cara_key(key, 1)].var = var;
+			free(key);
 		}
 		else if (my_ajoue_new_env(&key, &var) == -1)
 		{
