@@ -6,18 +6,28 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 13:44:24 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 17:04:43 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 10:42:12 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	my_recup_fd_fichier(t_cmd *cmd)
+int	my_check_type_red(char *str)
+{
+	if (ft_strncmp(str, ">>", 3) == 0
+		|| ft_strncmp(str, ">", 3) == 0
+		|| ft_strncmp(str, "<", 3) == 0)
+		return (1);
+	if (ft_strncmp(str, "<<", 3) == 0)
+		return (2);
+	return (0);
+}
+
+int	my_ecrase_fichier(t_cmd *cmd)
 {
 	int		fd;
-	char	c;
 
-	if (ft_strncmp(g_term.cmd->intra_red, ">", 3) == 0)
+	if (ft_strncmp(cmd->intra_red, ">", 3) == 0)
 	{
 		fd = open(cmd->fichier_1, O_RDONLY);
 		if (fd != -1)
@@ -32,9 +42,17 @@ int	my_recup_fd_fichier(t_cmd *cmd)
 		else
 			close(fd);
 	}
-	if (ft_strncmp(g_term.cmd->intra_red, ">>", 3) == 0
-		|| ft_strncmp(g_term.cmd->intra_red, ">", 3) == 0
-		|| ft_strncmp(g_term.cmd->intra_red, "<", 3) == 0)
+	return (1);
+}
+
+int	my_recup_fd_fichier(t_cmd *cmd)
+{
+	int		fd;
+	char	c;
+
+	fd = -1;
+	my_ecrase_fichier(cmd);
+	if (my_check_type_red(g_term.cmd->intra_red) == 1)
 	{
 		fd = open(cmd->fichier_1, O_RDWR);
 		if (ft_strncmp(g_term.cmd->intra_red, "<", 3) != 0)
@@ -53,14 +71,9 @@ pid_t	my_gestion_red(t_cmd *cmd)
 	int		tub[2];
 	pid_t	pid;
 
-
-	fd = 0;
-	pid = -1;
 	if (cmd->pid == 0 && cmd->intra_red)
 	{
-		if (ft_strncmp(g_term.cmd->intra_red, ">", 3) == 0
-			|| ft_strncmp(g_term.cmd->intra_red, ">>", 3) == 0
-			|| ft_strncmp(g_term.cmd->intra_red, "<", 3) == 0)
+		if (my_check_type_red(g_term.cmd->intra_red) == 1)
 		{
 			fd = my_recup_fd_fichier(cmd);
 			if (ft_strncmp(g_term.cmd->intra_red, ">", 3) == 0

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 10:16:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 16:37:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 10:57:30 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	my_sort(t_env **tmp)
 		j = i;
 		while ((*tmp)[++j].key)
 		{
-			if (ft_strcmp((*tmp)[i].key, (*tmp)[j].key) > 0)
+			if (ft_strncmp((*tmp)[i].key, (*tmp)[j].key,
+				ft_strlen((*tmp)[j].key)) > 0)
 			{
 				tmp_2 = (*tmp)[i];
 				(*tmp)[i] = (*tmp)[j];

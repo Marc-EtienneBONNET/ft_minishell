@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 10:01:03 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 11:07:33 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ char	**init_cmd_arg(char **tab_cmd, int *x)
 
 	y = 0;
 	conteur = 0;
-	while (tab_cmd[*x + conteur] && tab_cmd[*x + conteur][0]
+	while (tab_cmd[*x + conteur]
 		&& my_check_redirection(tab_cmd[*x + conteur]) == -1)
 		conteur++;
 	tabe = malloc(sizeof(char *) * (conteur + 2));
 	if (!tabe)
 		return (my_free_tab((void *)tabe));
 	y++;
-	while (tab_cmd[(*x)] && tab_cmd[*x][0]
+	while (tab_cmd[(*x)]
 		&& my_check_redirection(tab_cmd[*x]) == -1)
 	{
 		tabe[y++] = ft_strdup(tab_cmd[(*x)++]);

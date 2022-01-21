@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:29:06 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 14:51:50 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 11:39:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ int	my_export(char **argv)
 	else
 	{
 		arg = my_recup_arg(argv[1]);
+		if (arg[0] == NULL)
+		{
+			return (-1);
+		}
 		if (arg == NULL || my_ajoue_arg(arg) == -1)
 		{
 			my_free_double_tab((void **)arg, -1);

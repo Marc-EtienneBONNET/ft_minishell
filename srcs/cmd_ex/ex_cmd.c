@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:30:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 12:09:22 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 11:37:24 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,28 @@
 int	my_ex_building(t_cmd *cmd)
 {
 	char	*cpe;
+	int		c;
 
+	c = 0;
 	cpe = cmd->cmd;
 	if (ft_strncmp(cpe, "cd", 10) == 0)
-		my_cd(g_term.cmd->arg);
+		c = my_cd(g_term.cmd->arg);
 	else if (ft_strncmp(cpe, "pwd", 10) == 0)
-		my_pwd(cmd);
+		c = my_pwd(cmd);
 	else if (ft_strncmp(cpe, "echo", 10) == 0)
-		my_echo(cmd->arg);
+		c = my_echo(cmd->arg);
 	else if (ft_strncmp(cpe, "export", 10) == 0)
-		my_export(cmd->arg);
+		c = my_export(cmd->arg);
 	else if (ft_strncmp(cpe, "unset", 10) == 0)
-		my_unset(cmd->arg);
+		c = my_unset(cmd->arg);
 	else if (ft_strncmp(cpe, "env", 5) == 0)
-		my_env(cmd);
+		c = my_env(cmd);
 	else if (ft_strncmp(cpe, "exit", 5) == 0)
 		my_exit(cmd->arg);
 	else
 		return (-1);
-	g_term.dernier_ret = 0;
+	if (c == -1)
+		return (-1);
 	return (0);
 }
 

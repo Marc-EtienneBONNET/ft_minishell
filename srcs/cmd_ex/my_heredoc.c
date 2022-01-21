@@ -6,10 +6,9 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:29:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/20 15:46:05 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 10:39:26 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -69,6 +68,22 @@ void	my_sorti(char **str, char **tmp, int *tub)
 	exit (0);
 }
 
+void	my_tub(int tele, int *tub)
+{
+	if (tele == 0)
+	{
+		close(tub[ENTRE]);
+		dup2(tub[SORTI], 0);
+		close(tub[SORTI]);
+	}
+	else
+	{
+		close(tub[SORTI]);
+		dup2(tub[ENTRE], 1);
+		close(tub[ENTRE]);
+	}
+}
+
 void	my_heredoc(pid_t pid, int *tub)
 {
 	char	*str;
@@ -78,9 +93,7 @@ void	my_heredoc(pid_t pid, int *tub)
 	tmp = NULL;
 	if (pid != 0)
 	{
-		close(tub[ENTRE]);
-		dup2(tub[SORTI], 0);
-		close(tub[SORTI]);
+		my_tub(0, tub);
 		return ;
 	}
 	while (1)
@@ -88,15 +101,11 @@ void	my_heredoc(pid_t pid, int *tub)
 		str = readline(VERT"heredoc>"BLANC);
 		if (ft_strncmp(str, g_term.cmd->fichier_1, 1000) == 0)
 		{
-			close(tub[SORTI]);
-			dup2(tub[ENTRE], 1);
-			close(tub[ENTRE]);
+			my_tub(1, tub);
 			my_sorti(&str, &tmp, tub);
 		}
 		if (my_concatonne(&tmp, &str) == -1)
-		{
 			exit (-1);
-		}
 	}
 	exit (0);
 }

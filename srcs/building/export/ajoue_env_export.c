@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 09:29:33 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/21 10:56:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,6 @@ char	*my_recup_str(char *arg, int tele)
 	return (new);
 }
 
-int	ft_strcmp(char *str1, char *str2)
-{
-	unsigned int	x;
-
-	x = 0;
-	while ((str1[x]) || (str2[x]))
-	{
-		if ((unsigned char)str1[x] < (unsigned char)str2[x])
-			return (-1);
-		else if ((unsigned char)str1[x] > (unsigned char)str2[x])
-			return (1);
-		x++;
-	}
-	return (0);
-}
-
 int	my_check_doublon_and_cara_key(char *key,	int tele)
 {
 	int	x;
@@ -66,7 +50,7 @@ int	my_check_doublon_and_cara_key(char *key,	int tele)
 	{
 		while (g_term.my_env[x].key)
 		{
-			if (ft_strcmp(g_term.my_env[x].key, key) == 0)
+			if (ft_strncmp(g_term.my_env[x].key, key, 1000) == 0)
 				return (x);
 			x++;
 		}
@@ -113,6 +97,23 @@ int	my_ajoue_new_env(char **key, char **var)
 	return (1);
 }
 
+int	my_ajoue_arg_ex(char **key, char **var)
+{
+	if (my_check_doublon_and_cara_key(*key, 1) >= 0)
+	{
+		free(g_term.my_env[my_check_doublon_and_cara_key(*key, 1)].var);
+		g_term.my_env[my_check_doublon_and_cara_key(*key, 1)].var = *var;
+		free(*key);
+	}
+	else if (my_ajoue_new_env(key, var) == -1)
+	{
+		free(*var);
+		free(*key);
+		return (-1);
+	}
+	return (1);
+}
+
 int	my_ajoue_arg(char **arg)
 {
 	int		y;
@@ -126,18 +127,8 @@ int	my_ajoue_arg(char **arg)
 		if (!key || my_check_doublon_and_cara_key(key, 0) == -1)
 			return (-1);
 		var = my_recup_str(arg[y], 1);
-		if (my_check_doublon_and_cara_key(key, 1) >= 0)
-		{
-			free(g_term.my_env[my_check_doublon_and_cara_key(key, 1)].var);
-			g_term.my_env[my_check_doublon_and_cara_key(key, 1)].var = var;
-			free(key);
-		}
-		else if (my_ajoue_new_env(&key, &var) == -1)
-		{
-			free(var);
-			free(key);
+		if (my_ajoue_arg_ex(&key, &var) == -1)
 			return (-1);
-		}
 	}
 	my_free_double_tab((void **)arg, -1);
 	return (1);
