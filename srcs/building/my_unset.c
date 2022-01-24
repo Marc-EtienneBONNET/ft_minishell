@@ -6,32 +6,51 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:37:39 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/17 18:13:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/24 09:45:06 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	supp_var_2(char *argv, t_env **new, int j, int len)
+{
+	if (ft_strncmp(g_term.my_env[len].key, argv, 1000) == 0)
+	{
+		free(g_term.my_env[len].key);
+		if (g_term.my_env[len].var)
+			free(g_term.my_env[len].var);
+		return (1);
+	}
+	(*new)[j].key = g_term.my_env[len].key;
+	(*new)[j].var = g_term.my_env[len].var;
+	return (0);
+}
+
 void	supp_var(char *argv)
 {
-	int	i;
+	int		len;
+	t_env	*new;
+	int		j;
 
-	i = -1;
-	while (g_term.my_env[++i].key)
+	len = 0;
+	while (g_term.my_env[len].key)
+		len++;
+	new = malloc(sizeof(t_env) * (len + 1));
+	if (!new)
+		return ;
+	j = 0;
+	len = -1;
+	while (g_term.my_env[++len].key != NULL)
 	{
-		if (ft_strncmp(g_term.my_env[i].key, argv, ft_strlen(argv)) == 0)
-		{
-			free(g_term.my_env[i].var);
-			free(g_term.my_env[i].key);
-			while (g_term.my_env[i].var)
-			{
-				g_term.my_env[i].var = g_term.my_env[i + 1].var;
-				g_term.my_env[i].key = g_term.my_env[i + 1].key;
-				i++;
-			}
-			break ;
-		}
+		if (supp_var_2(argv, &new, j, len) == 1)
+			continue ;
+		j++;
 	}
+	new[j].key = NULL;
+	new[j].var = NULL;
+	free(g_term.my_env);
+	g_term.my_env = new;
+	return ;
 }
 
 int	mess_err(char *str)

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 10:56:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/24 09:54:40 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*my_recup_str(char *arg, int tele)
 	}
 	while (*arg && *arg != '=')
 		arg++;
-	if (!(*(++arg)))
+	if (!(*arg) || !(*(++arg)))
 		return (NULL);
 	new = ft_strdup(arg);
 	if (!new)

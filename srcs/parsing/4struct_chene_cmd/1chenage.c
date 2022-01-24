@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:16:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 16:00:44 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/24 09:50:56 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_cmd	*new_maillons(char **tab_cmd, int *x)
 	new_maillons_3(&tmp->cmd, tmp->path);
 	tmp->cmd = my_modifie_cmd(tmp);
 	tmp->arg = init_cmd_arg(tab_cmd, x);
-	if (!tmp->path || !tmp->cmd)
+	if (!tmp->cmd)
 		return (my_free_maillon(tmp));
 	tmp->arg[0] = ft_strdup(tmp->cmd);
 	return (new_maillons_2(tab_cmd, x, tmp));
