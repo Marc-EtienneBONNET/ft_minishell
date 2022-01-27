@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 17:49:52 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 14:16:37 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 17:36:52 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_strmicrojoin(char **str, char c)
 	res[x] = c;
 	x += 1;
 	res[x] = '\0';
-	free((*str));
+	*str = my_free_tab((*str));
 	return (res);
 }
 

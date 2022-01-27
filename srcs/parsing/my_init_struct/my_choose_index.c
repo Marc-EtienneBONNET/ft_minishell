@@ -6,11 +6,46 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:15:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 15:20:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 18:08:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*recup_element_2(char *str, int *x)
+{
+	int		gu;
+	char	*res;
+	int		y;
+
+	gu = 0;
+	res = NULL;
+	while (ft_whitespace(str[(*x)]) == 1)
+		(*x)++;
+	while (str[(*x)])
+	{
+		y = 0;
+		y = my_check_guil(&gu, str[(*x)]);
+		if (gu == 0 && (ft_whitespace(str[(*x)]) == 1
+				|| my_check_redirection(&(str[(*x)])) > 0
+				|| !str[(*x)]))
+			break ;
+		if (y == 0)
+			res = ft_strmicrojoin(&res, str[(*x)]);
+		(*x)++;
+	}
+	(*x) -= 2;
+	printf("ici : %s\n", &str[(*x)]);
+	if (str[(*x)] && str[(*x) + 1]
+		&& ((str[(*x)] == '\"' && str[(*x) + 1] == '\"')
+		|| (str[(*x)] == '\'' && str[(*x) + 1] == '\'')))
+	{
+		printf("ici\n");
+		res = ft_strmicrojoin(&res, str[(*x)]);
+		res = ft_strmicrojoin(&res, str[(*x) + 1]);
+	}
+	return (res);
+}
 
 void	my_take_fichier_and_intra_red(char *str, t_cmd *tmp)
 {
@@ -34,9 +69,9 @@ void	my_take_fichier_and_intra_red(char *str, t_cmd *tmp)
 		{
 			y = ++x;
 			if (!tmp->fichier_1)
-				tmp->fichier_1 = recup_element(str, &y);
+				tmp->fichier_1 = recup_element_2(str, &y);
 			else if (tmp->fichier_1)
-				tmp->fichier_2 = recup_element(str, &y);
+				tmp->fichier_2 = recup_element_2(str, &y);
 		}
 	}
 }

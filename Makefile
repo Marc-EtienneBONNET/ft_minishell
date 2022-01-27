@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/27 13:59:24 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/27 16:50:41 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS			=	main.c\
 					cmd_ex/gestion_red.c\
 					cmd_ex/ex_cmd.c\
 					cmd_ex/my_heredoc.c\
+					cmd_ex/my_heredoc_2.c\
 					building/my_unset.c\
 					building/my_cd.c\
 					building/my_exit.c\
@@ -42,19 +43,6 @@ SRCS			=	main.c\
 					building/my_check_building.c\
 					free/my_free.c\
 					tmp/tmp.c\
-					#parsing/2gestion_var_env.c\
-					parsing/3tab_cmd/modifi_cmd_tmp_for_export.c\
-					parsing/3tab_cmd/1init_tab_cmd.c\
-					parsing/3tab_cmd/2rempli_tab_cmd.c\
-					parsing/utile/checker_et_ft_utile.c\
-					parsing/4struct_chene_cmd/1chenage.c\
-					parsing/4struct_chene_cmd/2create_new_maillon.c\
-					parsing/4struct_chene_cmd/3mouv_struct_for_red.c\
-					parsing/4struct_chene_cmd/3mouv_struct_for_red_2.c\
-					parsing/4struct_chene_cmd/my_gestion_path.c\
-					parsing/pars_env/my_pars_env.c\
-					
-
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}
 

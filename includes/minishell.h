@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 15:17:53 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 17:22:32 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int			ft_len_2(char *str);
 char		*ft_strmicrojoin(char **str, char c);
 char		**my_recup_arg_2(char **str, int *y, char **res);
 char		**my_recup_arg(char *str);
+int	my_gestion_env_heredoc(char **tmp);
+
 	//my_cd
 int			change_pwd(char *pwd, char *oldpwd);
 int			op(char **argv);
@@ -138,6 +140,8 @@ int			my_concatonne(char **tmp, char **str, char **fd_ouv);
 void		my_sorti(char **str, char **tmp, int *tub);
 void		my_tub(int tele, int *tub);
 void		my_heredoc(pid_t pid, int *tub, char *fd_ouv, char	*fd_ferm);
+	//my_heredoc_2
+int			my_check_var_env_heredoc(char **tmp);
 	//protocole_ex
 int			message_error(void);
 int			boucle_waitpid(void);

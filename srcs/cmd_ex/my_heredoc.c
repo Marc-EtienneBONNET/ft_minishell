@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:29:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 09:52:34 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 17:22:22 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	my_sorti(char **str, char **tmp, int *tub)
 {
 	(void)tub;
 	free(*str);
+	my_gestion_env_heredoc(tmp);
 	write(1, *tmp, ft_strlen(*tmp));
 	if (*tmp)
 		free(*tmp);
