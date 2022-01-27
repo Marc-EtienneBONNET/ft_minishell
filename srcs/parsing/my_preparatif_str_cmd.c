@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:14:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 15:42:09 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:51:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,10 @@ int	my_check_var_env(void)
 			key = my_recup_key(&(g_term.str_cmd[x + 1]));
 			if (key == NULL
 				|| my_transforme_str_cmd_pour_var_env(&x, key) == -1)
-				return ((int)(my_free_tab(key)) - 1);
+			{
+				my_free_tab(key);
+				return (-1);
+			}
 			my_free_tab(key);
 		}
 	}

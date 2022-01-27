@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:37:39 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/24 09:45:06 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:53:49 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	supp_var_2(char *argv, t_env **new, int j, int len)
 {
-	if (ft_strncmp(g_term.my_env[len].key, argv, 1000) == 0)
+	if (ft_strncmp(g_term.my_env[len].key, argv, ft_strlen(argv)) == 0)
 	{
 		free(g_term.my_env[len].key);
 		if (g_term.my_env[len].var)
