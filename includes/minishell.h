@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 14:32:54 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:17:53 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void		handler_ctr_backslash(int code);
 		//my_init_tab
 char		**my_creat_tab_cmd(void);
 		//my_rempli_tab
-void		my_check_guil(int	*gu, char c);
+int			my_check_guil(int	*gu, char c);
 int			my_take_nb_tab(void);
 int			my_strlen_cmd(char *str);
 int			my_copie(char **tab_cmd, int y, int i, char *str);
@@ -187,7 +187,7 @@ int			my_passe_fichier(int x, int red, char *str, int *gu);
 char		**my_choose_var_env_path(void);
 char		*my_choose_path(t_cmd *tmp);
 		//my_init_struct
-char		*recup_element(char *str, int x);
+char		*recup_element(char *str, int *x);
 t_cmd		*my_creat_tmp(char *str);
 int			my_add_liste_chene(t_cmd *tmp);
 int			my_init_struct(char **tab_cmd);

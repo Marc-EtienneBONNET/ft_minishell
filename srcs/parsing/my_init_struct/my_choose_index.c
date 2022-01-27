@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:15:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 13:59:12 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:20:27 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void	my_take_fichier_and_intra_red(char *str, t_cmd *tmp)
 	int		x;
 	int		gu;
 	int		red;
+	int		y;
 
 	x = -1;
 	gu = 0;
+	y = 0;
 	while (str[++x])
 	{
 		my_check_guil(&gu, str[x]);
@@ -29,9 +31,13 @@ void	my_take_fichier_and_intra_red(char *str, t_cmd *tmp)
 		if (red == 3)
 			x++;
 		if (red > 1 && gu == 0 && !tmp->fichier_1)
-			tmp->fichier_1 = recup_element(str, ++x);
-		else if (red > 1 && gu == 0 && tmp->fichier_1)
-			tmp->fichier_2 = recup_element(str, ++x);
+		{
+			y = ++x;
+			if (!tmp->fichier_1)
+				tmp->fichier_1 = recup_element(str, &y);
+			else if (tmp->fichier_1)
+				tmp->fichier_2 = recup_element(str, &y);
+		}
 	}
 }
 

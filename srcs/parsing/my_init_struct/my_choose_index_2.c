@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:15:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 13:50:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:16:10 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ int	my_ajoute_arg(char *str, int *x, char ***arg)
 
 	tmp_2 = NULL;
 	tmp_3 = NULL;
-	tmp_2 = recup_element(str, *x);
+	tmp_2 = recup_element(str, x);
 	tmp_3 = ft_strdoubledup(*arg);
 	my_free_double_tab((void **)*arg, -1);
 	*arg = ft_strdoublejoin(tmp_3, tmp_2);
-	*x += ft_strlen(tmp_2);
 	my_free_tab(tmp_2);
 	return (1);
 }

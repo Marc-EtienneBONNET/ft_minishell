@@ -6,22 +6,38 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:19:51 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/25 12:40:52 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:14:50 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_check_guil(int	*gu, char c)
+int	my_check_guil(int *gu, char c)
 {
+	int	x;
+
+	x = 0;
 	if (c == '\'' && *gu == 0)
+	{
 		*gu = 1;
+		x = 1;
+	}
 	else if (c == '\"' && *gu == 0)
+	{
 		*gu = 2;
+		x = 1;
+	}
 	else if (c == '\"' && *gu == 2)
+	{
 		*gu = 0;
+		x = 1;
+	}
 	else if (c == '\'' && *gu == 1)
+	{
 		*gu = 0;
+		x = 1;
+	}
+	return (x);
 }
 
 int	my_take_nb_tab(void)

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:15:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 14:01:21 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:16:26 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	my_take_cmd_and_path(char *str, t_cmd *tmp)
 		else
 			break ;
 	}
-	tmp->cmd = recup_element(str, x);
+	tmp->cmd = recup_element(str, &x);
 	my_recup_path(tmp);
 	return (1);
 }
