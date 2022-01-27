@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:14:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 15:51:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 16:14:15 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,16 @@ char	*my_recup_key(char *cmd)
 	x = 0;
 	key = NULL;
 	while (cmd[x] == '_' || (cmd[x] >= '0' && cmd[x] <= '9')
-		|| (cmd[x] >= 'a' && cmd[x] <= 'z') || (cmd[x] >= 'A' && cmd[x] <= 'Z'))
+		|| (cmd[x] >= 'a' && cmd[x] <= 'z') || (cmd[x] >= 'A' && cmd[x] <= 'Z')
+		|| cmd[x] <= '?')
 		x++;
 	key = malloc(sizeof(char) * (x + 1));
 	if (!key)
 		return (NULL);
 	x = 0;
 	while (cmd[x] == '_' || (cmd[x] >= '0' && cmd[x] <= '9')
-		|| (cmd[x] >= 'a' && cmd[x] <= 'z') || (cmd[x] >= 'A' && cmd[x] <= 'Z'))
+		|| (cmd[x] >= 'a' && cmd[x] <= 'z') || (cmd[x] >= 'A' && cmd[x] <= 'Z')
+		|| cmd[x] <= '?')
 	{
 		key[x] = cmd[x];
 		x++;
@@ -94,9 +96,14 @@ int	my_transforme_str_cmd_pour_var_env(int *x, char *key)
 
 	y = -1;
 	var_env = NULL;
-	while (g_term.my_env[++y].key)
-		if (ft_strncmp(key, g_term.my_env[y].key, ft_strlen(key)) == 0)
-			var_env = g_term.my_env[y].var;
+	if (ft_strncmp(key, "?", 3) == 0)
+		var_env = ft_strdup(ft_itoa(g_term.dernier_ret));
+	else
+	{
+		while (g_term.my_env[++y].key)
+			if (ft_strncmp(key, g_term.my_env[y].key, ft_strlen(key)) == 0)
+				var_env = g_term.my_env[y].var;
+	}
 	if (var_env == NULL)
 		return (-1);
 	new_cmd = malloc(sizeof(char) * ((ft_strlen(g_term.str_cmd)

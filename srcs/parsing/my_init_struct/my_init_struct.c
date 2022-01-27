@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 14:05:42 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 15:15:59 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 16:30:18 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ t_cmd	*my_creat_tmp(char *str)
 	my_take_red(str, tmp);
 	tmp->previous = NULL;
 	tmp->next = NULL;
+	if (!tmp->cmd && !tmp->path && !tmp->fichier_1
+		&& !tmp->intra_red)
+	{
+		tmp = my_free_maillon(tmp);
+	}
 	return (tmp);
 }
 

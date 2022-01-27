@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:15:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 15:16:10 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 16:19:18 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,19 @@ void	my_take_arg(char *str, t_cmd *tmp)
 int	my_take_red(char *str, t_cmd *tmp)
 {
 	int	x;
+	int	gu;
 
 	x = -1;
+	gu = 0;
 	while (str[++x])
 	{
-		if (str[x] == '|')
+		my_check_guil(&gu, str[x]);
+		if (str[x] == '|' && gu == 0)
 		{
 			tmp->red = ft_strdup("|");
 			return (1);
 		}
-		else if (str[x] == ';')
+		else if (str[x] == ';' && gu == 0)
 		{
 			tmp->red = ft_strdup(";");
 			return (1);

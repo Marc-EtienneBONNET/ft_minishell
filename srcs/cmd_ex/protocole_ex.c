@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 15:39:01 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 16:30:01 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,19 @@ int	boucle_waitpid(void)
 
 int	my_lancement_ex(void)
 {
-	if (my_parsing() < 0)
+	g_term.dernier_ret = my_parsing();
+	if (g_term.dernier_ret < 0)
+	{
+		if (g_term.dernier_ret == -1)
+			printf(ROUGE"Erreur syntaxique de guillemet\n"BLANC);
+		if (g_term.dernier_ret == -2)
+			printf(ROUGE"Variable d'env inexistante\n"BLANC);
+		if (g_term.dernier_ret == -4)
+			printf(ROUGE"Commande non valide\n"BLANC);
+		my_free_liste_chene(g_term.cmd);
 		return (1);
-	//my_print_list_chene(g_term.cmd);
+	}
+	my_print_list_chene(g_term.cmd);
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	creat_pipe();

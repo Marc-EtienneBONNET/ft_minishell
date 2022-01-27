@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 14:07:15 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 16:05:09 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	my_check_guillemet_2(char *str)
 	x = -1;
 	g_simple = 0;
 	g_double = 0;
+	g_term.dernier_ret = 0;
 	while (str[++x])
 	{
 		if (str[x] == '\"' && g_double == 0 && g_simple == 0)
