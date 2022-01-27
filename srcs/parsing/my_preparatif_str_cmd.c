@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:14:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/25 11:33:20 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:42:09 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	my_transforme_str_cmd_pour_var_env(int *x, char *key)
 	y = -1;
 	var_env = NULL;
 	while (g_term.my_env[++y].key)
-		if (ft_strncmp(key, g_term.my_env[y].key, 1000) == 0)
+		if (ft_strncmp(key, g_term.my_env[y].key, ft_strlen(key)) == 0)
 			var_env = g_term.my_env[y].var;
 	if (var_env == NULL)
 		return (-1);
