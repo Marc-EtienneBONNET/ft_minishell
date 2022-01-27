@@ -6,12 +6,11 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 15:14:56 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 11:38:09 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 int	message_error(void)
 {
 	if (g_term.dernier_ret == 255 || g_term.dernier_ret == 139)
@@ -30,12 +29,12 @@ int	boucle_waitpid(void)
 
 	x = 0;
 	tmp = g_term.cmd;
-	while (x++ < g_term.cmd->info_cmd->nb_maillons)
+	while (x++ < g_term.nb_maillon)
 	{
 		if ((my_check_building(g_term.cmd) != 1
 				|| ft_strncmp(g_term.cmd->red, "|", 3) == 0
 				|| g_term.cmd->intra_red)
-			&& ft_strncmp(g_term.cmd->cmd, "cmd_vide", 9) != 0)
+			&& g_term.cmd->cmd)
 		{
 			waitpid(g_term.cmd->pid, &g_term.dernier_ret, 0);
 			if (WIFEXITED(g_term.dernier_ret))
@@ -50,16 +49,9 @@ int	boucle_waitpid(void)
 
 int	my_lancement_ex(void)
 {
-	int		x;
-
-	x = 0;
-	if (my_parsing() == 2)
+	if (my_parsing() < 0)
 		return (1);
-	free(g_term.str_cmd);
-	if (!g_term.cmd)
-		return (-1);
-	g_term.save_stdin = dup(0);
-	g_term.save_stdout = dup(1);
+	//my_print_list_chene(g_term.cmd);
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	creat_pipe();

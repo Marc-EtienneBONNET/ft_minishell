@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/24 09:54:40 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/26 12:48:07 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ char	*my_recup_str(char *arg, int tele)
 	{
 		while (arg[x] && arg[x] != '=')
 			x++;
+		if (arg[x] == '=')
+			x++;
 		new = malloc(sizeof(char) * (x + 1));
 		if (!new)
 			return (NULL);
 		x = -1;
-		while (arg[++x] && arg[x] != '=')
+		while (arg[++x] && arg[x - 1] != '=')
 			new[x] = arg[x];
 		new[x] = '\0';
 		return (new);
@@ -41,16 +43,36 @@ char	*my_recup_str(char *arg, int tele)
 	return (new);
 }
 
-int	my_check_doublon_and_cara_key(char *key,	int tele)
+int	ft_strncmp_2(char *str1, char *str2, unsigned int size)
 {
-	int	x;
+	unsigned int	x;
+
+	x = 0;
+	while (x < size && ((str1[x]) || (str2[x])))
+	{
+		if (str1[x] == '=' && (str2[x] == '=' || !str2[x]))
+			return (0);
+		if (str2[x] == '=' && (str1[x] == '=' || !str1[x]))
+			return (0);
+		else if ((unsigned char)str1[x] < (unsigned char)str2[x])
+			return (-1);
+		else if ((unsigned char)str1[x] > (unsigned char)str2[x])
+			return (1);
+		x++;
+	}
+	return (0);
+}
+
+int	my_check_doublon_and_cara_key(char *key, int tele)
+{
+	int		x;
 
 	x = 0;
 	if (tele == 1)
 	{
 		while (g_term.my_env[x].key)
 		{
-			if (ft_strncmp(g_term.my_env[x].key, key, 1000) == 0)
+			if (ft_strncmp_2(g_term.my_env[x].key, key, 1000) == 0)
 				return (x);
 			x++;
 		}
@@ -99,17 +121,24 @@ int	my_ajoue_new_env(char **key, char **var)
 
 int	my_ajoue_arg_ex(char **key, char **var)
 {
-	if (my_check_doublon_and_cara_key(*key, 1) >= 0)
+	int	check;
+
+	check = my_check_doublon_and_cara_key(*key, 1);
+	if (check >= 0)
 	{
-		free(g_term.my_env[my_check_doublon_and_cara_key(*key, 1)].var);
-		g_term.my_env[my_check_doublon_and_cara_key(*key, 1)].var = *var;
-		free(*key);
+		if ((*key)[ft_strlen(*key) - 1] != '=')
+			return (1);
+		free(g_term.my_env[check].var);
+		g_term.my_env[check].var = *var;
 	}
-	else if (my_ajoue_new_env(key, var) == -1)
+	if (my_check_doublon_and_cara_key(*key, 1) == -1)
 	{
-		free(*var);
-		free(*key);
-		return (-1);
+		if (my_ajoue_new_env(key, var) == -1)
+		{
+			free(*var);
+			free(*key);
+			return (-1);
+		}
 	}
 	return (1);
 }
@@ -119,8 +148,10 @@ int	my_ajoue_arg(char **arg)
 	int		y;
 	char	*key;
 	char	*var;
+	int		x;
 
 	y = -1;
+	x = -1;
 	while (arg[++y])
 	{
 		key = my_recup_str(arg[y], 0);
@@ -130,6 +161,5 @@ int	my_ajoue_arg(char **arg)
 		if (my_ajoue_arg_ex(&key, &var) == -1)
 			return (-1);
 	}
-	my_free_double_tab((void **)arg, -1);
 	return (1);
 }

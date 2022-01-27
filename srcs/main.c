@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 16:10:59 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/25 08:28:16 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	my_check_space(char *str)
 	return (1);
 }
 
-int	my_check_guillemet(char *str)
+int	my_check_guillemet_2(char *str)
 {
 	int		x;
 	int		g_simple;
@@ -73,6 +73,8 @@ int	my_check_guillemet(char *str)
 	return (-1);
 }
 
+
+
 int	main(int ac, char **av, char **envp)
 {
 	(void)av;
@@ -88,9 +90,9 @@ int	main(int ac, char **av, char **envp)
 			rl_clear_history();
 			return (my_free_all(-1));
 		}
-		if (my_check_guillemet(g_term.str_cmd) != 1)
-			continue ;
-		if (g_term.str_cmd[0] && my_check_space(g_term.str_cmd) == 1)
+		//if (my_check_guillemet_2(g_term.str_cmd) != 1)
+		//	continue ;
+		if (g_term.str_cmd[0] /*&& my_check_space(g_term.str_cmd) == 1*/)
 		{
 			add_history(g_term.str_cmd);
 			if (my_lancement_ex() == -1)

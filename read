@@ -73,3 +73,4 @@ Tuyaux
 - Essayez de mélanger les pipes et les redirections.
 Go Crazy et histoire
 - tapez une ligne de commande
+ls -l << test << test_2 -a | echo salut; ls -l < test -a; coucou monsieur < test_3; /bin/ls -la < test; /kjdbfkdwhf/ls << test -la

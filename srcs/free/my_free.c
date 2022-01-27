@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 12:01:20 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/24 09:49:56 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/26 10:59:05 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	*my_free_tab(void *a_free)
 {
 	if (a_free)
 		free(a_free);
+	a_free = NULL;
 	return (NULL);
 }
 
@@ -35,12 +36,12 @@ void	*my_free_double_tab(void **tab_str, int nb_str)
 	while (nb_str >= 0 && tab_str[nb_str])
 	{
 		if (tab_str[nb_str])
-		{
-			free(tab_str[nb_str]);
-		}
+			my_free_tab(tab_str[nb_str]);
+		else
+			break ;
 		nb_str += (1 * op);
 	}
-	free(tab_str);
+	my_free_tab(tab_str);
 	return (NULL);
 }
 
@@ -52,13 +53,10 @@ void	*my_free_liste_chene(t_cmd *cmd)
 
 	x = 0;
 	i = 1;
+	my_free_tab(g_term.str_cmd);
 	if (!cmd)
 		return (NULL);
-	if (cmd->info_cmd)
-	{
-		i = cmd->info_cmd->nb_maillons;
-		free(cmd->info_cmd);
-	}
+	i = g_term.nb_maillon;
 	while (i > 0)
 	{
 		tmp = cmd->next;
@@ -68,6 +66,8 @@ void	*my_free_liste_chene(t_cmd *cmd)
 		i--;
 		cmd = tmp;
 	}
+	g_term.nb_maillon = 0;
+	g_term.cmd = NULL;
 	return (NULL);
 }
 
@@ -75,27 +75,19 @@ void	*my_free_maillon(t_cmd *tmp)
 {
 	int	x;
 
-	x = 0;
+	x = -1;
 	if (tmp == NULL)
 		return (NULL);
-	if (tmp->cmd)
-		free(tmp->cmd);
-	if (tmp->path)
-		free(tmp->path);
-	if (tmp->fichier_1)
-		free(tmp->fichier_1);
-	if (tmp->fichier_2)
-		free(tmp->fichier_2);
-	if (tmp->intra_red)
-		free(tmp->intra_red);
-	while (tmp->arg && tmp->arg[x])
-		free(tmp->arg[x++]);
-	if (tmp->arg)
-		free(tmp->arg);
-	if (tmp->red)
-		free(tmp->red);
-	if (tmp)
-		free(tmp);
+	tmp->cmd = my_free_tab(tmp->cmd);
+	tmp->path = my_free_tab(tmp->path);
+	tmp->fichier_1 = my_free_tab(tmp->fichier_1);
+	tmp->fichier_2 = my_free_tab(tmp->fichier_2);
+	tmp->intra_red = my_free_tab(tmp->intra_red);
+	while (tmp->arg && tmp->arg[++x])
+		tmp->arg[x] = my_free_tab(tmp->arg[x]);
+	tmp->arg = my_free_tab(tmp->arg);
+	tmp->red = my_free_tab(tmp->red);
+	tmp = my_free_tab(tmp);
 	return (NULL);
 }
 
@@ -106,12 +98,12 @@ int	my_free_all(int ret)
 	x = 0;
 	while (g_term.my_env && g_term.my_env[x].key != NULL)
 	{
-		free(g_term.my_env[x].key);
-		free(g_term.my_env[x].var);
+		my_free_tab(g_term.my_env[x].key);
+		my_free_tab(g_term.my_env[x].var);
 		x++;
 	}
 	rl_clear_history();
 	if (g_term.my_env)
-		free(g_term.my_env);
+		my_free_tab(g_term.my_env);
 	return (ret);
 }

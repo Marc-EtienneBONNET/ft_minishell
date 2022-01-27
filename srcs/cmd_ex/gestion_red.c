@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 13:44:24 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 16:19:35 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 09:44:56 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ pid_t	my_gestion_red(t_cmd *cmd)
 		{
 			pipe(tub);
 			pid = fork();
-			my_heredoc(pid, tub);
+			if (!g_term.cmd->fichier_2)
+				my_heredoc(pid, tub, g_term.cmd->fichier_2, g_term.cmd->fichier_1);
+			else if (g_term.cmd->fichier_2)
+				my_heredoc(pid, tub, g_term.cmd->fichier_1, g_term.cmd->fichier_2);
 			return (pid);
 		}
 	}

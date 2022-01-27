@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:30:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/24 09:53:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/26 13:01:29 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	my_exe_cmd(t_term g_term, t_cmd *cmd)
 		cpe = ft_strjoin(cmd->path, cmd->cmd);
 	if (!cpe)
 	{
-		free(cpe);
 		exit (-1);
 		return (-1);
 	}

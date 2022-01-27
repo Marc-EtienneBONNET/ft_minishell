@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:29:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 10:39:26 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 09:52:34 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,19 @@ int	my_concatonne_2(char **tmp, char **str, char **tmp_2)
 	return (1);
 }
 
-int	my_concatonne(char **tmp, char **str)
+int	my_concatonne(char **tmp, char **str, char **fd_ouv)
 {
 	char	*tmp_2;
 
 	tmp_2 = NULL;
-	if (g_term.cmd->fichier_2 == NULL)
+	if (*fd_ouv == NULL)
 	{
 		if (my_concatonne_2(tmp, str, &tmp_2) == -1)
 			return (-1);
 	}
-	else if (ft_strncmp((*str), g_term.cmd->fichier_2, 1000) == 0
-		&& g_term.cmd->fichier_2)
-	{
-		free(g_term.cmd->fichier_2);
-		g_term.cmd->fichier_2 = NULL;
-	}
+	else if (ft_strncmp((*str), *fd_ouv, 1000) == 0
+		&& fd_ouv)
+		*fd_ouv = my_free_tab(*fd_ouv);
 	free((*str));
 	return (1);
 }
@@ -84,7 +81,7 @@ void	my_tub(int tele, int *tub)
 	}
 }
 
-void	my_heredoc(pid_t pid, int *tub)
+void	my_heredoc(pid_t pid, int *tub, char *fd_ouv, char	*fd_ferm)
 {
 	char	*str;
 	char	*tmp;
@@ -99,12 +96,12 @@ void	my_heredoc(pid_t pid, int *tub)
 	while (1)
 	{
 		str = readline(VERT"heredoc>"BLANC);
-		if (ft_strncmp(str, g_term.cmd->fichier_1, 1000) == 0)
+		if (ft_strncmp(str, fd_ferm, 1000) == 0 && fd_ouv == NULL)
 		{
 			my_tub(1, tub);
 			my_sorti(&str, &tmp, tub);
 		}
-		if (my_concatonne(&tmp, &str) == -1)
+		if (my_concatonne(&tmp, &str, &fd_ouv) == -1)
 			exit (-1);
 	}
 	exit (0);

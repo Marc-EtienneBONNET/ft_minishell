@@ -6,12 +6,11 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:12:05 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/21 10:24:03 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 11:57:10 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 int	creat_pipe(void)
 {
 	int		x;
@@ -19,7 +18,7 @@ int	creat_pipe(void)
 
 	x = 0;
 	tmp = g_term.cmd;
-	while (x++ < g_term.cmd->info_cmd->nb_maillons)
+	while (x++ < g_term.nb_maillon)
 	{
 		pipe(g_term.cmd->tub);
 		g_term.cmd = g_term.cmd->next;
@@ -35,12 +34,12 @@ int	creat_fork(void)
 
 	x = 0;
 	cmd_tmp = g_term.cmd;
-	while (x < g_term.cmd->info_cmd->nb_maillons)
+	while (x < g_term.nb_maillon)
 	{
 		if ((my_check_building(g_term.cmd) != 1
 				|| ft_strncmp(g_term.cmd->red, "|", 3) == 0
 				|| g_term.cmd->intra_red)
-			&& ft_strncmp(g_term.cmd->cmd, "cmd_vide", 9) != 0)
+			&& g_term.cmd->cmd)
 		{
 			g_term.cmd->pid = fork();
 			if (g_term.cmd->pid == 0)
@@ -49,6 +48,8 @@ int	creat_fork(void)
 				break ;
 			}
 		}
+		else
+			g_term.cmd->pid = -1;
 		g_term.cmd = g_term.cmd->next;
 		x++;
 	}
@@ -63,15 +64,10 @@ int	boucle_close_tub(void)
 
 	x = 0;
 	cmd_tmp = g_term.cmd;
-	while (x < g_term.cmd->info_cmd->nb_maillons)
+	while (x < g_term.nb_maillon)
 	{
-		if (g_term.cmd->pid != 0)
-		{
-			if (x == 0)
-				my_close_pip(g_term.cmd);
-			if (ft_strncmp(g_term.cmd->red, "|", 3) == 0)
-				my_close_pip(g_term.cmd->next);
-		}
+		if (ft_strncmp(g_term.cmd->red, "|", 3) == 0)
+			my_close_pip(g_term.cmd->next);
 		g_term.cmd = g_term.cmd->next;
 		x++;
 	}
@@ -100,7 +96,7 @@ int	boucle_ex(void)
 
 	x = 0;
 	tmp = g_term.cmd;
-	while (x++ < g_term.cmd->info_cmd->nb_maillons)
+	while (x++ < g_term.nb_maillon)
 	{
 		pid = my_gestion_red(g_term.cmd);
 		if ((my_check_building(g_term.cmd) == 1
