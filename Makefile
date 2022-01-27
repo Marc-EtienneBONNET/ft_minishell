@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/01/25 18:15:17 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/01/27 13:59:24 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS			=	main.c\
 					parsing/my_init_struct/my_init_struct.c\
 					parsing/my_init_struct/my_choose_index.c\
 					parsing/my_init_struct/my_choose_index_2.c\
+					parsing/my_init_struct/my_choose_index_3.c\
 					parsing/my_preparatif_str_cmd.c\
 					parsing/my_init_struct_env.c\
 					parsing/init_tab_cmd/my_init_tab.c\

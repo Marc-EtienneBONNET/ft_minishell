@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 09:49:36 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:32:54 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ typedef struct s_info_cmd
 
 typedef struct s_cmd
 {
-	char			*cmd;//
-	char			*path;//
-	char			*fichier_1;//
-	char			*fichier_2;//
-	char			*intra_red;//
-	char			**arg;//
-	char			*red;//
+	char			*cmd;
+	char			*path;
+	char			*fichier_1;
+	char			*fichier_2;
+	char			*intra_red;
+	char			**arg;
+	char			*red;
 	pid_t			pid;
 	int				tub[2];
 	struct s_cmd	*next;
@@ -58,11 +58,11 @@ typedef struct str_env
 
 typedef struct s_term
 {
-	int		nb_maillon;//
-	char	**envp;//
-	char	*str_cmd;//
+	int		nb_maillon;
+	char	**envp;
+	char	*str_cmd;
 	t_cmd	*cmd;
-	t_env	*my_env;//
+	t_env	*my_env;
 	int		dernier_ret;
 }	t_term;
 
@@ -137,7 +137,7 @@ int			my_concatonne_2(char **tmp, char **str, char **tmp_2);
 int			my_concatonne(char **tmp, char **str, char **fd_ouv);
 void		my_sorti(char **str, char **tmp, int *tub);
 void		my_tub(int tele, int *tub);
-void	my_heredoc(pid_t pid, int *tub, char *fd_ouv, char	*fd_ferm);
+void		my_heredoc(pid_t pid, int *tub, char *fd_ouv, char	*fd_ferm);
 	//protocole_ex
 int			message_error(void);
 int			boucle_waitpid(void);
@@ -156,89 +156,63 @@ int			my_free_all(int ret);
 void		handler_ctr_c(int code);
 void		handler_ctr_c_2(int code);
 void		handler_ctr_backslash(int code);
-/*
+
 //parsing
-	//3tab_cmd
-		//1init_tab_cmd
-int			my_avance_chaine(char *cmd_tmp, int *i);
-int			my_compte_nb_chaine(char *cmd_tmp);
-void		my_strlen_space_2(char *str, int *index, int *conteur);
-int			my_strlen_space(char *str, int *index);
-char		**my_malloc_chaine(char *cmd_tmp);
-		//2rempli_tab_cmd
-void		my_rempli_cmd(char **tab_cmd, char *cmd_tmp, int *i, int *y);
-void		my_rempli_tab_cmd(char **tab_cmd, char *cmd_tmp);
-		//modifi_cmd_tmp_for_ex
-int			my_install_guillemet(char **res, int *x);
-void		my_passe_guillemet(char *res, int *x);
-char		*my_modif_for_export(char *cmd_tmp);
-void		my_avance_whitespace(char *str, int *i);
-	//4struct_chene_cmd
-		//1chenage
-t_cmd		*my_ajoute_maillon_2(t_cmd *cmd, t_cmd *tmp);
-t_cmd		*my_ajoute_maillon(t_cmd *cmd, t_cmd *tmp);
-void		new_maillons_3(char **cmd, char *path);
-t_cmd		*new_maillons(char **tab_cmd, int *x);
-t_cmd		*my_init_struct_cmd(char **tab_cmd);
-		//2create_new_maillon
-char		**init_cmd_arg(char **tab_cmd, int *x);
-t_cmd		*bzero_tmp(void);
-char		*my_modifie_cmd(t_cmd *tmp);
-t_cmd		*new_maillons_2(char **tab_cmd, int *x, t_cmd *tmp);
-		//3mouv_struct_for_red_2
-t_cmd		*my_mouv_struct_for_red(t_cmd **cmd);
-		//3mouv_struct_for_red
-int			my_ajoute_arg(t_cmd **cmd, t_cmd **cmd_new_arg);
-void		my_ajuste_pointeur(t_cmd **cmd);
-char		*my_choose_fichier(t_cmd *cmd);
-int			my_mouv_struct_for_red_droite(t_cmd **cmd);
-int			my_mouv_struct_for_red_gauche(t_cmd **cmd);
-		//my_gestion_path
-char		**my_recup_path_2(void);
-char		*my_recup_path(t_cmd *cmd);
-char		*my_gestion_path(t_cmd *tmp);
-	//pars_env
-		//my_pars_env
+	//init_tab_cmd
+		//my_init_tab
+char		**my_creat_tab_cmd(void);
+		//my_rempli_tab
+void		my_check_guil(int	*gu, char c);
+int			my_take_nb_tab(void);
+int			my_strlen_cmd(char *str);
+int			my_copie(char **tab_cmd, int y, int i, char *str);
+int			my_rempli_tab_cmd(char **tab_cmd, char *str);
+		//my_sup_tab_cmd_vide
+int			ft_compte(char **tab_cmd);
+char		*my_copi_tab_cmd(char *str);
+char		**my_sup_str_vide(char **tab_cmd);
+	//my_init_struct
+		//my_choose_index_2
+char		*recup_red(char *red);
+int			my_ajoute_arg(char *str, int *x, char ***arg);
+void		my_gomme_path(t_cmd *tmp);
+void		my_take_arg(char *str, t_cmd *tmp);
+int			my_take_red(char *str, t_cmd *tmp);
+		//my_choose_index_3
+int			my_recup_path(t_cmd *tmp);
+int			my_take_cmd_and_path(char *str, t_cmd *tmp);
+		//my_choose_index
+void		my_take_fichier_and_intra_red(char *str, t_cmd *tmp);
+int			my_passe_fichier(int x, int red, char *str, int *gu);
+char		**my_choose_var_env_path(void);
+char		*my_choose_path(t_cmd *tmp);
+		//my_init_struct
+char		*recup_element(char *str, int x);
+t_cmd		*my_creat_tmp(char *str);
+int			my_add_liste_chene(t_cmd *tmp);
+int			my_init_struct(char **tab_cmd);
+	//my_init_struct_env
 char		*my_env_key(char *env);
 char		*my_env_var(char *env);
-	//utile
-		//checker_et_ft_utile
-int			my_check_redirection(char *str);
-char		*my_little_printf_char(char *str);
-	//protocole parsing
-char		*my_gestion_var_env_2(char **res, int *x);
-int			my_gestion_for_export(void);
-int			my_lancement_struct(char **cmd_tmp_env);
-char		*my_gestion_var_env(char *cmd_tmp);
+int			my_init_struct_env(void);
+	//my_preparatif_str_cmd
+int			my_check_guillemet(void);
+char		*my_recup_key(char *cmd);
+int			my_transforme_str_cmd_pour_var_env_2(int *x, char **new_cmd,
+				char *var_env, char *key);
+int			my_transforme_str_cmd_pour_var_env(int *x, char *key);
+int			my_check_var_env(void);
+	//my_protocole_de_parsing
 int			my_parsing(void);
-	//2gestion_var_env
-char		*my_take_key_env(char *cmd_tmp, int x);
-void		my_inclus_res_var_env_2(char **tmp, int x,
-				char **res, char *str_env);
-char		*my_give_str_env(char *key);
-char		*my_recup_str_env(char **tmp, char *key_env);
-char		*my_inclus_res_var_env(char **tmp, char *key_env, int x);
-*/
+	//utile
 int			my_check_redirection(char *str);
 int			my_check_cara_legale(char c);
-char		**my_creat_tab_cmd(void);
-int			my_check_guillemet(void);
-int			my_check_var_env(void);
-int			my_init_struct_env(void);
-int			my_parsing(void);
-int	my_rempli_tab_cmd(char **tab_cmd, char *str);
-int	my_take_nb_tab(void);
-char	**my_sup_str_vide(char **tab_cmd);
-int	my_init_struct(char **tab_cmd);
-void	my_check_guil(int	*gu, char c);
-void	my_take_fichier_and_intra_red(char *str, t_cmd *tmp);
-char	*recup_element(char *str, int x);
-int	my_take_cmd_and_path(char *str, t_cmd *tmp);
-char	*recup_red(char *red);
-void	my_take_arg(char *str, t_cmd *tmp);
-int	my_passe_fichier(int x, int red, char *str, int *gu);
-int	my_take_red(char *str, t_cmd *tmp);
-int	my_print_maillon(t_cmd *cmd, int i);
+
+//tmp
+	//tmp.c
+int			my_print_list_chene(t_cmd *cmd);
+int			my_print_maillon(t_cmd *cmd, int i);
+
 //main
 int			mise_en_place_de_lancement(int ac, char **envp);
 int			my_check_space(char *str);

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:29:06 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/26 11:51:01 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:13:30 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	mess_err2(char *str)
 
 int	my_export(char **argv)
 {
-
 	if (!argv[1])
 	{
 		if (my_print_export() == -1)

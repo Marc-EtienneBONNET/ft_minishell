@@ -6,11 +6,12 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:12:05 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 11:57:10 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:13:16 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 int	creat_pipe(void)
 {
 	int		x;
@@ -32,9 +33,9 @@ int	creat_fork(void)
 	int		x;
 	t_cmd	*cmd_tmp;
 
-	x = 0;
+	x = -1;
 	cmd_tmp = g_term.cmd;
-	while (x < g_term.nb_maillon)
+	while (++x < g_term.nb_maillon)
 	{
 		if ((my_check_building(g_term.cmd) != 1
 				|| ft_strncmp(g_term.cmd->red, "|", 3) == 0
@@ -51,7 +52,6 @@ int	creat_fork(void)
 		else
 			g_term.cmd->pid = -1;
 		g_term.cmd = g_term.cmd->next;
-		x++;
 	}
 	g_term.cmd = cmd_tmp;
 	return (1);

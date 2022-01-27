@@ -6,42 +6,11 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:48:53 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/26 12:48:07 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:14:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*my_recup_str(char *arg, int tele)
-{
-	int		x;
-	char	*new;
-
-	x = 0;
-	if (tele == 0)
-	{
-		while (arg[x] && arg[x] != '=')
-			x++;
-		if (arg[x] == '=')
-			x++;
-		new = malloc(sizeof(char) * (x + 1));
-		if (!new)
-			return (NULL);
-		x = -1;
-		while (arg[++x] && arg[x - 1] != '=')
-			new[x] = arg[x];
-		new[x] = '\0';
-		return (new);
-	}
-	while (*arg && *arg != '=')
-		arg++;
-	if (!(*arg) || !(*(++arg)))
-		return (NULL);
-	new = ft_strdup(arg);
-	if (!new)
-		return (NULL);
-	return (new);
-}
 
 int	ft_strncmp_2(char *str1, char *str2, unsigned int size)
 {

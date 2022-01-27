@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 13:44:24 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 09:44:56 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:10:57 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,25 @@ int	my_recup_fd_fichier(t_cmd *cmd)
 	return (fd);
 }
 
+pid_t	my_gestion_red_2(int *tub)
+{
+	pid_t	pid;
+
+	pipe(tub);
+	pid = fork();
+	if (!g_term.cmd->fichier_2)
+		my_heredoc(pid, tub, g_term.cmd->fichier_2,
+			g_term.cmd->fichier_1);
+	else if (g_term.cmd->fichier_2)
+		my_heredoc(pid, tub, g_term.cmd->fichier_1,
+			g_term.cmd->fichier_2);
+	return (pid);
+}
+
 pid_t	my_gestion_red(t_cmd *cmd)
 {
 	int		fd;
 	int		tub[2];
-	pid_t	pid;
 
 	if (cmd->pid == 0 && cmd->intra_red)
 	{
@@ -84,15 +98,7 @@ pid_t	my_gestion_red(t_cmd *cmd)
 			close(fd);
 		}
 		else if (ft_strncmp(g_term.cmd->intra_red, "<<", 3) == 0)
-		{
-			pipe(tub);
-			pid = fork();
-			if (!g_term.cmd->fichier_2)
-				my_heredoc(pid, tub, g_term.cmd->fichier_2, g_term.cmd->fichier_1);
-			else if (g_term.cmd->fichier_2)
-				my_heredoc(pid, tub, g_term.cmd->fichier_1, g_term.cmd->fichier_2);
-			return (pid);
-		}
+			return (my_gestion_red_2(tub));
 	}
 	return (-1);
 }

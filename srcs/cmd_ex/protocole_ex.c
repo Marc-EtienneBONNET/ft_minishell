@@ -6,11 +6,12 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 11:38:09 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:12:49 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 int	message_error(void)
 {
 	if (g_term.dernier_ret == 255 || g_term.dernier_ret == 139)
@@ -51,7 +52,6 @@ int	my_lancement_ex(void)
 {
 	if (my_parsing() < 0)
 		return (1);
-	//my_print_list_chene(g_term.cmd);
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	creat_pipe();

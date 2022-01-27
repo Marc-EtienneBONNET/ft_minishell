@@ -6,13 +6,11 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 14:05:42 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/26 11:26:58 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:05:24 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 char	*recup_element(char *str, int x)
 {
@@ -36,8 +34,6 @@ char	*recup_element(char *str, int x)
 	return (res);
 }
 
-
-
 t_cmd	*my_creat_tmp(char *str)
 {
 	t_cmd	*tmp;
@@ -55,7 +51,6 @@ t_cmd	*my_creat_tmp(char *str)
 	return (tmp);
 }
 
-
 int	my_add_liste_chene(t_cmd *tmp)
 {
 	int		x;
@@ -66,7 +61,6 @@ int	my_add_liste_chene(t_cmd *tmp)
 		return (-1);
 	if (!g_term.cmd)
 	{
-		tmp_1 = tmp;
 		g_term.cmd = tmp;
 		g_term.cmd->next = tmp;
 		g_term.cmd->previous = tmp;
@@ -80,9 +74,9 @@ int	my_add_liste_chene(t_cmd *tmp)
 		tmp_1->previous = tmp;
 		tmp->previous = g_term.cmd;
 		tmp->next = tmp_1;
+		g_term.cmd = tmp_1;
 	}
 	g_term.nb_maillon++;
-	g_term.cmd = tmp_1;
 	return (1);
 }
 

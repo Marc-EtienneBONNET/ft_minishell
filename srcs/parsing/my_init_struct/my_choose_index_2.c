@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:15:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/26 10:42:37 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 13:50:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,8 @@ void	my_take_arg(char *str, t_cmd *tmp)
 		else if (red > 1 && gu == 0)
 			x = my_passe_fichier(x, red, str, &gu);
 		else
-		{
-			my_ajoute_arg(str, &x, &arg);
-			if (!str[x])
+			if (my_ajoute_arg(str, &x, &arg) == 1 && !str[x])
 				break ;
-		}
 	}
 	tmp->arg = arg;
 	my_gomme_path(tmp);
