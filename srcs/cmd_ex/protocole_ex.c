@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 17:58:37 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 19:16:36 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	my_lancement_ex(void)
 		my_free_liste_chene(g_term.cmd);
 		return (1);
 	}
-	my_print_list_chene(g_term.cmd);
+	//my_print_list_chene(g_term.cmd);
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	creat_pipe();

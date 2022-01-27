@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:15:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 18:08:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 19:00:10 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,14 @@ char	*recup_element_2(char *str, int *x)
 		(*x)++;
 	}
 	(*x) -= 2;
-	printf("ici : %s\n", &str[(*x)]);
 	if (str[(*x)] && str[(*x) + 1]
 		&& ((str[(*x)] == '\"' && str[(*x) + 1] == '\"')
 		|| (str[(*x)] == '\'' && str[(*x) + 1] == '\'')))
 	{
-		printf("ici\n");
 		res = ft_strmicrojoin(&res, str[(*x)]);
 		res = ft_strmicrojoin(&res, str[(*x) + 1]);
 	}
+	(*x) += 2;
 	return (res);
 }
 
@@ -65,7 +64,7 @@ void	my_take_fichier_and_intra_red(char *str, t_cmd *tmp)
 			tmp->intra_red = recup_red(&(str[x]));
 		if (red == 3)
 			x++;
-		if (red > 1 && gu == 0 && !tmp->fichier_1)
+		if (red > 1 && gu == 0)
 		{
 			y = ++x;
 			if (!tmp->fichier_1)

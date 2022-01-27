@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 17:22:32 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 18:35:40 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,11 +137,12 @@ pid_t		my_gestion_red(t_cmd *cmd);
 	//my_heredoc
 int			my_concatonne_2(char **tmp, char **str, char **tmp_2);
 int			my_concatonne(char **tmp, char **str, char **fd_ouv);
-void		my_sorti(char **str, char **tmp, int *tub);
+void		my_sorti(char **str, char **tmp, int *tub, int x);
 void		my_tub(int tele, int *tub);
 void		my_heredoc(pid_t pid, int *tub, char *fd_ouv, char	*fd_ferm);
 	//my_heredoc_2
 int			my_check_var_env_heredoc(char **tmp);
+int			ft_modif_fd(char **tmp);
 	//protocole_ex
 int			message_error(void);
 int			boucle_waitpid(void);

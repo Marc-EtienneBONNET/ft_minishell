@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 08:28:28 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 15:42:55 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 19:12:17 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	my_parsing(void)
 
 	if (my_check_guillemet() == -1)
 		return (-1);
-	if (my_check_var_env() == -1)
+	if (my_gestion_env_heredoc(&g_term.str_cmd) == -1)
 		return (-2);
 	tab_cmd = my_creat_tab_cmd();
 	if (!tab_cmd)

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:29:16 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 17:22:22 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 18:59:57 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ int	my_concatonne(char **tmp, char **str, char **fd_ouv)
 	return (1);
 }
 
-void	my_sorti(char **str, char **tmp, int *tub)
+void	my_sorti(char **str, char **tmp, int *tub, int x)
 {
 	(void)tub;
 	free(*str);
-	my_gestion_env_heredoc(tmp);
+	if (x == 0)
+		my_gestion_env_heredoc(tmp);
 	write(1, *tmp, ft_strlen(*tmp));
 	if (*tmp)
 		free(*tmp);
@@ -86,6 +87,7 @@ void	my_heredoc(pid_t pid, int *tub, char *fd_ouv, char	*fd_ferm)
 {
 	char	*str;
 	char	*tmp;
+	int		x;
 
 	str = NULL;
 	tmp = NULL;
@@ -94,13 +96,15 @@ void	my_heredoc(pid_t pid, int *tub, char *fd_ouv, char	*fd_ferm)
 		my_tub(0, tub);
 		return ;
 	}
+	x = ft_modif_fd(&fd_ouv);
+	x += ft_modif_fd(&fd_ferm);
 	while (1)
 	{
 		str = readline(VERT"heredoc>"BLANC);
 		if (ft_strncmp(str, fd_ferm, 1000) == 0 && fd_ouv == NULL)
 		{
 			my_tub(1, tub);
-			my_sorti(&str, &tmp, tub);
+			my_sorti(&str, &tmp, tub, x);
 		}
 		if (my_concatonne(&tmp, &str, &fd_ouv) == -1)
 			exit (-1);

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 16:50:08 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 17:57:21 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 19:13:01 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ int	my_gestion_env_heredoc(char **tmp)
 	char	*key;
 	char	*var;
 	char	*tmp_2;
+	int		gu;
 
 	x = -1;
 	key = NULL;
+	gu = 0;
 	while ((*tmp)[++x])
 	{
-		if ((*tmp)[x] != '$')
+		my_check_guil(&gu, (*tmp)[x]);
+		if ((*tmp)[x] != '$' || gu != 0)
 			continue ;
 		(*tmp)[x] = '\0';
 		tmp_2 = ft_strdup(*tmp);
@@ -59,7 +62,35 @@ int	my_gestion_env_heredoc(char **tmp)
 			key = ft_strmicrojoin(&key, (*tmp)[x]);
 		var = my_recup_var(key);
 		key = my_free_tab(key);
+		if (!var)
+		{
+			tmp_2 = my_free_tab(tmp_2);
+			return (-1);
+		}
 		my_gestion_env_heredoc_2(tmp, &tmp_2, &var, x);
 	}
 	return (1);
+}
+
+int	ft_modif_fd(char **tmp)
+{
+	char	*tmp_2;
+	char	c;
+
+	if (!(*tmp))
+		return (0);
+	if (((*tmp)[ft_strlen(*tmp) - 1] == '\"'
+		&& (*tmp)[ft_strlen(*tmp) - 2] == '\"')
+		|| ((*tmp)[ft_strlen(*tmp) - 1] == '\''
+			&& (*tmp)[ft_strlen(*tmp) - 2] == '\''))
+	{
+		c = *tmp[ft_strlen(*tmp) - 2];
+		(*tmp)[ft_strlen(*tmp) - 2] = '\0';
+		tmp_2 = ft_strdup(*tmp);
+		(*tmp)[ft_strlen(*tmp) - 2] = c;
+		*tmp = my_free_tab(*tmp);
+		*tmp = ft_strdup(tmp_2);
+		return (1);
+	}
+	return (0);
 }

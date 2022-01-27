@@ -6,12 +6,11 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:14:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 16:14:15 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/27 19:13:33 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 int	my_check_guillemet(void)
 {
 	int		x;
@@ -39,6 +38,7 @@ int	my_check_guillemet(void)
 		return (-1);
 	return (1);
 }
+/*
 
 char	*my_recup_key(char *cmd)
 {
@@ -144,3 +144,5 @@ int	my_check_var_env(void)
 	}
 	return (1);
 }
+
+*/
