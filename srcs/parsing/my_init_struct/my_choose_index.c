@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:15:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 19:00:10 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/28 15:41:46 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	my_take_fichier_and_intra_red(char *str, t_cmd *tmp)
 	while (str[++x])
 	{
 		my_check_guil(&gu, str[x]);
+		if (gu > 0)
+			continue ;
 		red = my_check_redirection(&(str[x]));
 		if (red > 1)
 			tmp->intra_red = recup_red(&(str[x]));
@@ -94,7 +96,7 @@ int	my_passe_fichier(int x, int red, char *str, int *gu)
 	return (x);
 }
 
-char	**my_choose_var_env_path(void)
+char	**my_choose_var_env_path(void) 
 {
 	int	x;
 
@@ -116,6 +118,8 @@ char	*my_choose_path(t_cmd *tmp)
 
 	x = -1;
 	path = my_choose_var_env_path();
+	if (!path)
+		return (NULL);
 	while (path[++x])
 	{
 		tmp_2 = ft_strjoin(path[x], "/");

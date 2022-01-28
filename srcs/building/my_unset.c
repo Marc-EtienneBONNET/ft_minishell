@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:37:39 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 15:53:49 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:11:21 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,27 @@
 
 int	supp_var_2(char *argv, t_env **new, int j, int len)
 {
-	if (ft_strncmp(g_term.my_env[len].key, argv, ft_strlen(argv)) == 0)
+	int		len_2;
+	char	*tmp;
+
+	len_2 = ft_strlen(g_term.my_env[len].key) - 1;
+	if (g_term.my_env[len].key[len_2] == '=')
 	{
+		g_term.my_env[len].key[len_2] = '\0';
+		tmp = ft_strdup(g_term.my_env[len].key);
+		g_term.my_env[len].key[len_2] = '=';
+	}
+	else
+		tmp = ft_strdup(g_term.my_env[len].key);
+	if (ft_strncmp(tmp, argv, ft_strlen(tmp)) == 0)
+	{
+		free(tmp);
 		free(g_term.my_env[len].key);
 		if (g_term.my_env[len].var)
 			free(g_term.my_env[len].var);
 		return (1);
 	}
+	free(tmp);
 	(*new)[j].key = g_term.my_env[len].key;
 	(*new)[j].var = g_term.my_env[len].var;
 	return (0);

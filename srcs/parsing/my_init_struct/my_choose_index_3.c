@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:15:46 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 15:16:26 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/28 15:21:05 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	my_recup_path(t_cmd *tmp)
 		my_free_tab(tmp->cmd);
 		tmp->cmd = ft_strdup(tmp_2);
 		free(tmp_2);
+		return (1);
 	}
 	tmp->path = my_choose_path(tmp);
 	return (1);

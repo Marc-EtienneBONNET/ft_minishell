@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 16:50:08 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 19:13:01 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/28 15:47:01 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*my_recup_var(char *key)
 	int	x;
 
 	x = -1;
+	if (key[0] == '?')
+		return (ft_strdup(ft_itoa(g_term.dernier_ret)));
 	while (g_term.my_env[++x].key)
 		if (ft_strncmp(g_term.my_env[x].key, key, ft_strlen(key)) == 0)
 			return (ft_strdup(g_term.my_env[x].var));
@@ -39,6 +41,16 @@ int	my_gestion_env_heredoc_2(char **tmp, char **tmp_2, char **var, int x)
 	return (1);
 }
 
+int	my_check_red_gauche_avant_env(char *str, int x)
+{
+	x--;
+	while (ft_whitespace(str[x]) == 1 || str[x] == '\"' || str[x] == '\'')
+		x--;
+	if (str[x] == '<' && str[x - 1] == '<')
+		return (1);
+	return (0);
+}
+
 int	my_gestion_env_heredoc(char **tmp)
 {
 	int		x;
@@ -53,13 +65,19 @@ int	my_gestion_env_heredoc(char **tmp)
 	while ((*tmp)[++x])
 	{
 		my_check_guil(&gu, (*tmp)[x]);
-		if ((*tmp)[x] != '$' || gu != 0)
+		if (((*tmp)[x] != '$' || gu == 1))
+			continue ;
+		if ((*tmp)[x] == '$' && my_check_red_gauche_avant_env(*tmp, x) == 1 && (gu == 0 || gu == 2))
 			continue ;
 		(*tmp)[x] = '\0';
 		tmp_2 = ft_strdup(*tmp);
 		(*tmp)[x] = '$';
-		while (ft_whitespace((*tmp)[++x]) != 1 && (*tmp)[x])
+		while (ft_whitespace((*tmp)[++x]) != 1 && (*tmp)[x]
+			&& (*tmp)[x] != '\"')
+		{
+			my_check_guil(&gu, (*tmp)[x]);
 			key = ft_strmicrojoin(&key, (*tmp)[x]);
+		}
 		var = my_recup_var(key);
 		key = my_free_tab(key);
 		if (!var)
