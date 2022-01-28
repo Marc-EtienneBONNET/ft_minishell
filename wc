@@ -6,11 +6,3 @@ read
 srcs
 test
 wc
-includes
-libft
-Makefile
-minishell
-read
-srcs
-test
-wc

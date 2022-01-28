@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:14:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 19:13:33 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:19:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	my_check_guillemet(void)
 	while (g_term.str_cmd[x])
 	{
 		c = g_term.str_cmd[x];
+		if ((g_term.str_cmd[x] == '>' && g_term.str_cmd[x + 1] == '>'
+				&& g_term.str_cmd[x + 2] == '>') || (g_term.str_cmd[x] == '<'
+				&& g_term.str_cmd[x + 1] == '<'
+				&& g_term.str_cmd[x + 2] == '<'))
+			return (-1);
 		if (c == '\"' && double_g == 0 && simple_g == 0)
 			double_g = 1;
 		else if (c == '\'' && double_g == 0 && simple_g == 0)

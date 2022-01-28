@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:00:12 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/28 15:40:31 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:20:45 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	my_lancement_ex(void)
 	if (g_term.dernier_ret < 0)
 	{
 		if (g_term.dernier_ret == -1)
-			printf(ROUGE"Erreur syntaxique de guillemet\n"BLANC);
+			printf(ROUGE"Erreur syntaxique\n"BLANC);
 		if (g_term.dernier_ret == -2)
 			printf(ROUGE"Variable d'env inexistante\n"BLANC);
 		if (g_term.dernier_ret == -4)
@@ -62,7 +62,7 @@ int	my_lancement_ex(void)
 		my_free_liste_chene(g_term.cmd);
 		return (1);
 	}
-	my_print_list_chene(g_term.cmd);
+	//my_print_list_chene(g_term.cmd);
 	signal(SIGQUIT, handler_ctr_backslash);
 	signal(SIGINT, handler_ctr_c_2);
 	creat_pipe();
