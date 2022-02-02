@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2022/02/02 12:08:52 by mbonnet          ###   ########.fr        #
+#    Updated: 2022/02/02 12:34:47 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ SRCS			=	main.c\
 					building/export/my_print_export.c\
 					building/my_check_building.c\
 					free/my_free.c\
-					tmp/tmp.c\
 					my_init_struct_env.c\
 					parsing/my_init_parsing.c\
 					parsing/my_check_str_cmd.c\

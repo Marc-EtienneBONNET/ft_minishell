@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/02 12:30:19 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/02 12:35:09 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,6 @@ int			my_free_all(int ret);
 void		handler_ctr_c(int code);
 void		handler_ctr_c_2(int code);
 void		handler_ctr_backslash(int code);
-
-//tmp
-	//tmp.c
-int			my_print_list_chene(t_cmd *cmd);
-int			my_print_maillon(t_cmd *cmd, int i);
 
 //main
 int			mise_en_place_de_lancement(int ac, char **envp);
