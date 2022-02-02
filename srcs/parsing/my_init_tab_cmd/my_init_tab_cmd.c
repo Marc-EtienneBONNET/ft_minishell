@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 09:42:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/01 10:11:48 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/02 16:23:32 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ char	**my_init_tab_cmd_2(char **tab_cmd, char *str, int *x, char **tmp)
 	while ((*tmp) && (*tmp)[++y])
 	{
 		my_check_gu(&gu, (*tmp)[y]);
-		if (!str[(*x) + 1] || (gu == 0 && ((*tmp)[y] == '|'
-				|| (*tmp)[y] == ';'
-			|| ((*tmp)[y] == '&' && (*tmp)[y + 1] == '&')
-				|| ((*tmp)[y] == '|' && (*tmp)[y + 1] == '|'))))
+		if (!str[(*x) + 1] || (gu == 0
+				&& (((*tmp)[y] == '&' && (*tmp)[y + 1] == '&')
+			|| ((*tmp)[y] == '|' && (*tmp)[y + 1] == '|')
+					|| ((*tmp)[y] == '|' && str[(*x) + 1] != '|')
+					|| (*tmp)[y] == ';')))
 		{
 			tmp_2 = ft_strdoubledup(tab_cmd);
 			tab_cmd = my_free_double_tab((void **)tab_cmd, -1);

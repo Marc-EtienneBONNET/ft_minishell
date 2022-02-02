@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 11:47:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/02 11:55:11 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/02 16:06:02 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 int	my_check_red_pip(char *str)
 {
-	if (str[0] == '|')
-		return (1);
-	else if (str[0] == ';')
-		return (2);
-	else if (str[0] == '&' && str[1] == '&')
+	if (str[0] == '&' && str[1] == '&')
 		return (3);
 	else if (str[0] == '|' && str[1] == '|')
 		return (4);
@@ -26,6 +22,10 @@ int	my_check_red_pip(char *str)
 		return (5);
 	else if (str[0] == '<' && str[1] == '<')
 		return (6);
+	else if (str[0] == '|')
+		return (1);
+	else if (str[0] == ';')
+		return (2);
 	else if (str[0] == '>')
 		return (7);
 	else if (str[0] == '<')

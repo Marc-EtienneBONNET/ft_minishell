@@ -6,40 +6,64 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 08:27:33 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/02 12:24:06 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/02 16:45:31 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	my_gestion_and_ou(int	*verif, int	*verif_2)
+{
+	if (g_term.cmd->pid != 0)
+	{
+		if (ft_strcmp(g_term.cmd->prev->pip, "&&") == 0)
+		{
+			waitpid(g_term.cmd->prev->pid, &(*verif), 0);
+			if (WIFEXITED((*verif)))
+				(*verif) = WEXITSTATUS((*verif));
+		}
+		if (ft_strcmp(g_term.cmd->prev->pip, "||") == 0)
+		{
+			waitpid(g_term.cmd->prev->pid, &(*verif_2), 0);
+			if (WIFEXITED((*verif_2)))
+				(*verif_2) = WEXITSTATUS((*verif_2));
+		}
+		usleep(1000);
+	}
+	if ((*verif != 0 || *verif_2 == 0)
+		&& my_check_building(g_term.cmd) == 1
+		&& g_term.cmd->pip[0] == ';'
+		&& !g_term.cmd->red)
+		g_term.cmd->cmd = my_free_tab((void **)&g_term.cmd->cmd);
+	return (1);
+}
+
 void	my_creat_fork(void)
 {
 	t_cmd	*tmp;
 	int		x;
+	int		verif;
+	int		verif_2;
 
 	x = 0;
+	verif = 0;
+	verif_2 = -1;
 	tmp = g_term.cmd;
 	while (x++ < g_term.nb_maillon)
 	{
-		g_term.cmd->pid = fork();
-		if (g_term.cmd->pid == 0)
-			return ;
+		g_term.cmd->pid = -1;
+		my_gestion_and_ou(&verif, &verif_2);
+		if (verif == 0 && verif_2 != 0)
+		{
+			g_term.cmd->pid = fork();
+			if (g_term.cmd->pid == 0)
+				return ;
+		}
 		else
-			usleep(10);
+			g_term.dernier_ret = verif;
 		g_term.cmd = g_term.cmd->next;
 	}
 	g_term.cmd = tmp;
-}
-
-int	message_error(void)
-{
-	if (g_term.dernier_ret == 255 || g_term.dernier_ret == 139)
-		printf(ROUGE"Minishell: %s : command not found\n"BLANC,
-			g_term.cmd->cmd);
-	if (g_term.dernier_ret == -1)
-		printf(ROUGE"Minishell: %s : arg incorecte\n"BLANC,
-			g_term.cmd->cmd);
-	return (1);
 }
 
 void	my_boucle_waitpid(void)

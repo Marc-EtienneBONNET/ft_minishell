@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/02 12:35:09 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/02 16:39:30 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,23 +121,27 @@ void		*my_free_liste_chene(t_cmd *cmd);
 void		*my_free_maillon(t_cmd *tmp);
 int			my_free_all(int ret);
 
+int			my_sup_maillon(void);
+int			my_lancement_ex_2(void);
+int			my_print_maillon_2(t_cmd *cmd, int i);
+
 //hendler
 	//hendler
 void		handler_ctr_c(int code);
 void		handler_ctr_c_2(int code);
 void		handler_ctr_backslash(int code);
 
+//tmp
+	//tmp.c
+int			my_print_list_chene(t_cmd *cmd);
+int			my_print_maillon(t_cmd *cmd, int i);
+
 //main
 int			mise_en_place_de_lancement(int ac, char **envp);
 int			my_check_space(char *str);
 //int			my_check_guillemet(char *str);
 int			main(int ac, char **av, char **envp);
-
-//tmp
-	//tmp.c
-int			my_print_list_chene(t_cmd *cmd);
-int			my_init_struct_env(void);
-
+int			message_error(void);
 //parsing
 	//my_init_parsing
 int			my_init_parsing(void);
