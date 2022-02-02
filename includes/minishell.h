@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 18:35:40 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/02 12:30:19 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,23 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_info_cmd
+typedef struct s_intra_red
 {
-	int		nb_maillons;
-}	t_info_cmd;
+	char				*fichier;
+	char				*red;
+}	t_intra_red;
 
 typedef struct s_cmd
 {
 	char			*cmd;
 	char			*path;
-	char			*fichier_1;
-	char			*fichier_2;
-	char			*intra_red;
+	t_intra_red		*red;
 	char			**arg;
-	char			*red;
+	char			*pip;
 	pid_t			pid;
 	int				tub[2];
 	struct s_cmd	*next;
-	struct s_cmd	*previous;
+	struct s_cmd	*prev;
 
 }	t_cmd;
 
@@ -90,9 +89,7 @@ int			my_print_export(void);
 void		my_para(int *para, char *str);
 int			ft_len_2(char *str);
 char		*ft_strmicrojoin(char **str, char c);
-char		**my_recup_arg_2(char **str, int *y, char **res);
-char		**my_recup_arg(char *str);
-int	my_gestion_env_heredoc(char **tmp);
+int			nmy_gestion_env_heredoc(char **tmp);
 
 	//my_cd
 int			change_pwd(char *pwd, char *oldpwd);
@@ -116,41 +113,9 @@ int			mess_err(char *str);
 int			check(char *str);
 int			my_unset(char **argv);
 
-//cmd_ex
-	//element_d_ex
-int			creat_pipe(void);
-int			creat_fork(void);
-int			boucle_close_tub(void);
-int			boucle_ex_fork(pid_t pid);
-int			boucle_ex(void);
-	//ex_cmd
-int			my_ex_building(t_cmd *cmd);
-int			my_exe_cmd(t_term g_term, t_cmd *cmd);
-	//gestion_pip
-void		my_tub_entre_sorti_enfant(t_cmd *cmd);
-void		my_close_pip(t_cmd *cmd);
-	//gestion_red
-int			my_check_type_red(char *str);
-int			my_ecrase_fichier(t_cmd *cmd);
-int			my_recup_fd_fichier(t_cmd *cmd);
-pid_t		my_gestion_red(t_cmd *cmd);
-	//my_heredoc
-int			my_concatonne_2(char **tmp, char **str, char **tmp_2);
-int			my_concatonne(char **tmp, char **str, char **fd_ouv);
-void		my_sorti(char **str, char **tmp, int *tub, int x);
-void		my_tub(int tele, int *tub);
-void		my_heredoc(pid_t pid, int *tub, char *fd_ouv, char	*fd_ferm);
-	//my_heredoc_2
-int			my_check_var_env_heredoc(char **tmp);
-int			ft_modif_fd(char **tmp);
-	//protocole_ex
-int			message_error(void);
-int			boucle_waitpid(void);
-int			my_lancement_ex(void);
-
 //free
 	//my_free
-void		*my_free_tab(void *a_free);
+void		*my_free_tab(void **a_free);
 void		*my_free_double_tab(void **tab_str, int nb_str);
 void		*my_free_liste_chene(t_cmd *cmd);
 void		*my_free_maillon(t_cmd *tmp);
@@ -161,57 +126,6 @@ int			my_free_all(int ret);
 void		handler_ctr_c(int code);
 void		handler_ctr_c_2(int code);
 void		handler_ctr_backslash(int code);
-
-//parsing
-	//init_tab_cmd
-		//my_init_tab
-char		**my_creat_tab_cmd(void);
-		//my_rempli_tab
-int			my_check_guil(int	*gu, char c);
-int			my_take_nb_tab(void);
-int			my_strlen_cmd(char *str);
-int			my_copie(char **tab_cmd, int y, int i, char *str);
-int			my_rempli_tab_cmd(char **tab_cmd, char *str);
-		//my_sup_tab_cmd_vide
-int			ft_compte(char **tab_cmd);
-char		*my_copi_tab_cmd(char *str);
-char		**my_sup_str_vide(char **tab_cmd);
-	//my_init_struct
-		//my_choose_index_2
-char		*recup_red(char *red);
-int			my_ajoute_arg(char *str, int *x, char ***arg);
-void		my_gomme_path(t_cmd *tmp);
-void		my_take_arg(char *str, t_cmd *tmp);
-int			my_take_red(char *str, t_cmd *tmp);
-		//my_choose_index_3
-int			my_recup_path(t_cmd *tmp);
-int			my_take_cmd_and_path(char *str, t_cmd *tmp);
-		//my_choose_index
-void		my_take_fichier_and_intra_red(char *str, t_cmd *tmp);
-int			my_passe_fichier(int x, int red, char *str, int *gu);
-char		**my_choose_var_env_path(void);
-char		*my_choose_path(t_cmd *tmp);
-		//my_init_struct
-char		*recup_element(char *str, int *x);
-t_cmd		*my_creat_tmp(char *str);
-int			my_add_liste_chene(t_cmd *tmp);
-int			my_init_struct(char **tab_cmd);
-	//my_init_struct_env
-char		*my_env_key(char *env);
-char		*my_env_var(char *env);
-int			my_init_struct_env(void);
-	//my_preparatif_str_cmd
-int			my_check_guillemet(void);
-char		*my_recup_key(char *cmd);
-int			my_transforme_str_cmd_pour_var_env_2(int *x, char **new_cmd,
-				char *var_env, char *key);
-int			my_transforme_str_cmd_pour_var_env(int *x, char *key);
-int			my_check_var_env(void);
-	//my_protocole_de_parsing
-int			my_parsing(void);
-	//utile
-int			my_check_redirection(char *str);
-int			my_check_cara_legale(char c);
 
 //tmp
 	//tmp.c
@@ -227,5 +141,61 @@ int			main(int ac, char **av, char **envp);
 //tmp
 	//tmp.c
 int			my_print_list_chene(t_cmd *cmd);
+int			my_init_struct_env(void);
 
+//parsing
+	//my_init_parsing
+int			my_init_parsing(void);
+	//my_check_str_cmd
+int			my_check_nb_guillemet(char *str);
+int			my_check_bad_red(char *str);
+	//utile.c
+int			my_check_gu(int *gu, char c);
+int			my_check_red(int gu, char c);
+int			my_sup_char(char **str, int x);
+	//my_init_tab_cmd
+		//my_init_tab_cmd
+char		**my_init_tab_cmd(char *str);
+	//my_init_struct
+		//my_init_struct
+int			my_create_cmd(char **tab_cmd);
+		//my_utile
+int			my_check_red_pip(char *str);
+char		*my_recup_ellement(char **str, int *x);
+char		*my_take_red(int choose, int *x, char **str);
+		//my_gestion_red
+t_intra_red	*my_recup_red(char **str);
+		//my_gestion_cmd
+char		*my_recup_cmd(char **str);
+char		*my_recup_path(char **str);
+char		*my_recup_path_env(char *cmd);
+char		*my_recup_pip(char **cmd);
+		//my_recup_arg
+char		**my_recup_arg(char **tab_cmd, t_cmd *cmd);
+void		my_close_pip(t_cmd *cmd);
+
+//ex_cmd
+	//my_lancement_ex.c
+int			my_lancement_ex(void);
+	//my_gestion_gu_and_var_env
+int			my_gestion_var_env_and_gui(t_cmd *cmd);
+	//my_gestion_gu_and_var_env_utile
+int			netoyage_guillemet(char **str);
+int			my_check_var_env(char **str);
+	//my_gestion_tub
+void		my_connect_tub(void);
+void		my_close_tub_parent(void);
+void		my_creat_tub(void);
+	//my_gestion_red
+int			my_connect_red(void);
+	//my_gestion_heredoc
+int			my_connect_heredoc(void);
+	//my_gestion_heredoc_2
+int			ft_strcmp(char *str1, char *str2);
+int			my_sorti(char **str, char **res, int option, int *tub);
+int			my_concate(char **res, char *str);
+int			netoyage_guillemet_2(char **str);
+int			my_heredoc(char *deb, char *fin, int option, int *tub);
+	//my_gestion_ex
+int			my_exe_cmd(void);
 #endif

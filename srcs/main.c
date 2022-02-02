@@ -6,13 +6,30 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:50:35 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/27 16:05:09 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/02 12:27:44 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_term	g_term;
+
+int	my_free_all(int ret)
+{
+	int	x;
+
+	x = 0;
+	while (g_term.my_env && g_term.my_env[x].key != NULL)
+	{
+		g_term.my_env[x].key = my_free_tab((void **)&(g_term.my_env[x].key));
+		g_term.my_env[x].var = my_free_tab((void **)&(g_term.my_env[x].var));
+		x++;
+	}
+	rl_clear_history();
+	if (g_term.my_env)
+		g_term.my_env = my_free_tab((void **)&(g_term.my_env));
+	return (ret);
+}
 
 int	mise_en_place_de_lancement(int ac, char **envp)
 {
@@ -22,6 +39,7 @@ int	mise_en_place_de_lancement(int ac, char **envp)
 	signal(SIGINT, handler_ctr_c);
 	signal(SIGQUIT, SIG_IGN);
 	g_term.envp = envp;
+	g_term.my_env = NULL;
 	if (my_init_struct_env() == -1)
 		return (-1);
 	return (1);
@@ -43,35 +61,6 @@ int	my_check_space(char *str)
 	if (tem != 1)
 		return (-1);
 	return (1);
-}
-
-int	my_check_guillemet_2(char *str)
-{
-	int		x;
-	int		g_simple;
-	int		g_double;
-
-	x = -1;
-	g_simple = 0;
-	g_double = 0;
-	g_term.dernier_ret = 0;
-	while (str[++x])
-	{
-		if (str[x] == '\"' && g_double == 0 && g_simple == 0)
-			g_double = 1;
-		else if (str[x] == '\'' && g_simple == 0 && g_double == 0)
-			g_simple = 1;
-		else if (str[x] == '\"' && g_double == 1)
-			g_double = 0;
-		else if (str[x] == '\'' && g_simple == 1)
-			g_simple = 0;
-	}
-	if (g_simple == 0 && g_double == 0)
-		return (1);
-	printf(VIOLET"minishell: (%s) erreur de sintaxe\n"BLANC,
-		g_term.str_cmd);
-	free(g_term.str_cmd);
-	return (-1);
 }
 
 int	main(int ac, char **av, char **envp)

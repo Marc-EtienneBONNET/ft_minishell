@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 14:33:31 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/18 16:38:12 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/02 10:43:26 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	my_check_building(t_cmd *cmd)
 {
+	if (!cmd->cmd)
+		return (0);
 	if (ft_strncmp(cmd->cmd, "cd", 10) == 0
 		|| ft_strncmp(cmd->cmd, "unset", 10) == 0
 		|| ft_strncmp(cmd->cmd, "export", 10) == 0
