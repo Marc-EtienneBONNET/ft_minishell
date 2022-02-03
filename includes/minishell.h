@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/03 09:15:24 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 11:48:33 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ void		my_creat_tub(void);
 int			my_connect_red(void);
 	//my_gestion_heredoc
 int			my_connect_heredoc(void);
+int			my_sorti_2(char **str, char **res, int option, int *tub);
 	//my_gestion_heredoc_2
 int			ft_strcmp(char *str1, char *str2);
 int			my_sorti(char **str, char **res, int option, int *tub);

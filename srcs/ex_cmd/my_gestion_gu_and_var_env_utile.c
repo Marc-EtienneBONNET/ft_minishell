@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 18:53:40 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/03 09:43:36 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 11:49:52 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,27 +120,22 @@ int	netoyage_guillemet(char **str)
 	int	x;
 	int	gu;
 
-	x = 0;
+	x = -1;
 	gu = 0;
 	if (!*str)
 		return (1);
-	while ((*str)[x])
+	while ((*str)[++x])
 	{
 		my_check_gu(&gu, (*str)[x]);
 		if (gu == 2 && (*str)[x] == '\'')
-		{
-			x++;
 			continue ;
-		}
 		else if (gu == 1 && (*str)[x] == '\"')
-		{
-			x++;
 			continue ;
-		}
 		else if (((*str)[x] == '\"' || (*str)[x] == '\''))
+		{
 			my_sup_char(str, x);
-		else
-			x++;
+			x--;
+		}
 	}
 	return (1);
 }

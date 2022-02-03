@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 12:48:24 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/03 09:30:43 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 11:48:07 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,6 @@ int	my_sorti(char **str, char **res, int option, int *tub)
 	if (option == 0)
 		my_check_var_env(res);
 	write(1, (*res), ft_strlen((*res)));
-	*str = my_free_tab((void **)str);
-	*res = my_free_tab((void **)res);
-	exit(0);
-	return (1);
-}
-
-int	my_sorti_2(char **str, char **res, int option, int *tub)
-{
-	close(tub[SORTI]);
-	dup2(tub[ENTRE], 1);
-	close(tub[ENTRE]);
-	if (option == 0)
-		my_check_var_env(res);
-	write(2, (*res), ft_strlen((*res)));
-	write(2, ": commande introuvable\n", ft_strlen(": commande introuvable\n"));
 	*str = my_free_tab((void **)str);
 	*res = my_free_tab((void **)res);
 	exit(0);
@@ -113,13 +98,9 @@ int	my_heredoc(char *deb, char *fin, int option, int *tub)
 	{
 		str = readline(VERT"Heredoc>"BLANC);
 		if (deb == NULL && ft_strcmp(fin, str) == 0 && verif == 0)
-		{
 			my_sorti(&str, &res, option, tub);
-		}
 		else if (deb == NULL && ft_strcmp(fin, str) == 0 && verif != 0)
-		{
 			my_sorti_2(&str, &res, option, tub);
-		}
 		else if (deb == NULL && str)
 			my_concate(&res, str);
 		else if (deb != NULL && ft_strcmp(deb, str) == 0)

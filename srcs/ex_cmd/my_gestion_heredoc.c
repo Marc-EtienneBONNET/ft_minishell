@@ -6,11 +6,26 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 12:48:24 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/03 09:21:49 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 11:48:19 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	my_sorti_2(char **str, char **res, int option, int *tub)
+{
+	close(tub[SORTI]);
+	dup2(tub[ENTRE], 1);
+	close(tub[ENTRE]);
+	if (option == 0)
+		my_check_var_env(res);
+	write(2, (*res), ft_strlen((*res)));
+	write(2, ": commande introuvable\n", ft_strlen(": commande introuvable\n"));
+	*str = my_free_tab((void **)str);
+	*res = my_free_tab((void **)res);
+	exit(0);
+	return (1);
+}
 
 int	my_choose_option(char *fin, char *deb)
 {

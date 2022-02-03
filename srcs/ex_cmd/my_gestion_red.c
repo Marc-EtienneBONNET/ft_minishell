@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:35:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/03 09:37:25 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 11:51:02 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,9 @@ int	my_connect_red(void)
 		else if (ft_strncmp(g_term.cmd->red[x].red, "<", 3) == 0)
 		{
 			if (fd == -1)
-			{
 				printf(ROUGE"Aucun fichier au dossier de ce type\n"BLANC);
-				exit (1);
-			}
 			if (fd == -1)
-				exit (-1);
+				exit (1);
 			dup2(fd, 0);
 		}
 		if (fd != -1)
