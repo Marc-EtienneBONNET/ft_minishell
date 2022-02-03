@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 12:48:24 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/02 12:06:49 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 09:30:43 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,21 @@ int	my_sorti(char **str, char **res, int option, int *tub)
 	return (1);
 }
 
+int	my_sorti_2(char **str, char **res, int option, int *tub)
+{
+	close(tub[SORTI]);
+	dup2(tub[ENTRE], 1);
+	close(tub[ENTRE]);
+	if (option == 0)
+		my_check_var_env(res);
+	write(2, (*res), ft_strlen((*res)));
+	write(2, ": commande introuvable\n", ft_strlen(": commande introuvable\n"));
+	*str = my_free_tab((void **)str);
+	*res = my_free_tab((void **)res);
+	exit(0);
+	return (1);
+}
+
 int	my_concate(char **res, char *str)
 {
 	char	*tmp;
@@ -66,9 +81,11 @@ int	netoyage_guillemet_2(char **str)
 
 	x = 0;
 	if (!*str)
-		return (1);
-	if ((*str)[0] == '"' && (*str)[1] == '\0')
-		return (1);
+		return (0);
+	if ((*str)[0] == '\"' && (*str)[1] == '\0')
+		return (2);
+	if ((*str)[0] == '\'' && (*str)[1] == '\0')
+		return (2);
 	while ((*str)[x])
 	{
 		if ((*str)[x] == '\"' || (*str)[x] == '\'')
@@ -76,7 +93,7 @@ int	netoyage_guillemet_2(char **str)
 		else
 			x++;
 	}
-	return (1);
+	return (0);
 }
 
 int	my_heredoc(char *deb, char *fin, int option, int *tub)
@@ -84,18 +101,25 @@ int	my_heredoc(char *deb, char *fin, int option, int *tub)
 	char	*str;
 	char	*res;
 	char	*tmp;
+	int		verif;
 
 	str = NULL;
 	res = NULL;
 	tmp = NULL;
 	(void)option;
-	netoyage_guillemet_2(&fin);
-	netoyage_guillemet_2(&deb);
+	verif = netoyage_guillemet_2(&fin);
+	verif += netoyage_guillemet_2(&deb);
 	while (1)
 	{
 		str = readline(VERT"Heredoc>"BLANC);
-		if (deb == NULL && ft_strcmp(fin, str) == 0)
+		if (deb == NULL && ft_strcmp(fin, str) == 0 && verif == 0)
+		{
 			my_sorti(&str, &res, option, tub);
+		}
+		else if (deb == NULL && ft_strcmp(fin, str) == 0 && verif != 0)
+		{
+			my_sorti_2(&str, &res, option, tub);
+		}
 		else if (deb == NULL && str)
 			my_concate(&res, str);
 		else if (deb != NULL && ft_strcmp(deb, str) == 0)

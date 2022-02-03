@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 11:00:44 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/02 16:39:30 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 09:15:24 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void		my_para(int *para, char *str);
 int			ft_len_2(char *str);
 char		*ft_strmicrojoin(char **str, char c);
 int			nmy_gestion_env_heredoc(char **tmp);
+int			my_init_struct_env(void);
 
 	//my_cd
 int			change_pwd(char *pwd, char *oldpwd);

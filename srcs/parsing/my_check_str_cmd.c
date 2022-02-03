@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 09:17:25 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/01/31 09:33:34 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 09:16:38 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ int	my_check_nb_guillemet(char *str)
 			gu = 0;
 		x++;
 	}
-	if (gu != 0)
-		return (-1);
-	return (1);
+	return (gu);
 }
 
 int	my_check_bad_red(char *str)
