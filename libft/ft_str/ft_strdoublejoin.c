@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 10:04:02 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/03 09:58:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 11:05:59 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ char	**ft_strdoublejoin(char **tab, char *str)
 	if (!res)
 		return (NULL);
 	len = 0;
-	while (tab[len])
+	while (tab && tab[len])
 	{
 		res[len] = ft_strdup(tab[len]);
 		len++;
 	}
 	if (str)
-		res[len++] = ft_strdup(str);
+		res[len] = ft_strdup(str);
+	len++;
 	res[len] = NULL;
 	return (res);
 }
@@ -43,6 +44,8 @@ char	**ft_strdoubledup(char **tab)
 
 	len = 0;
 	res = NULL;
+	if (!tab)
+		return (NULL);
 	while (tab && tab[len])
 		len++;
 	res = malloc(sizeof(char *) * (len + 1));

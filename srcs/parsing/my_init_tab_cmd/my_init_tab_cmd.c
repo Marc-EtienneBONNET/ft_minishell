@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 09:42:30 by mbonnet           #+#    #+#             */
-/*   Updated: 2022/02/03 10:03:11 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 11:06:56 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,34 +33,24 @@ int	my_init_tab_cmd_3(char **tmp)
 	return (1);
 }
 
-char	**my_init_tab_cmd_2(char **tab_cmd, char *str, int *x, char **tmp)
+char	*my_init_tab_cmd_2(char *str, int *x, int *gu)
 {
-	char	**tmp_2;
-	int		gu;
-	int		y;
+	char	*res;
 
-	y = -1;
-	gu = 0;
-	*tmp = ft_strmicrojoin(tmp, str[*x]);
-	while ((*tmp) && (*tmp)[++y])
+	res = NULL;
+	while (1)
 	{
-		my_check_gu(&gu, (*tmp)[y]);
-		if (!str[(*x) + 1] || (gu == 0
-				&& (((*tmp)[y] == '&' && (*tmp)[y + 1] == '&')
-			|| ((*tmp)[y] == '|' && (*tmp)[y + 1] == '|')
-					|| ((*tmp)[y] == '|' && str[(*x) + 1] != '|')
-					|| (*tmp)[y] == ';')))
-		{
-			tmp_2 = ft_strdoubledup(tab_cmd);
-			tab_cmd = my_free_double_tab((void **)tab_cmd, -1);
-			tab_cmd = ft_strdoublejoin(tmp_2, *tmp);
-			printf("la : %s\n",tab_cmd[*x]);
-			tmp_2 = my_free_double_tab((void **)tmp_2, -1);
-			tmp = my_free_tab((void **)tmp);
-			break ;
-		}
+		my_check_gu(gu, str[*x]);
+		res = ft_strmicrojoin(&res, str[*x]);
+		if ((*gu == 0 && ((str[*x] == ';')
+					|| (str[*x] == '&' && str[(*x) - 1] == '&')
+					|| (str[*x] == '|' && str[(*x) - 1] == '|')
+					|| (str[*x] == '|' && str[(*x) + 1] != '|')))
+					|| str[*x] == '\0')
+			return (res);
+		(*x)++;
 	}
-	return (tab_cmd);
+	return (res);
 }
 
 char	**my_init_tab_cmd(char *str)
@@ -68,17 +58,27 @@ char	**my_init_tab_cmd(char *str)
 	char	**tab_cmd;
 	int		x;
 	char	*tmp;
+	char	**tmp_2;
+	int		gu;
 
 	x = 0;
 	tmp = NULL;
 	tab_cmd = NULL;
+	tmp_2 = NULL;
+	gu = 0;
 	while (str[x])
 	{
-		printf("str : (%s)\n", &(str[x]));
-		tab_cmd = my_init_tab_cmd_2(tab_cmd, str, &x, &tmp);
-		printf("ici : %s\n",tab_cmd[x]);
+		tmp = my_init_tab_cmd_2(str, &x, &gu);
+		tmp_2 = ft_strdoubledup(tab_cmd);
+		tab_cmd = my_free_double_tab((void **)tab_cmd, -1);
+		tab_cmd = ft_strdoublejoin(tmp_2, tmp);
+		tmp_2 = my_free_double_tab((void **)tmp_2, -1);
+		tmp = my_free_tab((void **)&tmp);
+		if (!str[x])
+			break ;
 		x++;
 	}
+	tmp = my_free_tab((void **)&tmp);
 	x = 0;
 	while (tab_cmd[x])
 	{

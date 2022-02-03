@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:29:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/12/10 13:15:33 by mbonnet          ###   ########.fr       */
+/*   Updated: 2022/02/03 10:56:11 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strdup(char *src)
 	if (!src)
 		return (NULL);
 	while (src[size])
-		++size;
+		size++;
 	new = malloc(sizeof(char) * (size + 1));
 	if (!(new))
 		return (NULL);
