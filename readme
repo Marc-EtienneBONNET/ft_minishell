@@ -1,0 +1,48 @@
+I) Problème
+
+	Ici, le but est de recrer le minishell dans sa quasi globaliter ! 
+
+	Projet a realiser avec une autre personne.
+
+II) Regle
+
+	Trouver et lancer l'exécutable approprié
+
+	Recoder les builtins suivant : 
+		export 
+		cd 
+		exit
+		unset
+		pwd
+		echo
+		env
+	; devra séparer les commandes sur la ligne de commande.
+
+	Les redirections >, ">>" et < doivent fonctionner comme dans bash, sauf dans les agrégations fd.
+
+	Les variables d'environnement ($ suivis de caractères) doivent fonctionner comme dans bash.
+
+	Tuyaux | devrait fonctionner comme dans bash.
+
+	$ ? cela devrait fonctionner comme dans bash.
+
+	ctrl-C, ctrl-D et ctrl-\ doivent afficher le même résultat que dans le bash.
+
+III) Notions
+
+	Découverte de Readline
+
+	Découverte et pratique des tuaux 
+
+	Découverte du multi-processe avec fork
+
+	Exploration de tout Les tenants et aboutissants de Bash
+
+	Perfectionnement de mas capaciter a travailler en equipe
+
+IV) Fonctions autorisées
+
+	alloc, free, write, open, read, close, fork, wait,
+	waitpid, wait3, wait4, signal, kill, exit, getcwd,
+	chdir, stat, lstat, fstat, execve, dup, dup2, pipe,
+	opendir, readdir, closedir, strerror, errno, readline
